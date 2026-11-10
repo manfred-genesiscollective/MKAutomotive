@@ -150,11 +150,11 @@ To launch: remove `SITE_PRELAUNCH` (or set it to `false`) in Vercel and redeploy
 
 ### Wording to approve
 
-These were drafted for the site and have no source beyond it. Approve, change or remove each one.
+The copy is written in a formal, corporate voice for partners and investors first, kept short, with every claim about a business taken from that business's own website. The lines below were drafted for the site and have no source beyond it. Approve, change or remove each one.
 
 - [ ] The tagline "The whole life of a car." and the five stage names: Drive, Upgrade, Maintain, Recover, Export.
 - [ ] The group description, the About page statements, and the mission and vision (`src/content/site.ts`, `src/app/about/page.tsx`).
-- [ ] The four habits (`habits` in `src/content/site.ts`).
+- [ ] The four operating principles (`habits` in `src/content/site.ts`).
 - [ ] The partner types (`partnerTypes` in `src/content/site.ts`). Two more were drafted and left out until confirmed: parts brands and distributors supplying RevHub, and founders bringing a business into the group.
 - [ ] The Careers page: whether open applications are wanted, and the kinds of work listed for each business (`work` in `src/content/businesses.ts`).
 - [ ] The Investors page: whether investor enquiries are wanted in public, and whether there is a deck to offer. The page currently takes enquiries and offers no document.

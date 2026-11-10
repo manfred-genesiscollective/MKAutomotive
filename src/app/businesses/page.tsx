@@ -3,23 +3,23 @@ import Link from "next/link";
 import { BusinessRows } from "@/components/business-rows";
 import { CtaBand } from "@/components/cta-band";
 import { PageHero } from "@/components/page-hero";
-import { businessNameList, countWord } from "@/content/businesses";
+import { businessNameList, capitalise, countWord } from "@/content/businesses";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Our businesses",
-  description: `${businessNameList()}: the ${countWord()} businesses of ${site.name}, each at one stage in the life of a car in Singapore.`,
+  description: `${businessNameList()}: the ${countWord()} businesses of ${site.name}, each serving one stage in the life of a car in Singapore.`,
   path: "/businesses",
 });
 
 export default function BusinessesPage() {
   return (
     <>
-      <PageHero eyebrow={`${countWord()} businesses`} title={["Our businesses."]}>
+      <PageHero eyebrow="The portfolio" title={["Our businesses."]}>
         <p className="lede lede--lg">
-          Each MK business looks after one stage in the life of a car in Singapore. Start with
-          the one you need.
+          {capitalise(countWord())} businesses, each serving one stage in the life of a car in
+          Singapore.
         </p>
       </PageHero>
 
@@ -31,9 +31,9 @@ export default function BusinessesPage() {
 
       <CtaBand
         surface="glass"
-        eyebrow="Not sure where to start"
-        title="Tell us what you need."
-        text="Describe what you are trying to do and we will point you to the right business."
+        eyebrow="General enquiries"
+        title="Speak to the Group."
+        text="We will direct your enquiry to the business concerned."
       >
         <Link href="/contact" className="button button--large">
           Contact us

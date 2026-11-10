@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "Careers",
-  description: `Work at ${site.name}: on the road, in the workshop, in the yard or behind the screen, across ${countWord()} automotive businesses in Singapore.`,
+  description: `Careers at ${site.name}: roles on the road, in the workshop, in the yard and in operations, across ${countWord()} automotive businesses in Singapore.`,
   path: "/careers",
 });
 
@@ -20,16 +20,15 @@ export default function CareersPage() {
     <>
       <PageHero eyebrow="Careers" title={["Build a career", "around cars."]}>
         <p className="lede lede--lg">
-          {count.charAt(0).toUpperCase() + count.slice(1)} businesses means many kinds of work: on
-          the road, in the workshop, in the yard and behind the screen. Tell us which one suits
-          you.
+          Roles across {count} businesses: on the road, in the workshop, in the yard and in
+          operations.
         </p>
       </PageHero>
 
       <section className="section section--flush-top">
         <div className="container">
           <h2 className="eyebrow" data-reveal>
-            Where you could work
+            The businesses
           </h2>
           <div className={styles.rows}>
             <NumberedRows
@@ -50,7 +49,7 @@ export default function CareersPage() {
         kind="careers"
         eyebrow="Apply"
         title="Send an open application."
-        text="We do not advertise openings on this site. Tell us what you do and which business interests you, and we will reply if there is a role."
+        text="Openings are not advertised on this site. Send an open application and we will contact you if a suitable role arises."
       />
     </>
   );

@@ -165,7 +165,7 @@ describe("parseEnquiry", () => {
     const base = {
       name: "Sam Lee",
       email: "sam@example.com",
-      topic: "Not sure yet",
+      topic: "Open to any",
       message: "I have ten years in fleet operations.",
     };
     const bad = parseEnquiry("careers", form({ ...base, link: "javascript:alert(1)" }));

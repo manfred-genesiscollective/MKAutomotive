@@ -8,20 +8,20 @@ import { partnerTypes } from "./site";
 
 const businessNames = businesses.map((business) => business.name);
 
-/** Contact page: "What is this about?" */
+/** Contact page: "Subject" */
 export const contactTopics: string[] = [
   ...businessNames,
   "Partnership",
-  "Investing",
+  "Investment",
   "Careers",
-  "Something else",
+  "Other",
 ];
 
 /** Partners page: "Partnership type" */
 export const partnershipOptions: string[] = [
   ...partnerTypes.map((type) => type.title),
-  "Something else",
+  "Other",
 ];
 
-/** Careers page: "Which business interests you?" */
-export const careerInterests: string[] = [...businessNames, "Not sure yet"];
+/** Careers page: "Business of interest" */
+export const careerInterests: string[] = [...businessNames, "Open to any"];

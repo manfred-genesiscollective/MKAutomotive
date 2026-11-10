@@ -42,31 +42,31 @@ const COPY: Record<EnquiryKind, FormCopy> = {
   contact: {
     submit: "Send message",
     successTitle: "Message sent",
-    successText: "Thank you for getting in touch. We will reply by email.",
-    company: { label: "Company", placeholder: "Company name (optional)" },
-    topic: { label: "What is this about?", control: "chips" },
-    message: { placeholder: "Tell us how we can help" },
+    successText: "Thank you. The Group will reply by email.",
+    company: { label: "Company", placeholder: "Company name" },
+    topic: { label: "Subject", control: "chips" },
+    message: { placeholder: "Your enquiry" },
   },
   partners: {
     submit: "Submit enquiry",
     successTitle: "Enquiry received",
-    successText: "Thank you. We will review your enquiry and reply by email.",
-    company: { label: "Company", placeholder: "Company name (optional)" },
+    successText: "Thank you. The Group will review your enquiry and reply by email.",
+    company: { label: "Company", placeholder: "Company name" },
     topic: { label: "Partnership type", control: "select" },
-    message: { placeholder: "How would you like to work together?" },
+    message: { placeholder: "The opportunity you have in mind" },
   },
   investors: {
     submit: "Send enquiry",
     successTitle: "Enquiry received",
-    successText: "Thank you. We will reply by email.",
-    company: { label: "Firm", placeholder: "Fund or firm name (optional)" },
+    successText: "Thank you. The Group will reply by email.",
+    company: { label: "Firm", placeholder: "Fund or firm name" },
   },
   careers: {
     submit: "Send application",
     successTitle: "Application received",
-    successText: "Thank you. We will reply if there is a role.",
-    topic: { label: "Which business interests you?", control: "chips" },
-    message: { placeholder: "What you do, and what you are looking for" },
+    successText: "Thank you. We will be in touch if a suitable role arises.",
+    topic: { label: "Business of interest", control: "chips" },
+    message: { placeholder: "Your experience and the role you are looking for" },
   },
 };
 
@@ -233,6 +233,9 @@ function Form({
   }
 
   const fieldId = (field: FieldName) => `${id}-${field}`;
+  /** Optional fields say so in their label, where it stays visible while typing. */
+  const labelFor = (label: string, field: FieldName) =>
+    rules[field] && !rules[field].required ? `${label} (optional)` : label;
   const errorId = (field: FieldName) => `${id}-${field}-error`;
   // Stated either way: a required field that is still empty would otherwise
   // be announced as invalid before anything has been sent.
@@ -320,7 +323,7 @@ function Form({
       {rules.company && copy.company ? (
         <div className={styles.field}>
           <label htmlFor={fieldId("company")} className={styles.label}>
-            {copy.company.label}
+            {labelFor(copy.company.label, "company")}
           </label>
           <input
             id={fieldId("company")}
@@ -341,14 +344,14 @@ function Form({
       {rules.phone ? (
         <div className={styles.field}>
           <label htmlFor={fieldId("phone")} className={styles.label}>
-            Phone
+            {labelFor("Phone", "phone")}
           </label>
           <input
             id={fieldId("phone")}
             name="phone"
             type="tel"
             className={styles.input}
-            placeholder="Optional"
+            placeholder="Your phone number"
             autoComplete="tel"
             required={rules.phone.required}
             maxLength={rules.phone.max}
@@ -413,14 +416,14 @@ function Form({
       {rules.link ? (
         <div className={styles.field}>
           <label htmlFor={fieldId("link")} className={styles.label}>
-            CV or LinkedIn link
+            {labelFor("CV or LinkedIn link", "link")}
           </label>
           <input
             id={fieldId("link")}
             name="link"
             type="url"
             className={styles.input}
-            placeholder="https:// (optional)"
+            placeholder="https://"
             autoComplete="url"
             required={rules.link.required}
             maxLength={rules.link.max}
@@ -459,8 +462,8 @@ function Form({
           </span>
         </button>
         <p className={styles.note}>
-          We use these details to answer your enquiry and to pass it to the right business. See
-          our <Link href="/privacy">privacy notice</Link>.
+          Your details are used only to answer your enquiry and to refer it to the business
+          concerned. See the <Link href="/privacy">privacy notice</Link>.
         </p>
       </div>
 

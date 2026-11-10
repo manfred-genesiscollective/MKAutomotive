@@ -6,7 +6,7 @@ import { NumberedRows } from "@/components/numbered-rows";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
 import { StatRow } from "@/components/stat-row";
-import { businesses, countWord, groupFacts } from "@/content/businesses";
+import { businesses, capitalise, countWord, groupFacts } from "@/content/businesses";
 import { habits, site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { getSiteUrl } from "@/lib/site-url";
@@ -50,23 +50,20 @@ export default function HomePage() {
 
       <PageHero size="home" title={["The whole life", "of a car."]} ruled={false} emblem>
         <p className="lede">
-          {site.name} is the Singapore holding company behind {countWord()} automotive
-          businesses. Between them they rent, upgrade, recover and export cars, and a booking
-          desk for workshops is in development.
+          {site.name} is a Singapore holding company with {countWord()} businesses across the
+          vehicle lifecycle: rental, performance parts and fitting, workshop booking, roadside
+          recovery and vehicle export.
         </p>
       </PageHero>
 
       <section className="section">
         <div className="container">
-          <SectionHeading
-            layout="split"
-            title={`One group, ${countWord()} stages in the life of a car.`}
-          >
+          <SectionHeading layout="split" title={`${capitalise(countWord())} businesses, one lifecycle.`}>
             <p>
-              A car registered in Singapore comes with a ten-year Certificate of Entitlement.
-              Over those years it is driven, upgraded, serviced and sometimes rescued, and when
-              the certificate runs out it is often shipped overseas. Each MK business looks after
-              one of those moments under its own name.
+              Every car registered in Singapore carries a ten-year Certificate of Entitlement
+              (COE). Over that period it is driven, upgraded, serviced and recovered; when the COE
+              ends, it is often exported. Each MK business serves one of those stages under its
+              own brand.
             </p>
           </SectionHeading>
           <div className={styles.rows}>
@@ -81,8 +78,8 @@ export default function HomePage() {
           {/* The About page links here: the habits, not the figures above them. */}
           <div className={styles.habits} id="habits">
             <SectionHeading
-              eyebrow="How we work"
-              title={`Different businesses, the same ${countWord(habits.length)} habits.`}
+              eyebrow="How we operate"
+              title={`${capitalise(countWord(habits.length))} principles, applied across the portfolio.`}
             />
             <div className={styles.habitRows}>
               <NumberedRows items={habits} />
@@ -92,9 +89,9 @@ export default function HomePage() {
       </section>
 
       <CtaBand
-        eyebrow="Work with us"
-        title="Talk to the group."
-        text="A partnership, supplying one of our businesses, investment or a job: tell us what you have in mind and we will point you to the right person."
+        eyebrow="Partnerships and investment"
+        title="Work with the Group."
+        text="Enquiries about partnerships, supply, investment and careers are reviewed by the Group and directed to the business concerned."
       >
         <Link href="/contact" className="button button--large">
           Contact us

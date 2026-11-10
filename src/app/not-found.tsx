@@ -11,8 +11,7 @@ export default function NotFound() {
     <PageHero eyebrow="Error 404" title={["Wrong turn."]}>
       <div className="stack" style={{ "--stack-gap": "32px" } as React.CSSProperties}>
         <p className="lede">
-          The page you are looking for is not here. It may have moved, or the address may have
-          been mistyped.
+          This page does not exist. It may have moved, or the address may be mistyped.
         </p>
         <div className="button-row">
           <Link href="/" className="button button--large">

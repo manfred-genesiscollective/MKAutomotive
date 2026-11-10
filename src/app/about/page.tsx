@@ -11,14 +11,12 @@ import { pageMetadata } from "@/lib/metadata";
 import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
-  title: "About the group",
-  description: `${site.name} is a Singapore holding company with ${countWord()} automotive businesses: ${businessNameList()}.`,
+  title: "About the Group",
+  description: `${site.name} is a Singapore holding company with ${countWord()} automotive businesses, each under its own brand: ${businessNameList()}.`,
   path: "/about",
 });
 
 export default function AboutPage() {
-  const first = businesses[0];
-  const last = businesses[businesses.length - 1];
   const upcoming = businesses.filter((business) => business.status !== "live");
   // "the price comes first, we come to you, ... and proof before promises"
   const habitList = habits.map(
@@ -32,20 +30,21 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHero eyebrow="The group" title={["About the group."]}>
+      <PageHero eyebrow="The Group" title={["About the Group."]}>
         <p className="lede lede--lg">
-          {site.name} is a Singapore holding company for {countWord()} automotive businesses.
+          A Singapore holding company with {countWord()} automotive businesses, each operating
+          under its own brand.
         </p>
       </PageHero>
 
       <section className="section surface-glass">
         <div className={`container ${styles.statement}`} data-reveal>
           <p>
-            A car in Singapore is rented, upgraded, serviced, sometimes rescued and, when its ten
-            years are up, often shipped overseas.
+            Every car in Singapore passes through the same stages: rental, upgrade, servicing,
+            recovery and, after ten years, export.
           </p>
           <p>
-            We are building one group that looks after each of those moments
+            The Group is building a business at each of them
             <span className="dot">.</span>
           </p>
         </div>
@@ -56,53 +55,53 @@ export default function AboutPage() {
           <LabelRows
             rows={[
               {
-                label: "What we are",
+                label: "Structure",
                 content: (
                   <>
                     <p className="lead">
-                      A holding company with {countWord()} businesses, each run under its own name.
+                      A holding company with {countWord()} businesses, each under its own brand.
                       {upcoming.length > 0
-                        ? ` ${upcoming.map((business) => business.name).join(" and ")} ${upcoming.length === 1 ? "is" : "are"} still in development.`
+                        ? ` ${upcoming.map((business) => business.name).join(" and ")} ${upcoming.length === 1 ? "is" : "are"} in development.`
                         : null}
                     </p>
                     <p className="body">
-                      {businessNameList()} sit at different points in a car&rsquo;s life:{" "}
-                      {first.name} at the start, {last.name} at the end and the others in between.
+                      {businessNameList()} serve successive stages of a car&rsquo;s life, from the
+                      first drive to the final export.
                     </p>
                   </>
                 ),
               },
               {
-                label: "How we work",
+                label: "Operating principles",
                 content: (
                   <>
                     <p className="lead">
-                      {habitCount.charAt(0).toUpperCase() + habitCount.slice(1)} habits run through
-                      the businesses we operate today: {habitSentence}.
+                      {habitCount.charAt(0).toUpperCase() + habitCount.slice(1)} principles apply
+                      across the businesses in operation: {habitSentence}.
                     </p>
                     <p className="body">
                       <Link href="/#habits" className="text-link">
-                        See what each habit means in practice
+                        The principles in practice
                       </Link>
                     </p>
                   </>
                 ),
               },
               {
-                label: "Our mission",
+                label: "Mission",
                 content: (
                   <p className="statement">
-                    To make every stage of a car&rsquo;s life in Singapore simple, fairly priced
-                    and well looked after.
+                    To make every stage of a car&rsquo;s life in Singapore simple, transparent and
+                    fairly priced.
                   </p>
                 ),
               },
               {
-                label: "Our vision",
+                label: "Vision",
                 content: (
                   <p className="statement">
-                    A group of automotive businesses that people recommend at every stage, from
-                    the first drive to the final export.
+                    To be the group drivers and partners rely on at every stage, from the
+                    first drive to the final export.
                   </p>
                 ),
               },
@@ -110,9 +109,9 @@ export default function AboutPage() {
           />
 
           <div className={styles.businesses}>
-            <p className="eyebrow" data-reveal>
-              The businesses
-            </p>
+            <h2 className="eyebrow" data-reveal>
+              The portfolio
+            </h2>
             <div className={styles.rail} data-reveal>
               <LifecycleRail />
             </div>
@@ -121,9 +120,9 @@ export default function AboutPage() {
       </section>
 
       <CtaBand
-        eyebrow="Work with us"
-        title="Talk to the group."
-        text="Tell us what you have in mind and we will pass it to the right business."
+        eyebrow="Partnerships and investment"
+        title="Work with the Group."
+        text="Enquiries are reviewed by the Group and directed to the business concerned."
       >
         <Link href="/contact" className="button button--large">
           Contact us
@@ -132,7 +131,7 @@ export default function AboutPage() {
           </span>
         </Link>
         <Link href="/businesses" className="button button--ghost button--large">
-          See our businesses
+          View the portfolio
         </Link>
       </CtaBand>
     </>

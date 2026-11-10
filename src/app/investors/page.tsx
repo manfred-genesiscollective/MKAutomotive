@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "Investors",
-  description: `${site.name} has a separate business at each point in the life of a car in Singapore.`,
+  description: `${site.name} operates a business at each stage of a car’s life in Singapore, from rental to export.`,
   path: "/investors",
 });
 
@@ -24,24 +24,21 @@ export default function InvestorsPage() {
         title={["One car,", `${countWord()} businesses.`]}
       >
         <p className="lede lede--lg">
-          Driving in Singapore runs on a ten-year clock. In that time people need a car to rent,
-          upgrades, servicing, help when things go wrong and, when the Certificate of Entitlement
-          (COE) ends, a buyer overseas. {site.name} has a business at each of those points.
+          Every car in Singapore runs on a ten-year Certificate of Entitlement (COE). Over that
+          period it creates demand for rental, upgrades, servicing and recovery; at the end, for
+          export. {site.name} operates a business at each stage.
         </p>
       </PageHero>
 
       <section className="section section--flush-top">
         <div className={`container ${styles.body}`} data-reveal>
           <p className="body">
-            Each business stands on its own, under its own brand, at a different point between a
-            first rental and a final export.
+            Each business operates independently under its own brand, at a different point
+            between a first rental and a final export.
+            {upcoming.length > 0
+              ? ` ${upcoming.map((business) => business.name).join(" and ")} ${upcoming.length === 1 ? "is" : "are"} in development.`
+              : null}
           </p>
-          {upcoming.length > 0 ? (
-            <p className="body">
-              {upcoming.map((business) => business.name).join(" and ")}{" "}
-              {upcoming.length === 1 ? "is" : "are"} in development.
-            </p>
-          ) : null}
         </div>
 
         <div className={`container ${styles.portfolio}`}>
@@ -70,7 +67,7 @@ export default function InvestorsPage() {
         kind="investors"
         eyebrow="Enquire"
         title="Investor enquiries."
-        text="Tell us who you are and we will reply by email."
+        text="Introduce yourself and your organisation, and we will reply by email."
       >
         <p className={`meta ${styles.disclaimer}`}>
           This page is for information only. It is not an offer or an invitation to invest.

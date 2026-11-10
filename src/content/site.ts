@@ -11,7 +11,7 @@ export const site = {
   legalName: "MK Automotive Group",
   tagline: "The whole life of a car.",
   description:
-    "MK Automotive Group is a Singapore holding company. Its businesses rent, upgrade, recover and export cars, and a booking desk for workshops is in development.",
+    "MK Automotive Group is a Singapore holding company with businesses across the vehicle lifecycle: rental, parts, service booking, recovery and export.",
   country: "Singapore",
 
   /** Shown on the Contact page and in the footer when filled in. */
@@ -41,25 +41,26 @@ export const primaryNav: { label: string; href: string }[] = [
 export const contactNav = { label: "Contact", href: "/contact" };
 
 /**
- * The habits the group's businesses share. Shown on the home page, and
- * listed in one sentence on the About page, which is built from these titles.
+ * The operating principles the group's businesses share. Shown on the home
+ * page, and listed in one sentence on the About page, which is built from
+ * these titles: write each title as a short noun phrase.
  */
 export const habits: { title: string; text: string }[] = [
   {
-    title: "The price comes first.",
-    text: "SwiftDrive shows one all-in price before you book. Golden Hour confirms the cost before a truck sets off. export.sg publishes the FOB price on every car.",
+    title: "Transparent pricing.",
+    text: "Prices are stated before commitment: an all-in rate at SwiftDrive, a confirmed price at Golden Hour, an open FOB price at export.sg.",
   },
   {
-    title: "We come to you.",
-    text: "Rental cars are delivered to your door, tow trucks reach you anywhere on the island, and export cars are shipped to your port.",
+    title: "Service at the customer’s location.",
+    text: "Rental cars are delivered, tow trucks attend anywhere on the island, and export vehicles are shipped to the buyer’s port.",
   },
   {
-    title: "We do the work ourselves.",
-    text: "SwiftDrive rents its own cars. RevHub fits what it sells in its own workshop. export.sg prepares and ships each car itself.",
+    title: "In-house operations.",
+    text: "SwiftDrive owns its fleet, RevHub fits what it sells, and export.sg prepares and ships every vehicle itself.",
   },
   {
-    title: "Proof before promises.",
-    text: "Photos at every rental handover. The driver’s name and plate on your phone before a tow. Video and at least 25 photos of every export car.",
+    title: "Documentation at every step.",
+    text: "Photographs at every rental handover, the driver and plate confirmed before every tow, and a video with at least 25 photographs of every export unit.",
   },
 ];
 
@@ -71,18 +72,18 @@ export const habits: { title: string; text: string }[] = [
 export const partnerTypes: { title: string; text: string }[] = [
   {
     title: "Workshops and service providers",
-    text: "Take bookings through The Car Lounge when it opens. Tell us what you offer.",
+    text: "Receive bookings through The Car Lounge when it launches. Expressions of interest are open now.",
   },
   {
     title: "Overseas dealers and importers",
-    text: "Source Singapore used cars through export.sg, with an open FOB price on every unit and the landed cost to your port on request.",
+    text: "Source Singapore used vehicles through export.sg, with an open FOB price on every unit and the landed cost to your port on request.",
   },
   {
-    title: "Car owners",
-    text: "Sell a car with an expiring Certificate of Entitlement (COE) to export.sg. SwiftDrive is exploring leasing owners’ cars into its fleet: that is not on offer yet, but you can register your interest.",
+    title: "Vehicle owners",
+    text: "Sell a vehicle with an expiring Certificate of Entitlement (COE) to export.sg. SwiftDrive is also considering leasing owners’ cars into its fleet; this is not yet offered, but interest can be registered.",
   },
   {
     title: "Companies and fleets",
-    text: "Monthly rentals from SwiftDrive, and towing and recovery from Golden Hour, for the vehicles your business depends on.",
+    text: "Monthly rental from SwiftDrive, and towing and recovery from Golden Hour, for business vehicles.",
   },
 ];

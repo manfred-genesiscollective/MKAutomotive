@@ -19,19 +19,18 @@ export default function ContactPage() {
 
   return (
     <>
-      <PageHero eyebrow="Contact" title={["Let’s talk."]} />
+      <PageHero eyebrow="Contact" title={["Contact us."]} />
 
       <section className="section surface-glass">
         <div className={`container ${styles.grid}`}>
           <div className={styles.aside} data-reveal>
             <p className={styles.lead}>
-              Write to the group about a partnership, supplying one of our businesses, investment
-              or a job. For anything a business handles itself, its own website is the quickest
-              way in.
+              Write to the Group about partnerships, supply, investment and careers. Customer
+              enquiries are answered fastest by each business directly.
             </p>
 
             <div className={styles.block}>
-              <h2 className="eyebrow">Looking for one of our businesses?</h2>
+              <h2 className="eyebrow">Contact a business directly</h2>
               <ul className={styles.direct}>
                 {businesses.map((business) => (
                   <li key={business.slug}>
