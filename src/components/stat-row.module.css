@@ -17,11 +17,11 @@
 
 .value {
   position: relative;
-  padding-bottom: 16px;
-  font-size: clamp(44px, 4.6vw, 68px);
+  padding-bottom: 22px;
+  font-size: clamp(56px, 7.4vw, 112px);
   font-weight: 550;
-  letter-spacing: -0.04em;
-  line-height: 1;
+  letter-spacing: -0.048em;
+  line-height: 0.95;
 }
 
 .value::after {

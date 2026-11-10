@@ -72,6 +72,7 @@ export async function SiteFooter() {
                 {businesses.map((business) => (
                   <li key={business.slug}>
                     <Link href={`/businesses/${business.slug}`} prefetch>
+                      <span className={styles.index}>{business.stage.number}</span>
                       {business.name}
                     </Link>
                   </li>

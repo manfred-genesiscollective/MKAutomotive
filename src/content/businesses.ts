@@ -16,8 +16,11 @@ export type Business = {
   slug: string;
   /** Brand name exactly as the business writes it. */
   name: string;
-  /** Where the business sits in the life of a car. */
-  stage: { number: string; label: string };
+  /**
+   * Where the business sits in the life of a car. `afterCoe` marks a stage
+   * that begins once the car's ten-year Certificate of Entitlement ends.
+   */
+  stage: { number: string; label: string; afterCoe?: boolean };
   /** Short category, used in labels. */
   category: string;
   /** One line under the name. */
@@ -328,7 +331,7 @@ export const businesses: Business[] = [
   {
     slug: "export-sg",
     name: "export.sg",
-    stage: { number: "05", label: "Export" },
+    stage: { number: "05", label: "Export", afterCoe: true },
     category: "Vehicle export",
     tagline: "Singapore used cars, ready to export.",
     need: "Buy a car for export",

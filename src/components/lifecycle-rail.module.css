@@ -1,18 +1,25 @@
 .list {
-  position: relative;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--columns, 5), minmax(0, 1fr));
 }
 
-/* The road: one hairline with a marker at each stage. */
-.list::before {
+/* The road: one hairline with a marker at each stage. Each stage draws its
+   own stretch, so a business that is not open yet can be dashed. */
+.item {
+  position: relative;
+}
+
+.item::before {
   content: "";
   position: absolute;
   top: 3px;
   left: 0;
   right: 0;
-  height: 1px;
-  background: var(--line-strong);
+  border-top: 1px solid var(--line-strong);
+}
+
+.soon::before {
+  border-top-style: dashed;
 }
 
 .stop {
@@ -75,18 +82,76 @@
   color: var(--ink-3);
 }
 
+/* ---------- The ten-year scale ---------- */
+
+.scale {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 5), minmax(0, 1fr));
+  margin-bottom: 22px;
+}
+
+.phase {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* A measuring line that runs to the end of the phase and stops at a tick. */
+.phase::after {
+  content: "";
+  flex: 1;
+  height: 7px;
+  border-right: 1px solid var(--line-strong);
+  background: linear-gradient(var(--line-strong), var(--line-strong)) center / 100% 1px no-repeat;
+}
+
+.caption {
+  display: none;
+}
+
 @media (max-width: 900px) {
+  .scale {
+    display: none;
+  }
+
   .list {
     grid-template-columns: 1fr;
   }
 
-  .list::before {
+  .item::before {
     top: 0;
     bottom: 0;
     left: 3px;
     right: auto;
-    width: 1px;
-    height: auto;
+    border-top: 0;
+    border-left: 1px solid var(--line-strong);
+  }
+
+  .soon::before {
+    border-left-style: dashed;
+  }
+
+  .caption {
+    display: block;
+    padding: 14px 0 6px 28px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .item:first-child .caption {
+    padding-top: 0;
   }
 
   .stop {
@@ -95,6 +160,7 @@
     align-items: baseline;
     column-gap: 12px;
     row-gap: 2px;
+    height: auto;
     padding: 13px 0 13px 28px;
   }
 

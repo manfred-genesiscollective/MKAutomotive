@@ -1,5 +1,13 @@
+/* The directory: a pearl band straight under the headline, so the first
+   screen already shows all three colours. */
 .rail {
-  padding-bottom: clamp(48px, 6vw, 88px);
+  padding-block: 30px 34px;
+}
+
+@media (max-width: 900px) {
+  .rail {
+    padding-block: 26px 22px;
+  }
 }
 
 .rows {

@@ -50,15 +50,15 @@ export default function HomePage() {
         </p>
       </PageHero>
 
-      <section className={styles.rail}>
+      <section className={`surface-pearl ${styles.rail}`}>
         <div className="container fade-in" style={{ "--delay": "0.7s" } as React.CSSProperties}>
-          <LifecycleRail />
+          <LifecycleRail scale />
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <SectionHeading title="One group, every stage of ownership.">
+          <SectionHeading layout="split" title="One group, every stage of ownership.">
             <p>
               A car registered in Singapore comes with a ten-year Certificate of Entitlement.
               Over those years it is driven, upgraded, serviced and sometimes rescued, and when
@@ -67,7 +67,7 @@ export default function HomePage() {
             </p>
           </SectionHeading>
           <div className={styles.rows}>
-            <BusinessRows />
+            <BusinessRows showSites />
           </div>
         </div>
       </section>

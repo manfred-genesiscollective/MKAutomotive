@@ -15,7 +15,9 @@ type Props = {
 /** The closing call to action on a page. */
 export function CtaBand({ eyebrow, title, text, children, surface = "carbon" }: Props) {
   return (
-    <section className={`section surface-${surface}`}>
+    <section
+      className={`section surface-${surface} ${surface === "carbon" ? styles.forged : ""}`}
+    >
       <div className={`container ${styles.band}`} data-reveal>
         <div className={styles.copy}>
           <p className="eyebrow">{eyebrow}</p>

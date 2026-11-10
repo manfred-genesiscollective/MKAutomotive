@@ -23,7 +23,7 @@ export function BusinessRows({ as: Heading = "h3", showSites = false }: Props) {
         >
           <div className={styles.head}>
             <p className="eyebrow">
-              {business.stage.number} · {business.stage.label}
+              {business.stage.number} · {business.stage.label} · {business.category}
             </p>
             {business.status === "coming-soon" ? (
               <span className={styles.badge}>Coming soon</span>
