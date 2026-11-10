@@ -121,6 +121,13 @@
   transition: text-decoration-color 0.25s var(--ease);
 }
 
+/* Saira has no arrows: draw them upright in the paragraph face. */
+.neighbourArrow {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 500;
+}
+
 @media (max-width: 960px) {
   .heroGrid {
     grid-template-columns: 1fr;

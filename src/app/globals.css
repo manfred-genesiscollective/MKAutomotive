@@ -625,7 +625,10 @@ textarea {
   font-size: 16.5px;
 }
 
+/* Saira has no arrows. Without this each device would pick its own. */
 .button-arrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
   transition: transform 0.25s var(--ease);
 }
 

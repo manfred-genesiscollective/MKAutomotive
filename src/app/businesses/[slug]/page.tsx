@@ -78,9 +78,18 @@ function NeighbourLink({ business, direction }: { business: Business; direction:
         {business.stage.label}
       </span>
       <span className={styles.neighbourName}>
-        {direction === "previous" ? <span aria-hidden="true">← </span> : null}
+        {direction === "previous" ? (
+          <span className={styles.neighbourArrow} aria-hidden="true">
+            ←{" "}
+          </span>
+        ) : null}
         {business.name}
-        {direction === "next" ? <span aria-hidden="true"> →</span> : null}
+        {direction === "next" ? (
+          <span className={styles.neighbourArrow} aria-hidden="true">
+            {" "}
+            →
+          </span>
+        ) : null}
       </span>
     </Link>
   );

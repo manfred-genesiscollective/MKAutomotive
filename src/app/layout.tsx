@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import localFont from "next/font/local";
 
 import { RevealObserver } from "@/components/reveal-observer";
@@ -12,8 +10,31 @@ import { getSiteUrl } from "@/lib/site-url";
 
 import "./globals.css";
 
-// Saira: headings, names, figures, navigation and buttons. Both files are
-// variable, so every weight comes from one download per style.
+/*
+ * Three typefaces, all served from this site (see src/assets/fonts/README.md).
+ *
+ * Geist: paragraphs. One variable file covers every weight.
+ * Geist Mono: small labels, in one weight.
+ * Saira: headings, names, figures, navigation and buttons. Both files are
+ * variable, so every weight comes from one download per style.
+ */
+const geist = localFont({
+  src: "../assets/fonts/Geist-Variable-latin.woff2",
+  weight: "100 900",
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: "../assets/fonts/GeistMono-Regular-latin.woff2",
+  weight: "400",
+  variable: "--font-geist-mono",
+  display: "swap",
+  // The stand-in metrics are worked out for a proportional face, which a
+  // monospaced one is not.
+  adjustFontFallback: false,
+});
+
 const saira = localFont({
   src: [
     { path: "../assets/fonts/Saira-Variable.woff2", weight: "100 900", style: "normal" },
@@ -42,7 +63,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-SG" className={`${GeistSans.variable} ${GeistMono.variable} ${saira.variable}`}>
+    <html lang="en-SG" className={`${geist.variable} ${geistMono.variable} ${saira.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           Skip to content
