@@ -125,18 +125,17 @@ Set the enquiry variables (see Enquiry forms) in the project's settings on Verce
 
 ### Search engines
 
-Until launch, every page asks search engines not to list it (a `noindex` mark on each page and on every file). Two things keep it that way:
+The site is listed on its own domain, www.mkholdings.asia. Its vercel.app addresses serve the same pages but always send `X-Robots-Tag: noindex` (`next.config.ts`), so search engines list the domain only. Canonical links, the sitemap and link previews all use the domain (`NEXT_PUBLIC_SITE_URL`).
 
-- The address. While the site lives on a `vercel.app` address, or on a developer's machine, it is never listable.
-- `SITE_PRELAUNCH=true`, set in the Vercel project. With it, the site stays unlisted even on its own domain, so the domain can be connected before the wording is approved.
+`SITE_PRELAUNCH` in the Vercel project holds the whole site back from search engines when it is `true`: every page and file is marked `noindex` and `robots.txt` leaves out the sitemap. It is `false` now that the site has launched. Set it to `true` and redeploy to take the site out of search results again. The rule is `isIndexable()` in `src/lib/site-url.ts`.
 
-To launch: remove `SITE_PRELAUNCH` (or set it to `false`) in Vercel and redeploy. The next build drops the mark and adds the sitemap to `robots.txt`. The rule is `isIndexable()` in `src/lib/site-url.ts`.
+To speed up listing, add www.mkholdings.asia to Google Search Console and Bing Webmaster Tools and submit https://www.mkholdings.asia/sitemap.xml.
 
 ### Domain
 
 `NEXT_PUBLIC_SITE_URL` in the Vercel project is the address written into canonical links, the sitemap and link previews. It must be an address that already works: change it to the site's own domain only once that domain's DNS points at Vercel, then redeploy.
 
-## Before launch
+## Launch checklist
 
 - [ ] Replace the redrawn monogram with the original logo artwork and confirm the exact gold (see Logo above).
 - [ ] Replace the traced business logos with each business's own vector files, if they have them, and confirm SwiftDrive's white "Drive" and Golden Hour's orange words (see Business logos above).
@@ -145,8 +144,9 @@ To launch: remove `SITE_PRELAUNCH` (or set it to `false`) in Vercel and redeploy
 - [ ] Set the three email variables and send a test enquiry from each form.
 - [ ] Add a firewall rule that limits `POST` requests (on Vercel: Firewall, rate limiting), as a second brake behind the built-in one.
 - [ ] Open all four business addresses in a signed-out browser. At the time of writing goldenhour.sg sends the public to a Vercel login, and revhub.sg and export.sg show placeholder contact details.
-- [ ] Point the domain's DNS at Vercel, set `NEXT_PUBLIC_SITE_URL` to it, redeploy, and check that `sitemap.xml` shows the live address (see Domain above).
-- [ ] When the wording is approved, remove `SITE_PRELAUNCH` and redeploy, then check that `robots.txt` names the sitemap (see Search engines above).
+- [x] Point the domain's DNS at Vercel, set `NEXT_PUBLIC_SITE_URL` to it, redeploy, and check that `sitemap.xml` shows the live address (see Domain above).
+- [x] Launch: set `SITE_PRELAUNCH` to `false` and redeploy, then check that `robots.txt` names the sitemap (see Search engines above).
+- [ ] Submit the sitemap in Google Search Console and Bing Webmaster Tools.
 
 ### Wording to approve
 

@@ -33,8 +33,8 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
   },
-  // Until the site has its own domain, nothing on it should be listed by
-  // search engines: this covers images and files, which have no page to mark.
+  // Before launch nothing on the site should be listed by search engines:
+  // this covers images and files, which have no page to mark.
   ...(isIndexable() ? [] : [{ key: "X-Robots-Tag", value: "noindex" }]),
   // The development server needs eval and a websocket for live reloading,
   // so these two are for production only.
@@ -56,7 +56,21 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // Once the site is listed, its vercel.app addresses still serve the
+      // same pages as its own domain. They stay out of search results for
+      // good, so that only the domain is listed.
+      ...(isIndexable()
+        ? [
+            {
+              source: "/:path*",
+              has: [{ type: "host" as const, value: ".*\\.vercel\\.app" }],
+              headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+            },
+          ]
+        : []),
+    ];
   },
 };
 
