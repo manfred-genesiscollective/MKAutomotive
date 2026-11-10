@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { preload } from "react-dom";
 
 import { RevealObserver } from "@/components/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
@@ -7,6 +8,8 @@ import { SiteHeader } from "@/components/site-header";
 import { site } from "@/content/site";
 import { defaultTitle } from "@/lib/metadata";
 import { getSiteUrl } from "@/lib/site-url";
+
+import forgedMetal from "@/assets/forged-metal.svg";
 
 import "./globals.css";
 
@@ -62,6 +65,11 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  // The texture that fills the headline is named only in the stylesheet, so
+  // the browser would not start fetching it until the styles had arrived,
+  // and the largest thing on the first screen would be the last to finish.
+  preload(forgedMetal.src, { as: "image", fetchPriority: "high" });
+
   return (
     <html lang="en-SG" className={`${geist.variable} ${geistMono.variable} ${saira.variable}`}>
       <body>

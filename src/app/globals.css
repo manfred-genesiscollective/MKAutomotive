@@ -684,10 +684,16 @@ textarea {
   }
 }
 
+/*
+ * The words under a headline brighten and rise. They start dim, not
+ * invisible: text that is first drawn at zero opacity is readable later
+ * than it needs to be, and browsers leave it out when they measure how fast
+ * the page showed its main content.
+ */
 @keyframes fade-in {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    opacity: 0.4;
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
