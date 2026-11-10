@@ -9,14 +9,14 @@ type Props = {
   text?: string;
   /** Buttons or links. */
   children: ReactNode;
-  surface?: "carbon" | "satin";
+  surface?: "carbon" | "glass";
 };
 
 /** The closing call to action on a page. */
 export function CtaBand({ eyebrow, title, text, children, surface = "carbon" }: Props) {
   return (
     <section
-      className={`section surface-${surface} ${surface === "carbon" ? `forged--open ${styles.ruled}` : ""}`}
+      className={`section surface-${surface} ${surface === "carbon" ? styles.ruled : ""}`}
     >
       <div className={`container ${styles.band}`} data-reveal>
         <div className={styles.copy}>

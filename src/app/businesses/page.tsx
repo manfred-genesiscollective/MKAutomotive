@@ -30,7 +30,7 @@ export default function BusinessesPage() {
       </section>
 
       <CtaBand
-        surface="satin"
+        surface="glass"
         eyebrow="Not sure where to start"
         title="Tell us what you need."
         text="Describe what you are trying to do and we will point you to the right business."

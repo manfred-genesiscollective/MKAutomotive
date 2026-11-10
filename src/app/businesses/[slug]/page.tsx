@@ -109,7 +109,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
 
   return (
     <>
-      <section className={`forged-reveal ${styles.hero}`}>
+      <section className={styles.hero}>
         <div className={`container ${styles.heroGrid}`}>
           <div className={styles.heroMain}>
             <p
@@ -181,7 +181,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
       </section>
 
       {business.promises.length > 0 ? (
-        <section className="section surface-satin">
+        <section className="section surface-glass">
           <div className="container">
             <SectionHeading size="small" title={`${business.promisesHeading}.`} />
             <div className={styles.promises}>
@@ -195,7 +195,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
       ) : null}
 
       <CtaBand
-        surface={business.promises.length > 0 ? "carbon" : "satin"}
+        surface={business.promises.length > 0 ? "carbon" : "glass"}
         eyebrow="Next step"
         title={business.cta.heading}
         text={business.cta.text}

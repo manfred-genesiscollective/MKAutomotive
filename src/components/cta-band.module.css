@@ -1,5 +1,4 @@
-/* On the forged surface the band lets more of the material show (see
-   .forged--open in globals.css). The hairline marks where it begins. */
+/* On the open carbon a hairline marks where the band begins. */
 .ruled {
   border-top: 1px solid var(--line);
 }

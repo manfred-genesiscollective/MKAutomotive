@@ -2,11 +2,10 @@
  * MK Automotive Group: global styles.
  *
  * The palette, as the owner set it:
- *   Forged Carbon  #1B1C1F  the main colour, in two finishes:
- *                           forged: the textured main surface (see "The
- *                                   forged-carbon surface" below)
- *                           satin:  smooth panels for the bands that carry
- *                                   the directory, figures and forms
+ *   Forged Carbon  #1B1C1F  the main colour, shown as the material itself:
+ *                           a forged-carbon texture under dark, smoked
+ *                           glass. See "The forged-carbon surface" and
+ *                           "The glass" below.
  *   Pearl White    #EEECE6  type, hairlines and buttons. Never a band or a
  *                           background: the site has no light sections.
  *   Rosso Corsa    #D40000  small details only: full stops, short stripes,
@@ -14,7 +13,7 @@
  *
  * Components never use the brand colours directly. They read the surface
  * variables (--bg, --ink, --line ...) so the same component works on the
- * forged surface and on a satin panel.
+ * open carbon and inside a glass panel.
  */
 
 :root {
@@ -41,6 +40,8 @@
   --veil: rgba(15, 16, 18, 0.62);
   /* Width of one repeat of the texture. Smaller means finer flakes. */
   --flake: 1000px;
+  /* The smoked tint of the glass that lies over the carbon. */
+  --glass-tint: rgba(9, 10, 13, 0.2);
 
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
   --ease-line: cubic-bezier(0.19, 0.72, 0.2, 1);
@@ -61,8 +62,8 @@
   --bg-raised: #232428;
   --bg-tint: rgba(238, 236, 230, 0.045);
   --ink: var(--pearl);
-  /* Ratios are against the brand carbon. On the forged surface, which is
-     darker, every one of them is higher. */
+  /* Ratios are against the brand carbon. Everything on the site is darker
+     than that, so every one of them is higher in practice. */
   --ink-2: #c0beba; /* 9.3:1 */
   --ink-3: #a4a3a0; /* 6.8:1 */
   --ink-4: #8a8987; /* 4.9:1: placeholders */
@@ -71,19 +72,24 @@
 }
 
 .surface-carbon,
-.surface-satin {
+.surface-glass {
   color: var(--ink);
 }
 
-/* Satin carbon: a smooth panel in the brand colour, set against the forged
-   surface around it. Used for the bands that need a calm ground: the stage
-   directory, the group figures, the forms. */
-.surface-satin {
-  --bg-raised: #25262b;
-  background: var(--carbon);
+/*
+ * A glass panel: a sheet of darker glass laid over the carbon, which stays
+ * faintly visible through it. Used for the bands that need a calm ground:
+ * the stage directory, the group figures, the forms. The top edge catches
+ * the light.
+ */
+.surface-glass {
+  --bg-raised: rgba(238, 236, 230, 0.05);
+  background:
+    linear-gradient(180deg, rgba(238, 236, 230, 0.045) 0, rgba(238, 236, 230, 0) 140px),
+    rgba(8, 9, 12, 0.5);
   box-shadow:
-    inset 0 1px 0 var(--line),
-    inset 0 -1px 0 var(--line);
+    inset 0 1px 0 rgba(238, 236, 230, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
 /* ---------- The forged-carbon surface ---------- */
@@ -92,10 +98,9 @@
  * The carbon is a material, not a colour: chopped carbon-fibre flakes, drawn
  * by scripts/forged-carbon.mjs as a seamless tile. The veil lays a deep
  * carbon tone over it, which makes the surface dark and solid and keeps text
- * easy to read. Satin panels are smooth and cover it.
+ * easy to read.
  */
 body,
-.surface-carbon,
 .forged {
   background-color: var(--carbon-deep);
   background-image:
@@ -105,53 +110,74 @@ body,
     var(--flake) var(--flake);
 }
 
-/* A closing band that lets more of the material show towards the right,
-   away from the text. */
-.forged--open {
-  background-image:
-    linear-gradient(90deg, var(--veil) 0%, var(--veil) 36%, rgba(15, 16, 18, 0.3) 100%),
-    url("../assets/forged-carbon.svg");
-}
+/* ---------- The glass ---------- */
 
 /*
- * The top of a page: the raw material shows through in the open corner
- * beside the headline and fades back into the veiled surface. The layer is
- * lined up with the page's own texture (which starts above the header), so
- * the flakes match exactly and there is no seam.
+ * Two layers fixed to the screen, between the carbon and the content, so the
+ * page scrolls underneath them the way a panel moves under showroom lights.
+ *
+ *   ::before  reflections: soft bands of light. They are blended with the
+ *             carbon, so they brighten the flakes they fall on instead of
+ *             fogging them.
+ *   ::after   the smoked tint, and a vignette that darkens towards the
+ *             edges of the screen.
  */
-.forged-reveal {
-  position: relative;
-}
-
-.forged-reveal::before {
+body::before,
+body::after {
   content: "";
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  z-index: 0;
   pointer-events: none;
-  opacity: 0.42;
-  background: url("../assets/forged-carbon.svg") 0 calc(-1 * (var(--header-height) + 1px)) /
-    var(--flake) var(--flake);
-  /* The fade: an ellipse anchored in the top right corner, no larger than
-     1300 by 760px, outside which nothing of this layer shows. */
-  -webkit-mask: radial-gradient(100% 100% at 100% 0%, #000 0%, rgba(0, 0, 0, 0.55) 32%, transparent 66%)
-    100% 0 / min(100%, 1300px) min(100%, 760px) no-repeat;
-  mask: radial-gradient(100% 100% at 100% 0%, #000 0%, rgba(0, 0, 0, 0.55) 32%, transparent 66%)
-    100% 0 / min(100%, 1300px) min(100%, 760px) no-repeat;
 }
 
-.forged-reveal > * {
+body::after {
+  background:
+    radial-gradient(130% 110% at 50% 35%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.45) 100%),
+    linear-gradient(var(--glass-tint), var(--glass-tint));
+}
+
+@supports (mix-blend-mode: overlay) {
+  body::before {
+    mix-blend-mode: overlay;
+    background:
+      linear-gradient(
+        116deg,
+        rgba(255, 255, 255, 0) 6%,
+        rgba(255, 255, 255, 0.55) 23%,
+        rgba(255, 255, 255, 0.19) 33%,
+        rgba(255, 255, 255, 0) 45%
+      ),
+      linear-gradient(
+        116deg,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0.3) 67%,
+        rgba(255, 255, 255, 0) 75%
+      ),
+      radial-gradient(90% 55% at 78% -8%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+  }
+}
+
+/* Content sits above the glass. */
+main,
+footer {
   position: relative;
+  z-index: 1;
 }
 
-@media (max-width: 900px) {
-  .forged--open {
-    background-image:
-      linear-gradient(var(--veil), var(--veil)), url("../assets/forged-carbon.svg");
+/* For people who ask their device for more contrast: no reflections, and a
+   heavier veil over the texture. */
+@media (prefers-contrast: more) {
+  :root {
+    --veil: rgba(15, 16, 18, 0.86);
   }
 
-  /* On a narrow screen the text fills the width, so the reveal stays faint. */
-  .forged-reveal::before {
-    opacity: 0.24;
+  body::before {
+    display: none;
   }
 }
 

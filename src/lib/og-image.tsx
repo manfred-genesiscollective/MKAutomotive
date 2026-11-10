@@ -77,7 +77,20 @@ export function renderOgImage({ eyebrow, lines, subtitle }: Options) {
             height: "100%",
             display: "flex",
             background:
-              "linear-gradient(90deg, rgba(15,16,18,0.74) 0%, rgba(15,16,18,0.64) 55%, rgba(15,16,18,0.36) 100%)",
+              "linear-gradient(90deg, rgba(12,13,16,0.8) 0%, rgba(12,13,16,0.7) 55%, rgba(12,13,16,0.46) 100%)",
+          }}
+        />
+        {/* One soft reflection, as on the site's glass. */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            background:
+              "linear-gradient(116deg, rgba(255,255,255,0) 38%, rgba(255,255,255,0.07) 55%, rgba(255,255,255,0) 70%)",
           }}
         />
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>

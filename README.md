@@ -65,13 +65,16 @@ Spam is limited by a hidden honeypot field and strict server-side validation. Fo
 
 The palette is defined once in `src/app/globals.css`:
 
-- **Forged Carbon `#1B1C1F`** is the main colour, in two finishes.
-  - *Forged*: the main surface. It is drawn as the material, not as a flat grey: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `node scripts/forged-carbon.mjs` redraws the texture. Two variables tune it: `--veil` (higher is darker and more solid) and `--flake` (the size of the flakes).
-  - *Satin*: smooth panels in the brand colour (`surface-satin`) for the bands that need a calm ground: the stage directory, the group figures and the forms.
+- **Forged Carbon `#1B1C1F`** is the main colour, shown as the material under dark glass.
+  - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `node scripts/forged-carbon.mjs` redraws the texture. `--veil` sets how solid it is (higher is darker) and `--flake` the size of the flakes.
+  - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
+  - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground: the stage directory, the group figures and the forms.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
 - **Rosso Corsa `#D40000`** is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text (red on carbon is about 3:1, too low for small text).
 
-Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the forged surface or on a satin panel. The typeface is Geist with Geist Mono for labels.
+Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the open carbon or inside a glass panel. The typeface is Geist with Geist Mono for labels.
+
+Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
 
 ## How it is built
 

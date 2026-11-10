@@ -3,9 +3,10 @@
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--line);
-  background: rgba(15, 16, 18, 0.88);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
+  /* Smoked glass: the carbon passes underneath, blurred. */
+  background: rgba(10, 11, 14, 0.74);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
 }
 
 .bar {

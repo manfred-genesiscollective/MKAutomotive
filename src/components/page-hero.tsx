@@ -22,7 +22,7 @@ export function PageHero({ eyebrow, title, size = "page", children, ruled = true
     size === "home" ? "display" : size === "long" ? "display display--long" : "display display--page";
 
   return (
-    <section className={`forged-reveal ${styles.hero} ${size === "home" ? styles.home : ""}`}>
+    <section className={`${styles.hero} ${size === "home" ? styles.home : ""}`}>
       <div className="container">
         {eyebrow ? (
           <p className={`eyebrow fade-in ${styles.eyebrow}`} style={{ "--delay": "0.04s" } as React.CSSProperties}>
