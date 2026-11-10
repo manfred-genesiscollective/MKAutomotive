@@ -82,7 +82,7 @@ Components read surface variables (`--bg`, `--ink`, `--line`), so any component 
 - **Saira** (ExtraBold Italic) for headings, business names and figures, and upright for navigation and buttons. **Geist** for paragraphs, **Geist Mono** for small labels.
 - **Forged-metal lettering**: page headlines, section headings, business names and the group figures are filled with the platinum finish, so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
 
-`node scripts/forged-carbon.mjs` redraws both textures from the same flakes.
+`node scripts/forged-carbon.mjs` redraws the three textures (carbon, metal, and the light and shade laid over the business logos) from the same flakes.
 
 ### Logo
 
@@ -90,7 +90,23 @@ The MK monogram is one outline, kept in `src/lib/mk-mark.ts` (used by the header
 
 The logo is platinum in the header, the menu, the footer and the share images (`src/components/logo.module.css`, `src/lib/og-image.tsx`). The browser icon is the one place it keeps the Champagne Gold of the original artwork, on a dark tile.
 
+In the header and the phone menu the monogram has the group's name beside it, "MK Automotive Group" in spaced capitals behind a hairline (`Wordmark` in `src/components/header-view.tsx`).
+
+### Business logos
+
+Each business is shown by its own logo, in its own colours: in the rows on the home page and Our businesses, as the headline of its page, in the stage directory, in the lists on Careers and Investors, in the previous and next links, and in its share image.
+
+- The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied. Two changes from those files: Golden Hour and The Car Lounge are their monograms alone, without the small words that came with them, and the "Drive" of SwiftDrive is white rather than navy, which would disappear against the carbon.
+- The forged finish (`src/components/business-logo.module.css`): the carbon's flakes are laid over each logo as light and shade (`src/assets/forged-shade.svg`), cut to its shape, and the logo is slightly see-through. The strength, the transparency and each logo's relative size are in `src/lib/business-logos.ts`, which the share images read too.
+- To use the businesses' own vector artwork instead, replace the five SVG files (keep the names). Each needs a `viewBox` and solid fills.
+
 Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
+
+### Copy protection
+
+At the group's request, text cannot be selected (highlighted) to copy, and pictures cannot be dragged off the page, saved from a long press or opened from the right-click menu (`globals.css`, "Protection", and `src/components/content-guard.tsx`). Form fields can still be selected, and links keep their right-click menu. This deters copying; it cannot prevent it, since anything shown on a screen can be captured.
+
+The ring that shows keyboard focus appears only when someone moves round the page with the keyboard, never for a click or a tap. On the header logo it is a gold underline under the name. Keyboard users need it to see where they are, so it should stay.
 
 ## How it is built
 
@@ -123,6 +139,7 @@ To launch: remove `SITE_PRELAUNCH` (or set it to `false`) in Vercel and redeploy
 ## Before launch
 
 - [ ] Replace the redrawn monogram with the original logo artwork and confirm the exact gold (see Logo above).
+- [ ] Replace the traced business logos with each business's own vector files, if they have them, and confirm SwiftDrive's white "Drive" (see Business logos above).
 - [ ] Confirm the registered company name in `src/content/site.ts` (used in the copyright line).
 - [ ] Add contact details and social links in `src/content/site.ts`.
 - [ ] Set the three email variables and send a test enquiry from each form.

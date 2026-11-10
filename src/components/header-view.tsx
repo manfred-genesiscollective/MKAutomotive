@@ -17,6 +17,16 @@ const menuItems = [{ label: "Home", href: "/" }, ...primaryNav, contactNav];
 
 const MENU_ID = "site-menu";
 
+/** The group's name, set beside the monogram. The link around it is labelled. */
+function Wordmark() {
+  return (
+    <span className={styles.wordmark}>
+      <span className={styles.wordmarkName}>MK Automotive</span>{" "}
+      <span className={styles.wordmarkGroup}>Group</span>
+    </span>
+  );
+}
+
 /*
  * Lets the menu buttons work before the page's scripts have run, and with
  * scripts off, in browsers that support command buttons. The click handlers
@@ -54,6 +64,7 @@ export function HeaderView({ pathname }: { pathname: string | null }) {
       <div className={`container ${styles.bar}`}>
         <Link href="/" className={styles.brand} aria-label={`${site.name}, home`}>
           <Logo />
+          <Wordmark />
         </Link>
 
         <nav className={styles.nav} aria-label="Main">
@@ -98,6 +109,7 @@ export function HeaderView({ pathname }: { pathname: string | null }) {
             onClick={closeMenu}
           >
             <Logo />
+            <Wordmark />
           </Link>
           <button
             type="button"

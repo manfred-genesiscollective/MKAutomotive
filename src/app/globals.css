@@ -303,10 +303,51 @@ textarea {
   color: var(--carbon);
 }
 
+/*
+ * The ring that shows where keyboard focus is. It appears only when the
+ * visitor is moving round the page with the keyboard, never for a click or
+ * a tap. The radius is in :where() so that it cannot override the shape of
+ * a component, such as a round button.
+ */
 :focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
+}
+
+:where(:focus-visible) {
   border-radius: 2px;
+}
+
+/* ---------- Protection ---------- */
+
+/*
+ * At the group's request, nothing on the site can be selected (highlighted)
+ * to copy, and pictures cannot be dragged off the page or saved from a long
+ * press. Form fields stay selectable, or they could not be filled in. The
+ * right-click menu on pictures is turned off in content-guard.tsx. All of
+ * this deters copying; it cannot prevent it.
+ */
+html {
+  /* No grey box flashing over whatever is tapped on a phone. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+svg {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
 }
 
 .skip-link {

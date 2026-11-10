@@ -24,6 +24,49 @@
   padding-block: 6px;
 }
 
+/*
+ * "MK Automotive Group" beside the monogram, behind a hairline: the name in
+ * wide-set capitals, with "Group" spaced out underneath to the same width.
+ */
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 15px;
+  padding-left: 15px;
+  border-left: 1px solid var(--line-strong);
+  font-family: var(--font-display);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.wordmarkName {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--platinum);
+}
+
+.wordmarkGroup {
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.62em;
+  color: var(--ink-3);
+}
+
+/* Keyboard focus on the logo: a gold underline under the name instead of a
+   box drawn round the logo. A click or a tap shows nothing. */
+.brand:focus-visible {
+  outline: none;
+}
+
+.brand:focus-visible .wordmarkName {
+  text-decoration: underline 2px var(--gold);
+  text-underline-offset: 7px;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -259,5 +302,9 @@
   .nav,
   .burger {
     display: none;
+  }
+
+  .wordmarkName {
+    color: var(--ink);
   }
 }
