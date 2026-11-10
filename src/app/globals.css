@@ -444,8 +444,8 @@ textarea {
     color: transparent;
     /* Italic letters lean and hang outside their box; without this room the
        fill would be cut off at the slant and at the tails. */
-    padding: 0.16em 0.14em 0.16em 0.04em;
-    margin: -0.16em -0.14em -0.16em -0.04em;
+    padding: 0.16em 0.14em 0.16em 0.08em;
+    margin: -0.16em -0.14em -0.16em -0.08em;
   }
 
   /* Selected text needs a colour of its own to stay visible. */
@@ -680,8 +680,8 @@ textarea {
   overflow: hidden;
   /* Room for tails below and for the italic slant at the sides, which would
      otherwise be cut off by the clipping that hides the line before it rises. */
-  padding: 0 0.14em 0.14em 0.04em;
-  margin: 0 -0.14em -0.14em -0.04em;
+  padding: 0 0.14em 0.14em 0.08em;
+  margin: 0 -0.14em -0.14em -0.08em;
 }
 
 .line > span {
