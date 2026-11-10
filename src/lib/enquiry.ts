@@ -12,26 +12,25 @@ import {
   partnershipOptions,
 } from "../content/forms";
 
-export const ENQUIRY_KINDS = [
-  "contact",
-  "partners",
-  "investors",
-  "careers",
-] as const;
+import {
+  ENQUIRY_KINDS,
+  FIELD_NAMES,
+  type EnquiryKind,
+  type FieldErrors,
+  type FieldName,
+  type FieldValues,
+} from "./enquiry-fields";
 
-export type EnquiryKind = (typeof ENQUIRY_KINDS)[number];
-
-export const FIELD_NAMES = [
-  "name",
-  "email",
-  "company",
-  "phone",
-  "topic",
-  "link",
-  "message",
-] as const;
-
-export type FieldName = (typeof FIELD_NAMES)[number];
+export {
+  ENQUIRY_KINDS,
+  FIELD_NAMES,
+  HONEYPOT_FIELD,
+  type EnquiryKind,
+  type EnquiryState,
+  type FieldErrors,
+  type FieldName,
+  type FieldValues,
+} from "./enquiry-fields";
 
 type FieldRule = {
   /** Label used in the email that is sent. */
@@ -172,29 +171,9 @@ export const ENQUIRY_FORMS: Record<
 
 export type Enquiry = { kind: EnquiryKind } & Partial<Record<FieldName, string>>;
 
-export type FieldErrors = Partial<Record<FieldName, string>>;
-export type FieldValues = Partial<Record<FieldName, string>>;
-
 export type ParseResult =
   | { ok: true; enquiry: Enquiry }
   | { ok: false; fieldErrors: FieldErrors; values: FieldValues };
-
-/** What the form shows after a submission. Returned by the server action. */
-export type EnquiryState =
-  | { status: "idle" }
-  | { status: "success" }
-  | {
-      status: "error";
-      message: string;
-      fieldErrors: FieldErrors;
-      values: FieldValues;
-    };
-
-/**
- * Hidden field that people never see or fill in. Automated form-fillers
- * usually do, which lets the server drop their submissions quietly.
- */
-export const HONEYPOT_FIELD = "referral_code";
 
 export function isEnquiryKind(value: unknown): value is EnquiryKind {
   return (

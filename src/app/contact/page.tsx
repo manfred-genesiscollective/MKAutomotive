@@ -2,6 +2,7 @@ import { EnquiryForm } from "@/components/enquiry-form";
 import { PageHero } from "@/components/page-hero";
 import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 import { site } from "@/content/site";
+import { enquiryFormProps } from "@/lib/enquiry-form-props";
 import { pageMetadata } from "@/lib/metadata";
 
 import styles from "./page.module.css";
@@ -99,7 +100,7 @@ export default function ContactPage() {
           </div>
 
           <div data-reveal>
-            <EnquiryForm kind="contact" />
+            <EnquiryForm {...enquiryFormProps("contact")} />
           </div>
         </div>
       </section>

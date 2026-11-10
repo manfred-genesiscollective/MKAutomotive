@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { EnquiryKind } from "@/lib/enquiry";
+import { enquiryFormProps } from "@/lib/enquiry-form-props";
 
 import { Dotted } from "./dotted";
 import { EnquiryForm } from "./enquiry-form";
@@ -32,7 +33,7 @@ export function FormSection({ kind, eyebrow, title, lead, text, children }: Prop
           {children}
         </div>
         <div data-reveal>
-          <EnquiryForm kind={kind} />
+          <EnquiryForm {...enquiryFormProps(kind)} />
         </div>
       </div>
     </section>

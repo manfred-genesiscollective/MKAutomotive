@@ -14,21 +14,17 @@ import {
 } from "react";
 
 import { submitEnquiry } from "@/app/actions";
-import { businesses } from "@/content/businesses";
+// Only from enquiry-fields: what this file imports, every visitor downloads.
 import {
-  careerInterests,
-  contactTopics,
-  partnershipOptions,
-} from "@/content/forms";
-import {
-  ENQUIRY_FORMS,
   FIELD_NAMES,
   HONEYPOT_FIELD,
+  type EnquiryFormProps,
   type EnquiryKind,
   type EnquiryState,
   type FieldName,
+  type FieldSettings,
   type FieldValues,
-} from "@/lib/enquiry";
+} from "@/lib/enquiry-fields";
 
 import styles from "./enquiry-form.module.css";
 
@@ -38,7 +34,7 @@ type FormCopy = {
   successText: string;
   /** Labels and placeholders that differ from the defaults below. */
   company?: { label: string; placeholder: string };
-  topic?: { label: string; options: string[]; control: "chips" | "select" };
+  topic?: { label: string; control: "chips" | "select" };
   message?: { placeholder: string };
 };
 
@@ -48,7 +44,7 @@ const COPY: Record<EnquiryKind, FormCopy> = {
     successTitle: "Message sent",
     successText: "Thank you for getting in touch. We will reply by email.",
     company: { label: "Company", placeholder: "Company name (optional)" },
-    topic: { label: "What is this about?", options: contactTopics, control: "chips" },
+    topic: { label: "What is this about?", control: "chips" },
     message: { placeholder: "Tell us how we can help" },
   },
   partners: {
@@ -56,7 +52,7 @@ const COPY: Record<EnquiryKind, FormCopy> = {
     successTitle: "Enquiry received",
     successText: "Thank you. We will review your enquiry and reply by email.",
     company: { label: "Company", placeholder: "Company name (optional)" },
-    topic: { label: "Partnership type", options: partnershipOptions, control: "select" },
+    topic: { label: "Partnership type", control: "select" },
     message: { placeholder: "How would you like to work together?" },
   },
   investors: {
@@ -69,7 +65,7 @@ const COPY: Record<EnquiryKind, FormCopy> = {
     submit: "Send application",
     successTitle: "Application received",
     successText: "Thank you. We will reply if there is a role.",
-    topic: { label: "Which business interests you?", options: careerInterests, control: "chips" },
+    topic: { label: "Which business interests you?", control: "chips" },
     message: { placeholder: "What you do, and what you are looking for" },
   },
 };
@@ -105,10 +101,11 @@ class RequestBoundary extends Component<
 }
 
 /**
- * One enquiry form. `kind` decides which fields are shown; the same rules in
- * src/lib/enquiry.ts are applied again on the server.
+ * One enquiry form. `kind` decides the wording; `fields`, `topics` and
+ * `preselect` come from enquiryFormProps() on the server, where the same
+ * rules are applied again to whatever is sent.
  */
-export function EnquiryForm({ kind }: { kind: EnquiryKind }) {
+export function EnquiryForm({ kind, fields, topics = [], preselect }: EnquiryFormProps) {
   // Changing the key gives a fresh form: empty after a successful send, or
   // refilled with what was typed after a request that failed.
   const [round, setRound] = useState(0);
@@ -136,18 +133,32 @@ export function EnquiryForm({ kind }: { kind: EnquiryKind }) {
 
   return (
     <RequestBoundary key={round} onFailure={recover}>
-      <Form kind={kind} startWith={startWith} onSend={remember} onStartAgain={startAgain} />
+      <Form
+        kind={kind}
+        rules={fields}
+        topics={topics}
+        preselect={preselect}
+        startWith={startWith}
+        onSend={remember}
+        onStartAgain={startAgain}
+      />
     </RequestBoundary>
   );
 }
 
 function Form({
   kind,
+  rules,
+  topics,
+  preselect,
   startWith,
   onSend,
   onStartAgain,
 }: {
   kind: EnquiryKind;
+  rules: FieldSettings;
+  topics: string[];
+  preselect?: Record<string, string>;
   startWith: EnquiryState;
   onSend: (values: FieldValues) => void;
   onStartAgain: () => void;
@@ -159,7 +170,6 @@ function Form({
   const statusRef = useRef<HTMLParagraphElement>(null);
 
   const copy = COPY[kind];
-  const rules = ENQUIRY_FORMS[kind].fields;
   const errors = state.status === "error" ? state.fieldErrors : {};
   const values = state.status === "error" ? state.values : {};
 
@@ -171,13 +181,13 @@ function Form({
       formRef.current?.querySelectorAll<HTMLInputElement>('input[name="topic"]') ?? [],
     );
     if (radios.some((input) => input.checked)) return;
-    const slug = new URLSearchParams(window.location.search).get("topic");
-    const match = businesses.find((business) => business.slug === slug);
-    if (!match) return;
+    const key = new URLSearchParams(window.location.search).get("topic");
+    const wanted = key && preselect ? preselect[key] : undefined;
+    if (!wanted) return;
     for (const input of radios) {
-      if (input.value === match.name) input.checked = true;
+      if (input.value === wanted) input.checked = true;
     }
-  }, []);
+  }, [preselect]);
 
   // Move focus to the result so it is announced and visible.
   useEffect(() => {
@@ -352,7 +362,7 @@ function Form({
         >
           <legend className={styles.label}>{copy.topic.label}</legend>
           <div className={styles.chips}>
-            {copy.topic.options.map((option, index) => (
+            {topics.map((option, index) => (
               <label key={option} className={styles.chip}>
                 <input
                   type="radio"
@@ -386,7 +396,7 @@ function Form({
             <option value="" disabled>
               Choose one
             </option>
-            {copy.topic.options.map((option) => (
+            {topics.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
