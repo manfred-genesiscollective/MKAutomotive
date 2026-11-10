@@ -1,0 +1,31 @@
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.prose section {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 640px);
+  gap: 10px 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.prose section p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+@media (max-width: 720px) {
+  .prose {
+    gap: 28px;
+  }
+
+  .prose section {
+    grid-template-columns: 1fr;
+    padding-top: 26px;
+  }
+}

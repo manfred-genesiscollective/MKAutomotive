@@ -1,0 +1,71 @@
+.sheet {
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--bg-raised);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* A small square marker: solid red when the business is live, an outline
+   while it is still being built. */
+.live,
+.pending {
+  flex: none;
+  width: 7px;
+  height: 7px;
+}
+
+.live {
+  background: var(--rosso);
+}
+
+.pending {
+  border: 1px solid var(--ink-3);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  align-items: baseline;
+  gap: 16px;
+  padding: 15px 22px;
+  border-top: 1px solid var(--line);
+}
+
+.row:first-child {
+  border-top: 0;
+}
+
+.value {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+@media (max-width: 420px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

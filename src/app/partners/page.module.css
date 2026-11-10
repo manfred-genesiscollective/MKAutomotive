@@ -1,0 +1,10 @@
+.intro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap: 24px 64px;
+  align-items: start;
+}
+
+.rows {
+  margin-top: 26px;
+}

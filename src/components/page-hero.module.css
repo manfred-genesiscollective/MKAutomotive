@@ -1,0 +1,30 @@
+.hero {
+  padding-block: clamp(56px, 6.4vw, 88px) clamp(40px, 4.4vw, 56px);
+}
+
+.home {
+  padding-block: clamp(64px, 7.4vw, 104px) clamp(44px, 5vw, 72px);
+}
+
+.eyebrow {
+  margin-bottom: 24px;
+}
+
+.body {
+  margin-top: 44px;
+}
+
+.ruled {
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 720px) {
+  .body {
+    margin-top: 32px;
+  }
+
+  .ruled {
+    padding-top: 24px;
+  }
+}
