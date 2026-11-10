@@ -246,3 +246,18 @@
     animation: none;
   }
 }
+
+/* On paper: the logo only, in the flow of the page. */
+@media print {
+  .header {
+    position: static;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .nav,
+  .burger {
+    display: none;
+  }
+}

@@ -440,6 +440,16 @@ textarea {
   }
 }
 
+/* Visitors who ask for more contrast get solid lettering. */
+@media (prefers-contrast: more) {
+  .display .line > span,
+  .h2,
+  .forged-text {
+    background: none;
+    color: var(--ink);
+  }
+}
+
 /* High-contrast modes replace backgrounds, so give the letters a solid colour. */
 @media (forced-colors: active) {
   .display .line > span,
@@ -455,7 +465,7 @@ textarea {
   .h2,
   .forged-text {
     background: none;
-    color: #000;
+    color: var(--ink);
   }
 }
 
@@ -694,8 +704,61 @@ textarea {
 
 /* Sections with data-reveal fade up as they scroll into view. Nothing in
    this stylesheet hides them: RevealObserver holds back only what is below
-   the screen, and only once it is running. On paper everything shows. */
+   the screen, and only once it is running. */
+
+/* ---------- Print ---------- */
+
+/*
+ * On paper the site is dark ink on white, whether or not the browser prints
+ * backgrounds. Components read the surface variables, so changing those
+ * here is nearly all it takes.
+ */
 @media print {
+  :root {
+    --bg: #fff;
+    --bg-raised: #fff;
+    --bg-tint: transparent;
+    --ink: #111214;
+    --ink-2: #2e2f33;
+    --ink-3: #4a4b50;
+    --ink-4: #5c5d62;
+    --line: rgba(0, 0, 0, 0.16);
+    --line-strong: rgba(0, 0, 0, 0.34);
+    /* The gold of the logo is too pale for white paper. */
+    --gold: #8f7340;
+  }
+
+  html,
+  body,
+  .forged {
+    background: #fff !important;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .surface-glass {
+    --bg-raised: #fff;
+    background: none;
+    box-shadow: none;
+  }
+
+  .button {
+    background: none !important;
+    color: var(--ink) !important;
+  }
+
+  .skip-link {
+    display: none;
+  }
+
+  .line > span,
+  .fade-in {
+    animation: none;
+  }
+
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;

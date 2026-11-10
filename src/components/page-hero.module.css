@@ -101,6 +101,13 @@
   }
 }
 
+/* More contrast asked for: nothing behind the words. */
+@media (prefers-contrast: more) and (max-width: 959px) {
+  .emblem {
+    display: none;
+  }
+}
+
 @media (max-width: 720px) {
   .body {
     margin-top: 32px;

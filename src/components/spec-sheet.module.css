@@ -64,3 +64,12 @@
     gap: 4px;
   }
 }
+
+@media print {
+  .sheet {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+}
