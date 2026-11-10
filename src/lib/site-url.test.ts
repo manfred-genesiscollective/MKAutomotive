@@ -3,7 +3,7 @@ import { afterEach, describe, it } from "node:test";
 
 import { getSiteUrl, isIndexable } from "./site-url";
 
-const KEYS = ["NEXT_PUBLIC_SITE_URL", "VERCEL_PROJECT_PRODUCTION_URL"] as const;
+const KEYS = ["NEXT_PUBLIC_SITE_URL", "VERCEL_PROJECT_PRODUCTION_URL", "SITE_PRELAUNCH"] as const;
 const saved = Object.fromEntries(KEYS.map((key) => [key, process.env[key]]));
 
 function withAddress(values: Partial<Record<(typeof KEYS)[number], string>>) {
@@ -57,6 +57,20 @@ describe("isIndexable", () => {
     withAddress({ VERCEL_PROJECT_PRODUCTION_URL: "www.example.sg" });
     assert.equal(isIndexable(), true);
     withAddress({ NEXT_PUBLIC_SITE_URL: "https://example.sg" });
+    assert.equal(isIndexable(), true);
+  });
+
+  it("holds a site back on its own domain while SITE_PRELAUNCH is set", () => {
+    withAddress({ NEXT_PUBLIC_SITE_URL: "https://www.example.sg", SITE_PRELAUNCH: "true" });
+    assert.equal(isIndexable(), false);
+    withAddress({ NEXT_PUBLIC_SITE_URL: "https://www.example.sg", SITE_PRELAUNCH: " TRUE " });
+    assert.equal(isIndexable(), false);
+  });
+
+  it("launches when SITE_PRELAUNCH is removed or set to anything else", () => {
+    withAddress({ NEXT_PUBLIC_SITE_URL: "https://www.example.sg", SITE_PRELAUNCH: "false" });
+    assert.equal(isIndexable(), true);
+    withAddress({ NEXT_PUBLIC_SITE_URL: "https://www.example.sg" });
     assert.equal(isIndexable(), true);
   });
 

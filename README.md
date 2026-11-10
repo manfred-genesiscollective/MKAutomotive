@@ -56,7 +56,8 @@ All four forms post to one server action (`src/app/actions.ts`), which validates
 | `RESEND_API_KEY` | Resend API key |
 | `ENQUIRY_FROM_EMAIL` | Sender on a domain verified in Resend, for example `MK Automotive Group <website@example.sg>` |
 | `ENQUIRY_TO_EMAIL` | Where enquiries go. Separate several addresses with commas |
-| `NEXT_PUBLIC_SITE_URL` | The live address. Not needed on Vercel, which supplies it |
+| `NEXT_PUBLIC_SITE_URL` | The address written into canonical links, the sitemap and link previews. Set in the Vercel project (see Domain below) |
+| `SITE_PRELAUNCH` | `true` keeps the site out of search engines until launch (see Search engines below) |
 
 Until the three email variables are set, nothing is delivered. In development the email is printed to the terminal instead. On a live deployment the visitor is told the message could not be sent, so no enquiry is lost silently. If a request fails outright (no connection, or a server error), the form stays on the page with what was typed and says so.
 
@@ -105,7 +106,16 @@ Set the enquiry variables (see Enquiry forms) in the project's settings on Verce
 
 ### Search engines
 
-While the site lives on a `vercel.app` address, or on a developer's machine, every page asks search engines not to list it (a `noindex` mark on each page and on every file). Nothing has to be switched: the first build after the site's own domain is connected, or after `NEXT_PUBLIC_SITE_URL` is set to it, removes the mark and adds the sitemap to `robots.txt`. The rule is `isIndexable()` in `src/lib/site-url.ts`.
+Until launch, every page asks search engines not to list it (a `noindex` mark on each page and on every file). Two things keep it that way:
+
+- The address. While the site lives on a `vercel.app` address, or on a developer's machine, it is never listable.
+- `SITE_PRELAUNCH=true`, set in the Vercel project. With it, the site stays unlisted even on its own domain, so the domain can be connected before the wording is approved.
+
+To launch: remove `SITE_PRELAUNCH` (or set it to `false`) in Vercel and redeploy. The next build drops the mark and adds the sitemap to `robots.txt`. The rule is `isIndexable()` in `src/lib/site-url.ts`.
+
+### Domain
+
+`NEXT_PUBLIC_SITE_URL` in the Vercel project is the address written into canonical links, the sitemap and link previews. It must be an address that already works: change it to the site's own domain only once that domain's DNS points at Vercel, then redeploy.
 
 ## Before launch
 
@@ -115,7 +125,8 @@ While the site lives on a `vercel.app` address, or on a developer's machine, eve
 - [ ] Set the three email variables and send a test enquiry from each form.
 - [ ] Add a firewall rule that limits `POST` requests (on Vercel: Firewall, rate limiting), as a second brake behind the built-in one.
 - [ ] Open all four business addresses in a signed-out browser. At the time of writing goldenhour.sg sends the public to a Vercel login, and revhub.sg and export.sg show placeholder contact details.
-- [ ] Connect the domain to the Vercel project, redeploy, and check that `sitemap.xml` shows the live address and that `robots.txt` now names the sitemap (see Search engines below).
+- [ ] Point the domain's DNS at Vercel, set `NEXT_PUBLIC_SITE_URL` to it, redeploy, and check that `sitemap.xml` shows the live address (see Domain above).
+- [ ] When the wording is approved, remove `SITE_PRELAUNCH` and redeploy, then check that `robots.txt` names the sitemap (see Search engines above).
 
 ### Wording to approve
 

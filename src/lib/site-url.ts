@@ -36,12 +36,16 @@ export function getSiteUrl(): string {
  * Whether search engines may list the site.
  *
  * Not while it lives on an address Vercel gave it (something.vercel.app) or
- * on a developer's machine: only once it has a domain of its own. A site
- * that is still being reviewed therefore stays out of search results, and
- * becomes listable by itself the first time it is built after its own
- * domain is connected. Nobody has to remember a switch.
+ * on a developer's machine: only once it has a domain of its own. Without
+ * anyone remembering a switch, a site that has no real address yet stays
+ * out of search results.
+ *
+ * SITE_PRELAUNCH=true holds it back for longer: with that set, the site
+ * stays unlisted even on its own domain. Use it while the wording is still
+ * being approved, and remove it to launch.
  */
 export function isIndexable(): boolean {
+  if (process.env.SITE_PRELAUNCH?.trim().toLowerCase() === "true") return false;
   try {
     const { hostname } = new URL(getSiteUrl());
     return hostname !== "localhost" && !hostname.endsWith(".vercel.app");
