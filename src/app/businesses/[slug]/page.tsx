@@ -181,7 +181,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
       </section>
 
       {business.promises.length > 0 ? (
-        <section className="section surface-pearl">
+        <section className="section surface-satin">
           <div className="container">
             <SectionHeading size="small" title={`${business.promisesHeading}.`} />
             <div className={styles.promises}>
@@ -195,7 +195,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
       ) : null}
 
       <CtaBand
-        surface={business.promises.length > 0 ? "carbon" : "pearl"}
+        surface={business.promises.length > 0 ? "carbon" : "satin"}
         eyebrow="Next step"
         title={business.cta.heading}
         text={business.cta.text}

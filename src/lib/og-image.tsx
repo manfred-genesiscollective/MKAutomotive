@@ -7,7 +7,7 @@ import { businesses } from "@/content/businesses";
 
 /**
  * The image shown when a page is shared on social media or in a chat app.
- * Drawn in code so it always matches the site: carbon, pearl and one red dot.
+ * Drawn in code so it always matches the site: forged carbon, pearl type and one red dot.
  */
 
 export const ogSize = { width: 1200, height: 630 };
@@ -77,7 +77,7 @@ export function renderOgImage({ eyebrow, lines, subtitle }: Options) {
             height: "100%",
             display: "flex",
             background:
-              "linear-gradient(90deg, rgba(27,28,31,0.62) 0%, rgba(27,28,31,0.5) 55%, rgba(27,28,31,0.12) 100%)",
+              "linear-gradient(90deg, rgba(15,16,18,0.74) 0%, rgba(15,16,18,0.64) 55%, rgba(15,16,18,0.36) 100%)",
           }}
         />
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>

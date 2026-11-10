@@ -17,10 +17,10 @@ type Props = {
   children?: ReactNode;
 };
 
-/** The pearl band that holds an enquiry form, with its introduction beside it. */
+/** The satin band that holds an enquiry form, with its introduction beside it. */
 export function FormSection({ kind, eyebrow, title, lead, text, children }: Props) {
   return (
-    <section className="section surface-pearl">
+    <section className="section surface-satin">
       <div className={`container ${styles.grid}`}>
         <div className={styles.copy} data-reveal>
           <p className="eyebrow">{eyebrow}</p>

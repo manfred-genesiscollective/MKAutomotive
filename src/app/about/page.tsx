@@ -29,7 +29,7 @@ export default function AboutPage() {
         </p>
       </PageHero>
 
-      <section className="section surface-pearl">
+      <section className="section surface-satin">
         <div className={`container ${styles.statement}`} data-reveal>
           <p>
             A car in Singapore is rented, upgraded, serviced, sometimes rescued and, when its ten

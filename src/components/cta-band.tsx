@@ -9,7 +9,7 @@ type Props = {
   text?: string;
   /** Buttons or links. */
   children: ReactNode;
-  surface?: "carbon" | "pearl";
+  surface?: "carbon" | "satin";
 };
 
 /** The closing call to action on a page. */

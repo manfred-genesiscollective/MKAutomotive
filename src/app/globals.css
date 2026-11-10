@@ -1,22 +1,29 @@
 /*
  * MK Automotive Group: global styles.
  *
- * Colour follows a 60 / 30 / 10 rule:
- *   60%  Forged Carbon   the main surface: a real forged-carbon texture, not
- *                        a flat grey (see "The forged-carbon surface" below)
- *   30%  Pearl White     type on carbon, and flat light bands
- *   10%  Rosso Corsa     small details only: full stops, short stripes, tiny
- *                        markers. Never a background, a button fill or text.
+ * The palette, as the owner set it:
+ *   Forged Carbon  #1B1C1F  the main colour, in two finishes:
+ *                           forged: the textured main surface (see "The
+ *                                   forged-carbon surface" below)
+ *                           satin:  smooth panels for the bands that carry
+ *                                   the directory, figures and forms
+ *   Pearl White    #EEECE6  type, hairlines and buttons. Never a band or a
+ *                           background: the site has no light sections.
+ *   Rosso Corsa    #D40000  small details only: full stops, short stripes,
+ *                           tiny markers. Never a fill, a block or text.
  *
- * Components never use the three brand colours directly. They read the
- * surface variables (--bg, --ink, --line ...) so the same component works on
- * a carbon section and on a pearl one.
+ * Components never use the brand colours directly. They read the surface
+ * variables (--bg, --ink, --line ...) so the same component works on the
+ * forged surface and on a satin panel.
  */
 
 :root {
   --carbon: #1b1c1f;
   --pearl: #eeece6;
   --rosso: #d40000;
+  /* The tone laid over the forged-carbon texture: deeper than the brand
+     carbon, so the surface reads as dark, solid carbon rather than grey. */
+  --carbon-deep: #0f1012;
 
   --font-sans:
     var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
@@ -29,9 +36,9 @@
   --gutter: 40px;
   --header-height: 68px;
 
-  /* How much the flat brand colour is laid over the texture where there is
-     text: 0 shows the raw material, 1 hides it completely. */
-  --veil: rgba(27, 28, 31, 0.46);
+  /* How much of the deep carbon tone is laid over the texture: 0 shows the
+     raw material, 1 hides it completely. Higher is darker and more solid. */
+  --veil: rgba(15, 16, 18, 0.62);
   /* Width of one repeat of the texture. Smaller means finer flakes. */
   --flake: 1000px;
 
@@ -48,56 +55,49 @@
 
 /* ---------- Surfaces ---------- */
 
-:root,
-.surface-carbon {
+:root {
   color-scheme: dark;
   --bg: var(--carbon);
   --bg-raised: #232428;
   --bg-tint: rgba(238, 236, 230, 0.045);
   --ink: var(--pearl);
-  /* Ratios are against the flat brand colour; the second figure is the worst
-     case measured over the lightest flakes of the texture. */
-  --ink-2: #c0beba; /* 9.3:1, never below 7:1 */
-  --ink-3: #a4a3a0; /* 6.8:1, never below 5:1 */
-  --ink-4: #858482; /* 4.6:1 on flat carbon only: do not use on the texture */
+  /* Ratios are against the brand carbon. On the forged surface, which is
+     darker, every one of them is higher. */
+  --ink-2: #c0beba; /* 9.3:1 */
+  --ink-3: #a4a3a0; /* 6.8:1 */
+  --ink-4: #8a8987; /* 4.9:1: placeholders */
   --line: rgba(238, 236, 230, 0.11);
   --line-strong: rgba(238, 236, 230, 0.24);
 }
 
-.surface-pearl {
-  color-scheme: light;
-  --bg: var(--pearl);
-  --bg-raised: #f7f6f2;
-  --bg-tint: rgba(27, 28, 31, 0.05);
-  --ink: var(--carbon);
-  --ink-2: #454647; /* 8.1:1 on pearl */
-  --ink-3: #5a5a5b; /* 5.8:1 */
-  --ink-4: #6a6a6b; /* 4.6:1 */
-  --line: rgba(27, 28, 31, 0.14);
-  --line-strong: rgba(27, 28, 31, 0.3);
-}
-
 .surface-carbon,
-.surface-pearl {
+.surface-satin {
   color: var(--ink);
 }
 
-.surface-pearl {
-  background: var(--bg);
+/* Satin carbon: a smooth panel in the brand colour, set against the forged
+   surface around it. Used for the bands that need a calm ground: the stage
+   directory, the group figures, the forms. */
+.surface-satin {
+  --bg-raised: #25262b;
+  background: var(--carbon);
+  box-shadow:
+    inset 0 1px 0 var(--line),
+    inset 0 -1px 0 var(--line);
 }
 
 /* ---------- The forged-carbon surface ---------- */
 
 /*
  * The carbon is a material, not a colour: chopped carbon-fibre flakes, drawn
- * by scripts/forged-carbon.mjs as a seamless tile in tints that average back
- * to #1B1C1F. The veil lays the flat brand colour over it so text stays easy
- * to read; pearl surfaces are flat and cover it.
+ * by scripts/forged-carbon.mjs as a seamless tile. The veil lays a deep
+ * carbon tone over it, which makes the surface dark and solid and keeps text
+ * easy to read. Satin panels are smooth and cover it.
  */
 body,
 .surface-carbon,
 .forged {
-  background-color: var(--carbon);
+  background-color: var(--carbon-deep);
   background-image:
     linear-gradient(var(--veil), var(--veil)), url("../assets/forged-carbon.svg");
   background-size:
@@ -109,7 +109,7 @@ body,
    away from the text. */
 .forged--open {
   background-image:
-    linear-gradient(90deg, var(--veil) 0%, var(--veil) 36%, rgba(27, 28, 31, 0.06) 100%),
+    linear-gradient(90deg, var(--veil) 0%, var(--veil) 36%, rgba(15, 16, 18, 0.3) 100%),
     url("../assets/forged-carbon.svg");
 }
 
@@ -128,6 +128,7 @@ body,
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: 0.42;
   background: url("../assets/forged-carbon.svg") 0 calc(-1 * (var(--header-height) + 1px)) /
     var(--flake) var(--flake);
   /* The fade: an ellipse anchored in the top right corner, no larger than
@@ -150,7 +151,7 @@ body,
 
   /* On a narrow screen the text fills the width, so the reveal stays faint. */
   .forged-reveal::before {
-    opacity: 0.45;
+    opacity: 0.24;
   }
 }
 
@@ -163,7 +164,7 @@ body,
 }
 
 html {
-  background: var(--carbon);
+  background: var(--carbon-deep);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-height) + 24px);

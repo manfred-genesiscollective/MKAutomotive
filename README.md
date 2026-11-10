@@ -63,13 +63,15 @@ Spam is limited by a hidden honeypot field and strict server-side validation. Fo
 
 ## Design rules
 
-Colour follows a 60 / 30 / 10 scheme, defined once in `src/app/globals.css`:
+The palette is defined once in `src/app/globals.css`:
 
-- **Forged Carbon `#1B1C1F`**: the main surface. It is drawn as the material, not as a flat grey: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) in tints that average back to `#1B1C1F`. `node scripts/forged-carbon.mjs` redraws it. Two variables in `globals.css` tune it: `--veil` (how much flat colour sits over the texture; raise it for a calmer surface) and `--flake` (the size of the flakes).
-- **Pearl White `#EEECE6`**: type on carbon, and flat light bands.
-- **Rosso Corsa `#D40000`**: small details only. The headline full stop, short stripes, stage markers. Never a background, a button fill or body text (red on carbon is about 3:1, too low for small text).
+- **Forged Carbon `#1B1C1F`** is the main colour, in two finishes.
+  - *Forged*: the main surface. It is drawn as the material, not as a flat grey: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `node scripts/forged-carbon.mjs` redraws the texture. Two variables tune it: `--veil` (higher is darker and more solid) and `--flake` (the size of the flakes).
+  - *Satin*: smooth panels in the brand colour (`surface-satin`) for the bands that need a calm ground: the stage directory, the group figures and the forms.
+- **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
+- **Rosso Corsa `#D40000`** is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text (red on carbon is about 3:1, too low for small text).
 
-Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on a carbon section or inside a `surface-pearl` one. The typeface is Geist with Geist Mono for labels.
+Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the forged surface or on a satin panel. The typeface is Geist with Geist Mono for labels.
 
 ## How it is built
 

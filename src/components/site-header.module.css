@@ -3,7 +3,7 @@
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--line);
-  background: rgba(27, 28, 31, 0.86);
+  background: rgba(15, 16, 18, 0.88);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
 }
@@ -139,7 +139,7 @@
 }
 
 .menu::backdrop {
-  background: var(--carbon);
+  background: var(--carbon-deep);
 }
 
 .menu[open] {

@@ -50,7 +50,7 @@ export default function HomePage() {
         </p>
       </PageHero>
 
-      <section className={`surface-pearl ${styles.rail}`}>
+      <section className={`surface-satin ${styles.rail}`}>
         <div className="container fade-in" style={{ "--delay": "0.7s" } as React.CSSProperties}>
           <LifecycleRail scale />
         </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section surface-pearl" id="habits">
+      <section className="section surface-satin" id="habits">
         <div className="container">
           <StatRow items={groupFacts} />
           <div className={styles.habits}>

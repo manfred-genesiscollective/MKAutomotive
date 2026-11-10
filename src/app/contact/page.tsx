@@ -20,7 +20,7 @@ export default function ContactPage() {
     <>
       <PageHero eyebrow="Contact" title={["Let’s talk."]} />
 
-      <section className="section surface-pearl">
+      <section className="section surface-satin">
         <div className={`container ${styles.grid}`}>
           <div className={styles.aside} data-reveal>
             <p className={styles.lead}>
