@@ -10,14 +10,16 @@ import { MK_MARK } from "./mk-mark";
 
 /**
  * The image shown when a page is shared on social media or in a chat app.
- * Drawn in code so it always matches the site: forged carbon, forged-metal
- * lettering, the gold monogram and one gold dot.
+ * Drawn in code so it always matches the site: near-black forged carbon,
+ * forged-metal lettering, the platinum monogram and one gold dot.
  */
 
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
-const CARBON = "#1b1c1f";
+/* The deep tone laid over the carbon: --carbon-deep and --veil on the site. */
+const CARBON_DEEP = "#08090b";
+const VEIL = "5,6,8";
 const PEARL = "#eeece6";
 const GOLD = "#bd9c66";
 const MUTED = "#9a9996";
@@ -37,14 +39,30 @@ const svgUrl = (svg: string | Buffer) =>
 const carbonUrl = svgUrl(carbon);
 const metalUrl = svgUrl(metal);
 
-/** The monogram cut from forged metal: the texture, clipped to the mark. */
-const emblemUrl = svgUrl(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MK_MARK.viewBox}">` +
-    `<defs><clipPath id="mark"><path clip-rule="evenodd" d="${MK_MARK.path}"/></clipPath></defs>` +
-    `<g clip-path="url(#mark)"><g transform="translate(-150 -90) scale(0.94)">` +
-    metal.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "") +
-    `</g></g></svg>`,
-);
+const flakes = metal.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+
+/**
+ * The monogram cut from forged metal: the texture, clipped to the mark.
+ * `shift` and `scale` place the texture and set the size of its flakes.
+ * `wash` lays a pale tone over them (0 to 1), for a mark too small to carry
+ * the full texture.
+ */
+function forgedMark(shift: string, scale: number, wash = 0): string {
+  return svgUrl(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MK_MARK.viewBox}">` +
+      `<defs><clipPath id="mark"><path clip-rule="evenodd" d="${MK_MARK.path}"/></clipPath></defs>` +
+      `<g clip-path="url(#mark)"><g transform="translate(${shift}) scale(${scale})">${flakes}</g>` +
+      (wash
+        ? `<rect width="${MK_MARK.width}" height="${MK_MARK.height}" fill="#e9e8e4" fill-opacity="${wash}"/>`
+        : "") +
+      `</g></svg>`,
+  );
+}
+
+/** The large emblem beside the home headline. */
+const emblemUrl = forgedMark("-150 -90", 0.94);
+/** The small logo in the corner: platinum, as in the site's header. */
+const logoUrl = forgedMark("-745 -951", 3.12, 0.45);
 
 type Options = {
   /** Small label above the headline, for example "01 · Drive". */
@@ -91,13 +109,13 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Opti
           justifyContent: "space-between",
           position: "relative",
           padding: "60px 72px",
-          background: CARBON,
+          background: CARBON_DEEP,
           color: PEARL,
           fontFamily: "Geist",
         }}
       >
-        {/* The forged-carbon surface, with the brand colour laid over it
-            more heavily on the left, where the words are. */}
+        {/* The forged-carbon surface, with the deep tone laid over it more
+            heavily on the left, where the words are. */}
         {/* eslint-disable-next-line @next/next/no-img-element -- drawn into an image, not a page */}
         <img
           src={carbonUrl}
@@ -115,7 +133,7 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Opti
             height: "100%",
             display: "flex",
             background:
-              "linear-gradient(90deg, rgba(12,13,16,0.8) 0%, rgba(12,13,16,0.7) 55%, rgba(12,13,16,0.5) 100%)",
+              `linear-gradient(90deg, rgba(${VEIL},0.86) 0%, rgba(${VEIL},0.79) 55%, rgba(${VEIL},0.64) 100%)`,
           }}
         />
         {/* One soft reflection, as on the site's glass. */}
@@ -143,9 +161,8 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Opti
           />
         ) : null}
 
-        <svg width="55" height="64" viewBox={MK_MARK.viewBox}>
-          <path d={MK_MARK.path} fill={GOLD} fillRule="evenodd" />
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element -- drawn into an image, not a page */}
+        <img src={logoUrl} alt="" width={55} height={64} />
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           {eyebrow ? (

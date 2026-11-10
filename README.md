@@ -67,25 +67,28 @@ Spam is limited in three ways: a hidden honeypot field, strict server-side valid
 
 The palette is defined once in `src/app/globals.css`:
 
-- **Forged Carbon `#1B1C1F`** is the main colour, shown as the material under dark glass.
-  - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `--veil` sets how solid it is (higher is darker) and `--flake` the size of the flakes.
+- **Forged Carbon `#1B1C1F`** is the main colour, shown as the material under dark glass. On screen it is kept close to black, so that the platinum and Pearl White on it stand out.
+  - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `--carbon-deep` is that tone and `--veil` sets how much of it covers the flakes (higher is darker): change these two to lighten or darken the whole site. `--flake` sets the size of the flakes.
   - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
   - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground: the stage directory, the group figures and the forms.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
-- **Champagne Gold `#BD9C66`** (`--gold`) is the colour of the logo, and is for small details only: the logo, the headline full stop, short stripes, stage markers. Never a background, a button fill or body text.
+- **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text.
+- **Platinum** is a finish, not a flat colour: a light version of the flake texture (`src/assets/forged-metal.svg`), so a shape looks cut from polished forged metal. The logo, the emblem beside the home headline and the large headings are made of it. `--platinum` (`#E5E4E2`) is the flat colour used where the texture cannot be shown, such as in print.
 
 Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the open carbon or inside a glass panel.
 
 ### Type
 
 - **Saira** (ExtraBold Italic) for headings, business names and figures, and upright for navigation and buttons. **Geist** for paragraphs, **Geist Mono** for small labels.
-- **Forged-metal lettering**: page headlines, section headings, business names and the group figures are filled with a light version of the flake texture (`src/assets/forged-metal.svg`), so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
+- **Forged-metal lettering**: page headlines, section headings, business names and the group figures are filled with the platinum finish, so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
 
 `node scripts/forged-carbon.mjs` redraws both textures from the same flakes.
 
 ### Logo
 
-The MK monogram is one outline, kept in `src/lib/mk-mark.ts` (used by the header, footer, menu and share images), `src/assets/mk-mark.svg` (the forged emblem beside the home headline) and `src/app/icon.svg` (the browser icon). To replace it with the original artwork, change the path in those three places. `apple-icon.png` and `favicon.ico` are pictures of `icon.svg` and need exporting again if it changes.
+The MK monogram is one outline, kept in `src/lib/mk-mark.ts` (used by the header, footer, menu and share images), `src/assets/mk-mark.svg` (the shape the platinum finish is cut to, for the logo and for the emblem beside the home headline) and `src/app/icon.svg` (the browser icon). To replace it with the original artwork, change the path in those three places. `apple-icon.png` and `favicon.ico` are pictures of `icon.svg` and need exporting again if it changes.
+
+The logo is platinum in the header, the menu, the footer and the share images (`src/components/logo.module.css`, `src/lib/og-image.tsx`). The browser icon is the one place it keeps the Champagne Gold of the original artwork, on a dark tile.
 
 Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
 

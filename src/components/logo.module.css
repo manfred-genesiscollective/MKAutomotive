@@ -1,15 +1,62 @@
+/*
+ * The MK monogram in platinum: the same forged metal as the emblem and the
+ * large headings, with a pale wash over it so the mark stays crisp at this
+ * size. The texture shows through the shape of the mark.
+ *
+ * The font size is the height of the mark, so everything else can be set
+ * in em and the two sizes stay in proportion.
+ */
 .logo {
+  position: relative;
   display: inline-flex;
-  color: var(--gold);
+  font-size: 36px;
   line-height: 1;
+  /* The flat colour of the drawn mark: what is shown wherever the texture
+     cannot be (no masking, forced colours, print). */
+  color: var(--platinum);
+}
+
+.large {
+  font-size: 52px;
 }
 
 .mark {
   flex: none;
-  height: 36px;
+  height: 1em;
   width: auto;
 }
 
-.large .mark {
-  height: 52px;
+@supports ((-webkit-mask-image: none) or (mask-image: none)) {
+  .logo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(233, 232, 228, 0.45), rgba(233, 232, 228, 0.45)),
+      #d9d8d3 url("../assets/forged-metal.svg") 30% 40% / 4.2em 4.2em;
+    -webkit-mask: url("../assets/mk-mark.svg") center / contain no-repeat;
+    mask: url("../assets/mk-mark.svg") center / contain no-repeat;
+  }
+
+  /* Still takes up its space: the texture above is what is seen. */
+  .mark {
+    visibility: hidden;
+  }
+}
+
+/* Where backgrounds are dropped, fall back to the drawn mark. */
+@media (forced-colors: active), print {
+  .logo::after {
+    display: none;
+  }
+
+  .mark {
+    visibility: visible;
+  }
+}
+
+@media print {
+  .logo {
+    color: var(--ink);
+  }
 }

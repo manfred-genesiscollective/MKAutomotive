@@ -8,10 +8,14 @@
  *                            "The glass" below.
  *   Pearl White     #EEECE6  type, hairlines and buttons. Never a band or a
  *                            background: the site has no light sections.
- *   Champagne Gold  #BD9C66  the colour of the logo. Small details only:
- *                            the logo, full stops, short stripes, tiny
- *                            markers, selected text. Never a band, a panel
- *                            or a button.
+ *   Champagne Gold  #BD9C66  small details only: full stops, short
+ *                            stripes, tiny markers, selected text. Never a
+ *                            band, a panel or a button.
+ *   Platinum                 not a flat colour but a finish: the carbon's
+ *                            own flakes in polished metal. The logo, the
+ *                            emblem and the large headings are made of it.
+ *                            These are the parts meant to stand out, so the
+ *                            carbon behind them is kept very dark.
  *
  * Type: Saira (ExtraBold Italic for headings, as on export.sg) with a plain
  * face for paragraphs and a mono face for small labels. Large headings are
@@ -27,9 +31,12 @@
   --carbon: #1b1c1f;
   --pearl: #eeece6;
   --gold: #bd9c66;
-  /* The tone laid over the forged-carbon texture: deeper than the brand
-     carbon, so the surface reads as dark, solid carbon rather than grey. */
-  --carbon-deep: #0f1012;
+  /* Platinum where it has to be one flat colour (see logo.module.css). */
+  --platinum: #e5e4e2;
+  /* The tone laid over the forged-carbon texture: far deeper than the brand
+     carbon, so the surface is close to black and the platinum and pearl on
+     it stand out. The flakes still show through. */
+  --carbon-deep: #08090b;
 
   /* Headings, names, figures, navigation and buttons. */
   --font-display:
@@ -47,12 +54,13 @@
   --header-height: 68px;
 
   /* How much of the deep carbon tone is laid over the texture: 0 shows the
-     raw material, 1 hides it completely. Higher is darker and more solid. */
-  --veil: rgba(15, 16, 18, 0.62);
+     raw material, 1 hides it completely. Higher is darker and more solid.
+     To lighten or darken the whole site, change this and --carbon-deep. */
+  --veil: rgba(5, 6, 8, 0.7);
   /* Width of one repeat of the texture. Smaller means finer flakes. */
   --flake: 1000px;
   /* The smoked tint of the glass that lies over the carbon. */
-  --glass-tint: rgba(9, 10, 13, 0.2);
+  --glass-tint: rgba(5, 6, 8, 0.28);
 
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
   --ease-line: cubic-bezier(0.19, 0.72, 0.2, 1);
@@ -97,7 +105,7 @@
   --bg-raised: rgba(238, 236, 230, 0.05);
   background:
     linear-gradient(180deg, rgba(238, 236, 230, 0.045) 0, rgba(238, 236, 230, 0) 140px),
-    rgba(8, 9, 12, 0.5);
+    rgba(4, 5, 7, 0.44);
   box-shadow:
     inset 0 1px 0 rgba(238, 236, 230, 0.18),
     inset 0 -1px 0 rgba(0, 0, 0, 0.6);
@@ -117,6 +125,18 @@ body,
   background-image:
     linear-gradient(var(--veil), var(--veil)), url("../assets/forged-carbon.svg");
   background-size:
+    auto,
+    var(--flake) var(--flake);
+}
+
+/* A surface that covers the page (the phone menu) is not under the page's
+   glass, so it carries the smoked tint itself and is as dark as the page. */
+.forged {
+  background-image:
+    linear-gradient(var(--glass-tint), var(--glass-tint)),
+    linear-gradient(var(--veil), var(--veil)), url("../assets/forged-carbon.svg");
+  background-size:
+    auto,
     auto,
     var(--flake) var(--flake);
 }
@@ -159,17 +179,17 @@ body::after {
       linear-gradient(
         116deg,
         rgba(255, 255, 255, 0) 6%,
-        rgba(255, 255, 255, 0.55) 23%,
-        rgba(255, 255, 255, 0.19) 33%,
+        rgba(255, 255, 255, 0.4) 23%,
+        rgba(255, 255, 255, 0.14) 33%,
         rgba(255, 255, 255, 0) 45%
       ),
       linear-gradient(
         116deg,
         rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0.3) 67%,
+        rgba(255, 255, 255, 0.22) 67%,
         rgba(255, 255, 255, 0) 75%
       ),
-      radial-gradient(90% 55% at 78% -8%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+      radial-gradient(90% 55% at 78% -8%, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0) 70%);
   }
 }
 
@@ -184,7 +204,7 @@ footer {
    heavier veil over the texture. */
 @media (prefers-contrast: more) {
   :root {
-    --veil: rgba(15, 16, 18, 0.86);
+    --veil: rgba(5, 6, 8, 0.9);
   }
 
   body::before {
@@ -750,7 +770,7 @@ textarea {
     --ink-4: #5c5d62;
     --line: rgba(0, 0, 0, 0.16);
     --line-strong: rgba(0, 0, 0, 0.34);
-    /* The gold of the logo is too pale for white paper. */
+    /* Champagne gold is too pale for white paper. */
     --gold: #8f7340;
   }
 
