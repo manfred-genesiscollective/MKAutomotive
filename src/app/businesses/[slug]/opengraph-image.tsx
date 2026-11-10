@@ -19,6 +19,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   return renderOgImage({
     eyebrow: `${business.stage.number} · ${business.stage.label}${business.status === "live" ? "" : ` · ${IN_DEVELOPMENT}`}`,
     lines: [business.name],
+    logo: business.slug,
     subtitle: business.tagline,
   });
 }

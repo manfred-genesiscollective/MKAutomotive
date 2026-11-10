@@ -28,6 +28,12 @@
   flex: 1 1 280px;
 }
 
+/* A logo in place of the title: it sits on the line the number is set on. */
+.logoTitle {
+  align-self: center;
+  line-height: 0;
+}
+
 .text {
   flex: 2 1 380px;
   display: flex;

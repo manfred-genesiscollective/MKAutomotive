@@ -6,6 +6,7 @@ import { ImageResponse } from "next/og";
 import { businesses } from "@/content/businesses";
 import { site } from "@/content/site";
 
+import { LOGO_FLAKE_TILE, LOGO_OPACITY, LOGO_SHADE, LOGO_STYLE } from "./business-logos";
 import { MK_MARK } from "./mk-mark";
 
 /**
@@ -25,13 +26,22 @@ const GOLD = "#bd9c66";
 const MUTED = "#9a9996";
 
 const assets = join(process.cwd(), "src/assets");
-const [display, medium, mono, carbon, metal] = await Promise.all([
+const [display, medium, mono, carbon, metal, shade, ...logoFiles] = await Promise.all([
   readFile(join(assets, "fonts/Saira-ExtraBoldItalic.woff")),
   readFile(join(assets, "fonts/Geist-Medium.ttf")),
   readFile(join(assets, "fonts/GeistMono-Regular.ttf")),
   readFile(join(assets, "forged-carbon.svg")),
   readFile(join(assets, "forged-metal.svg"), "utf8"),
+  readFile(join(assets, "forged-shade.svg"), "utf8"),
+  // Named one by one, so that every file is bundled with the server code.
+  readFile(join(assets, "logos/swiftdrive.svg"), "utf8"),
+  readFile(join(assets, "logos/revhub.svg"), "utf8"),
+  readFile(join(assets, "logos/the-car-lounge.svg"), "utf8"),
+  readFile(join(assets, "logos/golden-hour.svg"), "utf8"),
+  readFile(join(assets, "logos/export-sg.svg"), "utf8"),
 ]);
+const LOGO_SLUGS = ["swiftdrive", "revhub", "the-car-lounge", "golden-hour", "export-sg"];
+const logoArtwork = new Map(LOGO_SLUGS.map((slug, index) => [slug, logoFiles[index]]));
 
 const svgUrl = (svg: string | Buffer) =>
   `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
@@ -39,7 +49,10 @@ const svgUrl = (svg: string | Buffer) =>
 const carbonUrl = svgUrl(carbon);
 const metalUrl = svgUrl(metal);
 
-const flakes = metal.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+/** What is inside an SVG file's outer element. */
+const contents = (svg: string) => svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+
+const flakes = contents(metal);
 
 /**
  * The monogram cut from forged metal: the texture, clipped to the mark.
@@ -59,6 +72,36 @@ function forgedMark(shift: string, scale: number, wash = 0): string {
   );
 }
 
+/**
+ * A business logo as one picture, finished as on the site
+ * (business-logo.module.css): its own colours, the flakes laid over them as
+ * light and shade, and the whole slightly see-through. The share image is
+ * drawn without CSS masks, so the flakes are cut to the logo with a clip.
+ */
+function forgedBusinessLogo(slug: string) {
+  const artwork = logoArtwork.get(slug);
+  const style = LOGO_STYLE[slug];
+  if (!artwork || !style) return null;
+  const [, width, height] = artwork.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/) ?? [];
+  const w = Number(width);
+  const h = Number(height);
+  // The flakes repeat at the same size, relative to the logo, as on the site.
+  const tile = (LOGO_FLAKE_TILE * h) / style.scale;
+  const shapes = [...artwork.matchAll(/<path[^>]*\sd="([^"]+)"/g)]
+    .map((match) => `<path clip-rule="evenodd" d="${match[1]}"/>`)
+    .join("");
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">` +
+    `<defs><clipPath id="shape">${shapes}</clipPath>` +
+    `<pattern id="flakes" patternUnits="userSpaceOnUse" width="${tile}" height="${tile}" ` +
+    `x="${(-style.flakes[0] / 100) * tile}" y="${(-style.flakes[1] / 100) * tile}">` +
+    `<g transform="scale(${tile / 1000})">${contents(shade)}</g></pattern></defs>` +
+    `<g opacity="${LOGO_OPACITY}">${contents(artwork)}` +
+    `<rect width="${w}" height="${h}" fill="url(#flakes)" clip-path="url(#shape)" opacity="${LOGO_SHADE}"/></g>` +
+    `</svg>`;
+  return { src: svgUrl(svg), width: w, height: h, scale: style.scale };
+}
+
 /** The large emblem beside the home headline. */
 const emblemUrl = forgedMark("-150 -90", 0.94);
 /** The small logo in the corner: platinum, as in the site's header. */
@@ -73,6 +116,8 @@ type Options = {
   subtitle?: string;
   /** Show the forged monogram on the right. Needs a short headline. */
   emblem?: boolean;
+  /** A business's slug: its logo is drawn in place of the headline. */
+  logo?: string;
 };
 
 /**
@@ -92,7 +137,13 @@ function emWidth(line: string): number {
   return width;
 }
 
-export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Options) {
+export function renderOgImage({ eyebrow, lines, subtitle, emblem = false, logo }: Options) {
+  const businessLogo = logo ? forgedBusinessLogo(logo) : null;
+  // A wordmark 118 high; the monograms taller by their scale; never wider than the room.
+  const logoHeight = businessLogo
+    ? Math.round(Math.min(118 * businessLogo.scale, (940 * businessLogo.height) / businessLogo.width))
+    : 0;
+
   // Keep the headline on one line inside the width that is free: all of it,
   // or what the emblem leaves.
   const room = emblem ? 720 : 1040;
@@ -183,7 +234,17 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Opti
               {eyebrow}
             </div>
           ) : null}
-          {lines.map((line, index) => {
+          {businessLogo ? (
+            // eslint-disable-next-line @next/next/no-img-element -- drawn into an image, not a page
+            <img
+              src={businessLogo.src}
+              alt=""
+              width={Math.round((logoHeight * businessLogo.width) / businessLogo.height)}
+              height={logoHeight}
+              style={{ marginTop: 6, marginBottom: 10 }}
+            />
+          ) : null}
+          {(businessLogo ? [] : lines).map((line, index) => {
             const dotted = index === lines.length - 1 && line.endsWith(".");
             return (
               <div

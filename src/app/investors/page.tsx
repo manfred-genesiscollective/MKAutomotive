@@ -54,6 +54,7 @@ export default function InvestorsPage() {
               labels={businesses.map((business) => business.stage.number)}
               items={businesses.map((business) => ({
                 title: business.name,
+                logo: business.slug,
                 text: business.model,
                 note:
                   business.status === "live"

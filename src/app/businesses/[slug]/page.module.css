@@ -9,17 +9,15 @@
   align-items: start;
 }
 
-/* The name is sized from the width of its own column (14cqi keeps the
-   longest name, "The Car Lounge", on one line), so it fits whether the
-   column is half the page or all of it. */
+/* The business's logo is the headline. It is sized from the width of its
+   own column (see .hero in business-logo.module.css), so it fits whether
+   the column is half the page or all of it. */
 .heroMain {
   container-type: inline-size;
 }
 
-@supports (width: 1cqi) {
-  .heroMain :global(.display) {
-    font-size: clamp(36px, 14cqi, 110px);
-  }
+.title {
+  line-height: 0;
 }
 
 .eyebrow {
@@ -96,8 +94,8 @@
   padding-block: 36px;
 }
 
-.neighbour:hover .neighbourName {
-  text-decoration-color: var(--line-strong);
+.neighbour:hover .neighbourArrow {
+  color: var(--ink);
 }
 
 .next {
@@ -107,25 +105,30 @@
   text-align: right;
 }
 
-.neighbourName {
-  font-family: var(--font-display);
-  font-size: clamp(23px, 2.7vw, 36px);
-  font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.012em;
-  line-height: 1.1;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
-  transition: text-decoration-color 0.25s var(--ease);
+/* The first and last business have one neighbour: it takes the whole row,
+   with no divider beside an empty half. */
+.neighbour:only-child {
+  grid-column: 1 / -1;
 }
 
-/* Saira has no arrows: draw them upright in the paragraph face. */
+.next:only-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+/* The neighbour's logo, with an arrow pointing the way. */
+.neighbourName {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .neighbourArrow {
-  font-family: var(--font-sans);
-  font-style: normal;
+  font-size: clamp(20px, 2vw, 26px);
   font-weight: 500;
+  line-height: 1;
+  color: var(--ink-3);
+  transition: color 0.25s var(--ease);
 }
 
 @media (max-width: 960px) {
@@ -154,5 +157,9 @@
     border-left: 0;
     border-top: 1px solid var(--line);
     text-align: left;
+  }
+
+  .next:only-child {
+    border-top: 0;
   }
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { BusinessLogo } from "@/components/business-logo";
 import { CtaBand } from "@/components/cta-band";
 import { Dotted } from "@/components/dotted";
 import { NumberedRows } from "@/components/numbered-rows";
@@ -81,13 +82,12 @@ function NeighbourLink({ business, direction }: { business: Business; direction:
       <span className={styles.neighbourName}>
         {direction === "previous" ? (
           <span className={styles.neighbourArrow} aria-hidden="true">
-            ←{" "}
+            ←
           </span>
         ) : null}
-        {business.name}
+        <BusinessLogo slug={business.slug} alt={business.name} size="neighbour" />
         {direction === "next" ? (
           <span className={styles.neighbourArrow} aria-hidden="true">
-            {" "}
             →
           </span>
         ) : null}
@@ -128,10 +128,8 @@ export default async function BusinessPage({ params }: PageProps<"/businesses/[s
             >
               {business.stage.number} · {business.stage.label}
             </p>
-            <h1 className="display display--long">
-              <span className="line">
-                <span>{business.name}</span>
-              </span>
+            <h1 className={`fade-in ${styles.title}`} style={{ "--delay": "0.1s" } as React.CSSProperties}>
+              <BusinessLogo slug={business.slug} alt={business.name} size="hero" priority />
             </h1>
             <p className={`fade-in ${styles.tagline}`}>
               <Dotted>{business.tagline}</Dotted>
@@ -217,8 +215,8 @@ export default async function BusinessPage({ params }: PageProps<"/businesses/[s
 
       <nav className={styles.neighbours} aria-label="Neighbouring businesses">
         <div className={`container ${styles.neighbourGrid}`}>
-          {previous ? <NeighbourLink business={previous} direction="previous" /> : <span />}
-          {next ? <NeighbourLink business={next} direction="next" /> : <span />}
+          {previous ? <NeighbourLink business={previous} direction="previous" /> : null}
+          {next ? <NeighbourLink business={next} direction="next" /> : null}
         </div>
       </nav>
     </>

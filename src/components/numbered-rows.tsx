@@ -1,6 +1,13 @@
+import { BusinessLogo } from "./business-logo";
 import styles from "./numbered-rows.module.css";
 
-type Item = { title: string; text: string; note?: string };
+type Item = {
+  title: string;
+  text: string;
+  note?: string;
+  /** A business's slug: its logo is shown in place of the title. */
+  logo?: string;
+};
 
 type Props = {
   items: Item[];
@@ -19,7 +26,13 @@ export function NumberedRows({ items, as: Heading = "h3", labels }: Props) {
           <span className={styles.number}>
             {labels?.[index] ?? String(index + 1).padStart(2, "0")}
           </span>
-          <Heading className={`h3 ${styles.title}`}>{item.title}</Heading>
+          {item.logo ? (
+            <Heading className={`${styles.title} ${styles.logoTitle}`}>
+              <BusinessLogo slug={item.logo} alt={item.title} size="list" />
+            </Heading>
+          ) : (
+            <Heading className={`h3 ${styles.title}`}>{item.title}</Heading>
+          )}
           <div className={styles.text}>
             <p>{item.text}</p>
             {item.note ? <p className={styles.note}>{item.note}</p> : null}

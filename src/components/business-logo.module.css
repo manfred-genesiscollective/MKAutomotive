@@ -1,0 +1,79 @@
+/*
+ * A business logo in its own colours with the forged finish of the rest of
+ * the site: the carbon's flakes laid over it as light and shade
+ * (src/assets/forged-shade.svg), cut to the shape of the logo, and the whole
+ * logo slightly see-through, so the carbon behind it still shows.
+ *
+ * --height is the height of a wordmark; the monograms are drawn taller by
+ * their --scale (business-logo.tsx).
+ */
+.logo {
+  --height: 48px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  height: calc(var(--height) * var(--scale, 1));
+  line-height: 0;
+  opacity: 0.86;
+}
+
+.image {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+
+@supports ((-webkit-mask-image: none) or (mask-image: none)) {
+  .logo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* The flakes keep a size of their own, so they still read on a small logo. */
+    background: url("../assets/forged-shade.svg") var(--flakes, 30% 40%) /
+      max(var(--height) * 5, 180px) max(var(--height) * 5, 180px);
+    -webkit-mask: var(--logo) 0 0 / 100% 100% no-repeat;
+    mask: var(--logo) 0 0 / 100% 100% no-repeat;
+    /* Strong enough to read as forged, light enough to keep the colours true. */
+    opacity: var(--shade, 0.36);
+    pointer-events: none;
+  }
+}
+
+/* The business pages: as wide as the column allows (the column is a container). */
+.hero {
+  --height: clamp(44px, 12cqi, 112px);
+}
+
+/* The rows of businesses on the home page and Our businesses. */
+.row {
+  --height: clamp(36px, 3.9vw, 54px);
+}
+
+/* Lists with a business on each line: Careers and Investors. */
+.list {
+  --height: clamp(26px, 2.3vw, 32px);
+  --shade: 0.3;
+}
+
+/* The stage directory under the home headline. */
+.rail {
+  --height: clamp(20px, 1.6vw, 23px);
+  --shade: 0.28;
+}
+
+/* The previous and next business at the foot of a business page. */
+.neighbour {
+  --height: clamp(24px, 2.3vw, 32px);
+  --shade: 0.3;
+}
+
+/* Where backgrounds are dropped, show the plain logo. */
+@media (forced-colors: active), print {
+  .logo {
+    opacity: 1;
+  }
+
+  .logo::after {
+    display: none;
+  }
+}

@@ -4,6 +4,8 @@
 //   src/assets/forged-carbon.svg   the dark surface behind every page
 //   src/assets/forged-metal.svg    the same flakes in polished metal, used
 //                                  to fill the large headings
+//   src/assets/forged-shade.svg    the same flakes as light and shade only,
+//                                  laid over the business logos
 //
 // Forged carbon is chopped carbon fibre pressed in resin: overlapping flakes,
 // each catching the light differently. This draws those flakes as a square
@@ -71,9 +73,27 @@ const hex = (level) => toHex([level, level + 1, level + 4]);
  * rare bright flakes become its shadows. Never darker than 140, so lettering
  * filled with it keeps at least 3:1 contrast against the carbon behind it.
  */
+const metalTone = (level) => Math.max(140, Math.min(255, Math.round(262 - (level - 9) * 2.1)));
 const metal = (level) => {
-  const tone = Math.max(140, Math.min(255, Math.round(262 - (level - 9) * 2.1)));
+  const tone = metalTone(level);
   return toHex([tone, tone - 1, tone - 5]);
+};
+
+/**
+ * The same flakes as light and shade alone, for the business logos. Laid over
+ * a logo, each flake lightens or darkens whatever colour is under it, so the
+ * logo keeps its own colours and takes on the texture. It is clear between
+ * the flakes. Tones are measured from the average metal flake, so on the
+ * whole a colour comes out neither lighter nor darker than it went in. These
+ * are the strongest values; the site turns them down (logo.module.css).
+ */
+const AVERAGE_TONE = 224;
+const shade = (level) => {
+  const lift = metalTone(level) - AVERAGE_TONE;
+  if (lift === 0) return null;
+  return lift > 0
+    ? { fill: "#fff", opacity: ((0.5 * lift) / (255 - AVERAGE_TONE)).toFixed(3) }
+    : { fill: "#000", opacity: ((0.6 * -lift) / (AVERAGE_TONE - 140)).toFixed(3) };
 };
 
 /** Corner points for one flake, turned and placed. */
@@ -142,19 +162,35 @@ for (let i = 0; i < FLAKES; i++) {
   }
 }
 
-/** One tile, with every flake coloured by `colour(level)`. */
+/**
+ * One tile, with every flake coloured by `colour(level)`: a colour, or a
+ * colour with an opacity, or null to leave that tone out. `ground` fills the
+ * tile first; without it the tile is clear between the flakes.
+ */
 function draw(colour, ground) {
   const paths = passes
     .map((pass) =>
-      [...pass].map(([level, shapes]) => `<path fill="${colour(level)}" d="${shapes.join("")}"/>`).join(""),
+      [...pass]
+        .map(([level, shapes]) => {
+          const paint = colour(level);
+          if (!paint) return "";
+          const attributes =
+            typeof paint === "string"
+              ? `fill="${paint}"`
+              : `fill="${paint.fill}" fill-opacity="${paint.opacity}"`;
+          return `<path ${attributes} d="${shapes.join("")}"/>`;
+        })
+        .join(""),
     )
     .join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${TILE}" height="${TILE}" viewBox="0 0 ${TILE} ${TILE}"><rect width="${TILE}" height="${TILE}" fill="${ground}"/>${paths}</svg>\n`;
+  const base = ground ? `<rect width="${TILE}" height="${TILE}" fill="${ground}"/>` : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${TILE}" height="${TILE}" viewBox="0 0 ${TILE} ${TILE}">${base}${paths}</svg>\n`;
 }
 
 const files = [
   ["forged-carbon.svg", draw(hex, "#1b1c1f")],
   ["forged-metal.svg", draw(metal, "#d9d8d3")],
+  ["forged-shade.svg", draw(shade, null)],
 ];
 for (const [name, svg] of files) {
   writeFileSync(new URL(`../src/assets/${name}`, import.meta.url), svg);

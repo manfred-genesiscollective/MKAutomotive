@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 
+import { BusinessLogo } from "./business-logo";
 import styles from "./business-rows.module.css";
 
 type Props = {
@@ -32,13 +33,13 @@ export function BusinessRows({ as: Heading = "h3", showSites = false }: Props) {
 
           <div className={styles.grid}>
             <div>
-              <Heading className={`forged-text ${styles.name}`}>
+              <Heading className={styles.name}>
                 <Link
                   href={`/businesses/${business.slug}`}
                   className={styles.rowLink}
                   prefetch
                 >
-                  {business.name}
+                  <BusinessLogo slug={business.slug} alt={business.name} size="row" />
                 </Link>
               </Heading>
               <p className={styles.tagline}>{business.tagline}</p>

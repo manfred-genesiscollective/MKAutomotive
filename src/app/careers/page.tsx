@@ -37,6 +37,7 @@ export default function CareersPage() {
               labels={businesses.map((business) => business.stage.number)}
               items={businesses.map((business) => ({
                 title: business.name,
+                logo: business.slug,
                 text: business.work,
                 note: business.status === "live" ? undefined : IN_DEVELOPMENT,
               }))}

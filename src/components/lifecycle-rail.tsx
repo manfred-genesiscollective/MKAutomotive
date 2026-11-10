@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 
+import { BusinessLogo } from "./business-logo";
 import styles from "./lifecycle-rail.module.css";
 
 type Props = {
@@ -59,7 +60,9 @@ export function LifecycleRail({ scale = false }: Props) {
               <span className={styles.stage}>
                 {business.stage.number} <span>{business.stage.label}</span>
               </span>
-              <span className={styles.name}>{business.name}</span>
+              <span className={styles.name}>
+                <BusinessLogo slug={business.slug} alt={business.name} size="rail" />
+              </span>
               <span className={styles.category}>
                 {business.status === "live" ? business.category : IN_DEVELOPMENT}
               </span>
