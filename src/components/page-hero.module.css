@@ -3,7 +3,14 @@
 }
 
 .home {
+  /* A little smaller than other display type can go, to leave the emblem its
+     room. The emblem reads this size too, so its flakes match the letters. */
+  --hero-size: clamp(40px, min(13.2vw, 5.6vw + 50px), 132px);
   padding-block: clamp(64px, 7.4vw, 104px) clamp(44px, 5vw, 72px);
+}
+
+.home :global(.display) {
+  font-size: var(--hero-size);
 }
 
 .eyebrow {
@@ -17,6 +24,81 @@
 .ruled {
   padding-top: 28px;
   border-top: 1px solid var(--line);
+}
+
+/* ---------- The emblem ---------- */
+
+/*
+ * The MK monogram beside the headline, cut from the same forged metal as the
+ * letters: the texture shows through the shape of the mark
+ * (src/assets/mk-mark.svg), slightly see-through so the carbon behind it
+ * still reads.
+ */
+.split {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(32px, 4.4vw, 72px);
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.emblem {
+  justify-self: end;
+  width: min(100%, 350px);
+  aspect-ratio: 638 / 743;
+  filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.5));
+}
+
+.mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #d9d8d3 url("../assets/forged-metal.svg") 62% 38% /
+    calc(var(--hero-size, 132px) * 3.75) calc(var(--hero-size, 132px) * 3.75);
+  -webkit-mask: url("../assets/mk-mark.svg") center / contain no-repeat;
+  mask: url("../assets/mk-mark.svg") center / contain no-repeat;
+  opacity: 0.72;
+}
+
+/* Without masking the mark would be a plain block of metal: leave it out. */
+@supports not ((-webkit-mask-image: none) or (mask-image: none)) {
+  .emblem {
+    display: none;
+  }
+}
+
+/* Narrower screens have no room beside the headline, so the mark moves
+   behind the words as a faint watermark. */
+@media (max-width: 959px) {
+  .split {
+    display: block;
+    position: relative;
+  }
+
+  .emblem {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: var(--gutter);
+    z-index: 0;
+    width: auto;
+    filter: none;
+  }
+
+  .mark {
+    opacity: 0.13;
+  }
+}
+
+@media (forced-colors: active), print {
+  .emblem {
+    display: none;
+  }
 }
 
 @media (max-width: 720px) {

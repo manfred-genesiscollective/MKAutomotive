@@ -29,7 +29,7 @@ export async function SiteFooter() {
             <Link href="/" aria-label={`${site.name}, home`} className={styles.logo}>
               <Logo size="large" />
             </Link>
-            <p className={styles.tagline}>
+            <p className={`forged-text ${styles.tagline}`}>
               <Dotted>{site.tagline}</Dotted>
             </p>
             {email || phone || site.social.length > 0 ? (

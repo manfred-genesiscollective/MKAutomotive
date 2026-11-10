@@ -33,7 +33,10 @@
 .link {
   position: relative;
   padding-block: 10px;
-  font-size: 13.5px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.012em;
   color: var(--ink-3);
   white-space: nowrap;
   transition: color 0.2s var(--ease);
@@ -44,7 +47,7 @@
   color: var(--ink);
 }
 
-/* A short red stripe under the section you are in. */
+/* A short gold stripe under the section you are in. */
 .link[aria-current]::after {
   content: "";
   position: absolute;
@@ -52,15 +55,17 @@
   bottom: 4px;
   width: 14px;
   height: 2px;
-  background: var(--rosso);
+  background: var(--gold);
 }
 
 .cta {
   padding: 9px 18px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  font-size: 13.5px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
   font-weight: 600;
+  letter-spacing: 0.012em;
   line-height: 1.2;
   color: var(--ink);
   white-space: nowrap;
@@ -192,21 +197,26 @@
 }
 
 .menuLabel {
-  font-size: 28px;
-  font-weight: 550;
-  letter-spacing: -0.028em;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.012em;
   line-height: 1.15;
 }
 
 .menuLink[aria-current] .menuLabel::after {
   content: ".";
-  color: var(--rosso);
+  color: var(--gold);
 }
 
 .menuFoot {
   margin-top: auto;
   padding-top: 32px;
-  font-size: 13.5px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 600;
   color: var(--ink-3);
 }
 

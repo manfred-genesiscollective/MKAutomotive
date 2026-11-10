@@ -32,7 +32,7 @@ export function BusinessRows({ as: Heading = "h3", showSites = false }: Props) {
 
           <div className={styles.grid}>
             <div>
-              <Heading className={styles.name}>
+              <Heading className={`forged-text ${styles.name}`}>
                 <Link
                   href={`/businesses/${business.slug}`}
                   className={styles.rowLink}

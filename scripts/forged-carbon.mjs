@@ -1,13 +1,17 @@
-// Draws src/assets/forged-carbon.svg: the forged-carbon surface of the site.
-// Run `node scripts/forged-carbon.mjs` to redraw it.
+// Draws the two forged textures the site is built on. Run
+// `node scripts/forged-carbon.mjs` to redraw them.
+//
+//   src/assets/forged-carbon.svg   the dark surface behind every page
+//   src/assets/forged-metal.svg    the same flakes in polished metal, used
+//                                  to fill the large headings
 //
 // Forged carbon is chopped carbon fibre pressed in resin: overlapping flakes,
 // each catching the light differently. This draws those flakes as a square
 // tile whose edges wrap, so it repeats without a seam.
 //
-// Every flake is a tint of Forged Carbon (#1B1C1F) and the tints average back
-// to that colour, so the surface still measures as the brand carbon. The
-// result is fixed by SEED: the file only changes when the settings do.
+// Every carbon flake is a tint of Forged Carbon (#1B1C1F) and the tints
+// average back to that colour. The result is fixed by SEED: the files only
+// change when the settings do.
 import { writeFileSync } from "node:fs";
 
 const SEED = 20261110;
@@ -56,8 +60,21 @@ function pickLevel() {
   return LEVELS[LEVELS.length - 1][0];
 }
 
-const hex = (level) =>
-  "#" + [level, level + 1, level + 4].map((v) => Math.min(255, v).toString(16).padStart(2, "0")).join("");
+const toHex = (channels) =>
+  "#" + channels.map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, "0")).join("");
+
+/** A carbon tint: green is +1 and blue +4, as in the brand colour. */
+const hex = (level) => toHex([level, level + 1, level + 4]);
+
+/**
+ * The same flake in polished metal: dark carbon becomes bright metal and the
+ * rare bright flakes become its shadows. Never darker than 140, so lettering
+ * filled with it keeps at least 3:1 contrast against the carbon behind it.
+ */
+const metal = (level) => {
+  const tone = Math.max(140, Math.min(255, Math.round(262 - (level - 9) * 2.1)));
+  return toHex([tone, tone - 1, tone - 5]);
+};
 
 /** Corner points for one flake, turned and placed. */
 function place(points, cx, cy, angle) {
@@ -109,9 +126,8 @@ for (let i = 0; i < FLAKES; i++) {
   if (length < 100 && random() < 0.2) corners = corners.slice(0, 3);
 
   const level = pickLevel();
-  const fill = hex(level);
-  if (!pass.has(fill)) pass.set(fill, []);
-  pass.get(fill).push(wrapped(place(corners, cx, cy, angle)));
+  if (!pass.has(level)) pass.set(level, []);
+  pass.get(level).push(wrapped(place(corners, cx, cy, angle)));
 
   // Fibres run along the flake, so one long edge often catches the light:
   // a narrow sliver in a slightly lighter or darker tone.
@@ -120,17 +136,27 @@ for (let i = 0; i < FLAKES; i++) {
     const [a, b, c, d] = corners;
     const mix = (p, q) => [p[0] + (q[0] - p[0]) * share, p[1] + (q[1] - p[1]) * share];
     const sliver = [a, b, mix(b, c), mix(a, d)];
-    const tone = hex(Math.max(9, level + (random() < 0.6 ? 6 : -5)));
+    const tone = Math.max(9, level + (random() < 0.6 ? 6 : -5));
     if (!pass.has(tone)) pass.set(tone, []);
     pass.get(tone).push(wrapped(place(sliver, cx, cy, angle)));
   }
 }
 
-const paths = passes
-  .map((pass) => [...pass].map(([fill, shapes]) => `<path fill="${fill}" d="${shapes.join("")}"/>`).join(""))
-  .join("");
+/** One tile, with every flake coloured by `colour(level)`. */
+function draw(colour, ground) {
+  const paths = passes
+    .map((pass) =>
+      [...pass].map(([level, shapes]) => `<path fill="${colour(level)}" d="${shapes.join("")}"/>`).join(""),
+    )
+    .join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${TILE}" height="${TILE}" viewBox="0 0 ${TILE} ${TILE}"><rect width="${TILE}" height="${TILE}" fill="${ground}"/>${paths}</svg>\n`;
+}
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${TILE}" height="${TILE}" viewBox="0 0 ${TILE} ${TILE}"><rect width="${TILE}" height="${TILE}" fill="#1b1c1f"/>${paths}</svg>\n`;
-
-writeFileSync(new URL("../src/assets/forged-carbon.svg", import.meta.url), svg);
-console.log(`forged-carbon.svg: ${FLAKES} flakes, ${(svg.length / 1024).toFixed(1)} kB`);
+const files = [
+  ["forged-carbon.svg", draw(hex, "#1b1c1f")],
+  ["forged-metal.svg", draw(metal, "#d9d8d3")],
+];
+for (const [name, svg] of files) {
+  writeFileSync(new URL(`../src/assets/${name}`, import.meta.url), svg);
+  console.log(`${name}: ${FLAKES} flakes, ${(svg.length / 1024).toFixed(1)} kB`);
+}

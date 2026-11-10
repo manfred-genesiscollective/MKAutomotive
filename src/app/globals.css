@@ -1,15 +1,20 @@
 /*
  * MK Automotive Group: global styles.
  *
- * The palette, as the owner set it:
- *   Forged Carbon  #1B1C1F  the main colour, shown as the material itself:
- *                           a forged-carbon texture under dark, smoked
- *                           glass. See "The forged-carbon surface" and
- *                           "The glass" below.
- *   Pearl White    #EEECE6  type, hairlines and buttons. Never a band or a
- *                           background: the site has no light sections.
- *   Rosso Corsa    #D40000  small details only: full stops, short stripes,
- *                           tiny markers. Never a fill, a block or text.
+ * The palette:
+ *   Forged Carbon   #1B1C1F  the main colour, shown as the material itself:
+ *                            a forged-carbon texture under dark, smoked
+ *                            glass. See "The forged-carbon surface" and
+ *                            "The glass" below.
+ *   Pearl White     #EEECE6  type, hairlines and buttons. Never a band or a
+ *                            background: the site has no light sections.
+ *   Champagne Gold  #BD9C66  the colour of the logo. Small details only:
+ *                            the logo, full stops, short stripes, tiny
+ *                            markers. Never a fill or a block.
+ *
+ * Type: Saira (ExtraBold Italic for headings, as on export.sg) with a plain
+ * face for paragraphs and a mono face for small labels. Large headings are
+ * filled with forged metal: see "Forged-metal lettering" below.
  *
  * Components never use the brand colours directly. They read the surface
  * variables (--bg, --ink, --line ...) so the same component works on the
@@ -19,11 +24,15 @@
 :root {
   --carbon: #1b1c1f;
   --pearl: #eeece6;
-  --rosso: #d40000;
+  --gold: #bd9c66;
   /* The tone laid over the forged-carbon texture: deeper than the brand
      carbon, so the surface reads as dark, solid carbon rather than grey. */
   --carbon-deep: #0f1012;
 
+  /* Headings, names, figures, navigation and buttons. */
+  --font-display:
+    var(--font-saira), "Arial Narrow", "Helvetica Neue", Arial, system-ui, sans-serif;
+  /* Paragraphs. */
   --font-sans:
     var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -271,8 +280,8 @@ textarea {
 }
 
 ::selection {
-  background: var(--rosso);
-  color: var(--pearl);
+  background: var(--gold);
+  color: var(--carbon);
 }
 
 :focus-visible {
@@ -354,44 +363,118 @@ textarea {
 
 /* ---------- Type ---------- */
 
+.display,
+.h2,
+.h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+/* Sized so "The whole life" holds one line from 320px wide upwards. */
 .display {
-  font-size: clamp(44px, min(14.6vw, 6vw + 54px), 158px);
-  font-weight: 550;
-  letter-spacing: -0.048em;
-  line-height: 0.97;
-}
-
-.display--page {
-  font-size: clamp(46px, min(13.4vw, 5.4vw + 50px), 140px);
-  letter-spacing: -0.045em;
-  line-height: 0.96;
-}
-
-.display--long {
-  font-size: clamp(40px, min(11.4vw, 4.6vw + 44px), 116px);
-  letter-spacing: -0.045em;
+  font-size: clamp(40px, min(13.2vw, 5.6vw + 50px), 150px);
+  font-weight: 800;
+  letter-spacing: -0.018em;
   line-height: 0.98;
 }
 
+/* The first limit keeps a headline of up to 7.9em ("About the group.") on
+   one line: it is the room between the gutters, divided by that width. */
+.display--page {
+  font-size: clamp(
+    34px,
+    min(calc((100vw - 2 * var(--gutter)) / 7.9), 5vw + 48px),
+    132px
+  );
+}
+
+.display--long {
+  font-size: clamp(36px, min(10.4vw, 4.3vw + 42px), 110px);
+  line-height: 1;
+}
+
 .h2 {
-  font-size: clamp(32px, 4.6vw, 68px);
-  font-weight: 550;
-  letter-spacing: -0.038em;
-  line-height: 1.04;
+  font-size: clamp(30px, 4.3vw, 62px);
+  font-weight: 800;
+  letter-spacing: -0.014em;
+  line-height: 1.06;
   text-wrap: balance;
 }
 
 .h2--sm {
-  font-size: clamp(28px, 3.8vw, 52px);
-  letter-spacing: -0.032em;
-  line-height: 1.06;
+  font-size: clamp(27px, 3.5vw, 48px);
+  letter-spacing: -0.012em;
+  line-height: 1.08;
 }
 
 .h3 {
-  font-size: clamp(20px, 2.2vw, 27px);
-  font-weight: 550;
-  letter-spacing: -0.02em;
+  font-size: clamp(20px, 2.1vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.006em;
   line-height: 1.2;
+}
+
+/* ---------- Forged-metal lettering ---------- */
+
+/*
+ * Large headings are cut from forged metal: the same flakes as the surface
+ * behind them, in polished metal (src/assets/forged-metal.svg), showing
+ * through the shape of the letters. The text stays real text.
+ *
+ * Applies to every page headline (.display), section heading (.h2) and to
+ * anything given .forged-text: business names, the group figures, the
+ * footer line. Smaller headings stay solid: the texture needs size to read.
+ */
+.display .line > span,
+.h2,
+.forged-text {
+  color: var(--ink);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .display .line > span,
+  .h2,
+  .forged-text {
+    /* Sized in em, so the flakes stay in proportion to the letters. */
+    background: #d9d8d3 url("../assets/forged-metal.svg") 0.27em 0.2em / 3.75em 3.75em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Italic letters lean and hang outside their box; without this room the
+       fill would be cut off at the slant and at the tails. */
+    padding: 0.16em 0.14em 0.16em 0.04em;
+    margin: -0.16em -0.14em -0.16em -0.04em;
+  }
+
+  /* Selected text needs a colour of its own to stay visible. */
+  .display .line > span::selection,
+  .display .line > span *::selection,
+  .h2::selection,
+  .h2 *::selection,
+  .forged-text::selection,
+  .forged-text *::selection {
+    color: var(--carbon);
+    -webkit-text-fill-color: var(--carbon);
+  }
+}
+
+/* High-contrast modes replace backgrounds, so give the letters a solid colour. */
+@media (forced-colors: active) {
+  .display .line > span,
+  .h2,
+  .forged-text {
+    background: none;
+    color: CanvasText;
+  }
+}
+
+@media print {
+  .display .line > span,
+  .h2,
+  .forged-text {
+    background: none;
+    color: #000;
+  }
 }
 
 .lede {
@@ -432,7 +515,7 @@ textarea {
   max-width: 560px;
 }
 
-/* Small mono label with a short red stripe: the site's signature detail. */
+/* Small mono label with a short gold stripe: the site's signature detail. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -451,7 +534,7 @@ textarea {
   flex: none;
   width: 14px;
   height: 2px;
-  background: var(--rosso);
+  background: var(--gold);
 }
 
 .eyebrow--plain::before {
@@ -467,9 +550,10 @@ textarea {
   color: var(--ink-3);
 }
 
-/* The red full stop that ends a headline. */
+/* The gold full stop that ends a headline. */
 .dot {
-  color: var(--rosso);
+  color: var(--gold);
+  -webkit-text-fill-color: var(--gold);
 }
 
 .text-link {
@@ -502,7 +586,7 @@ textarea {
   flex: none;
   width: 14px;
   height: 2px;
-  background: var(--rosso);
+  background: var(--gold);
   transition: width 0.3s var(--ease);
 }
 
@@ -525,8 +609,10 @@ a.arrow-link:hover::before,
   border-radius: 999px;
   background: var(--ink);
   color: var(--bg);
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: 0.005em;
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
@@ -582,8 +668,10 @@ a.arrow-link:hover::before,
 .line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.14em;
-  margin-bottom: -0.14em;
+  /* Room for tails below and for the italic slant at the sides, which would
+     otherwise be cut off by the clipping that hides the line before it rises. */
+  padding: 0 0.14em 0.14em 0.04em;
+  margin: 0 -0.14em -0.14em -0.04em;
 }
 
 .line > span {

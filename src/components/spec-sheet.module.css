@@ -30,7 +30,7 @@
   color: var(--ink);
 }
 
-/* A small square marker: solid red when the business is live, an outline
+/* A small square marker: solid gold when the business is live, an outline
    while it is still being built. */
 .live,
 .pending {
@@ -40,7 +40,7 @@
 }
 
 .live {
-  background: var(--rosso);
+  background: var(--gold);
 }
 
 .pending {

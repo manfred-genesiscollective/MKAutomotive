@@ -1,33 +1,31 @@
 import styles from "./logo.module.css";
 
 /*
- * "MK" drawn from the outlines of Geist Bold, so the mark does not depend on
- * a font being loaded, followed by one slanted Rosso Corsa stripe.
+ * The MK monogram: an M whose right half carries the arm and leg of a K.
+ * One path, so it can be filled with a colour, or used as a mask over a
+ * texture (see src/assets/mk-mark.svg, which holds the same outline).
  */
-const MK =
-  "M15.2 71H0V0h20.3l18.1 51.7L56.4 0h20.3v71H61.5V25L44.8 70.8h-13L15.2 25v46ZM103.7 71H88.5V0h15.2v31l25.8-31h17.7l-26.1 31.3L148.8 71h-17.3l-20.4-29.5-7.4 8.6V71Z";
-const STRIPE = "M160 71h11.5L186 0h-11.5L160 71Z";
+const MARK =
+  "M0 0 319 319 638 0V743H542V385L317 610 430 743H322L222 630V743H132V250L95 213V743H0ZM222 340 319 437 542 214V275L222 595Z";
 
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 186 71"
+      viewBox="0 0 638 743"
       aria-hidden="true"
       focusable="false"
     >
-      <path d={MK} fill="currentColor" />
-      <path d={STRIPE} fill="var(--rosso)" />
+      <path d={MARK} fill="currentColor" fillRule="evenodd" />
     </svg>
   );
 }
 
-/** The mark with "Automotive Group" beside it. Purely visual: label the link. */
+/** The monogram in champagne gold. Purely visual: label the link around it. */
 export function Logo({ size = "regular" }: { size?: "regular" | "large" }) {
   return (
     <span className={`${styles.logo} ${size === "large" ? styles.large : ""}`}>
       <LogoMark className={styles.mark} />
-      <span className={styles.word}>Automotive Group</span>
     </span>
   );
 }

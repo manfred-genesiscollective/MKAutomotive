@@ -14,7 +14,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const business = getBusiness(slug);
   if (!business) {
-    return renderOgImage({ lines: ["The whole life", "of a car."] });
+    return renderOgImage({ lines: ["The whole life", "of a car."], emblem: true });
   }
   return renderOgImage({
     eyebrow: `${business.stage.number} · ${business.stage.label}`,

@@ -66,13 +66,24 @@ Spam is limited by a hidden honeypot field and strict server-side validation. Fo
 The palette is defined once in `src/app/globals.css`:
 
 - **Forged Carbon `#1B1C1F`** is the main colour, shown as the material under dark glass.
-  - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `node scripts/forged-carbon.mjs` redraws the texture. `--veil` sets how solid it is (higher is darker) and `--flake` the size of the flakes.
+  - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `--veil` sets how solid it is (higher is darker) and `--flake` the size of the flakes.
   - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
   - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground: the stage directory, the group figures and the forms.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
-- **Rosso Corsa `#D40000`** is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text (red on carbon is about 3:1, too low for small text).
+- **Champagne Gold `#BD9C66`** (`--gold`) is the colour of the logo, and is for small details only: the logo, the headline full stop, short stripes, stage markers. Never a background, a button fill or body text.
 
-Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the open carbon or inside a glass panel. The typeface is Geist with Geist Mono for labels.
+Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the open carbon or inside a glass panel.
+
+### Type
+
+- **Saira** (ExtraBold Italic) for headings, business names and figures, and upright for navigation and buttons. **Geist** for paragraphs, **Geist Mono** for small labels.
+- **Forged-metal lettering**: page headlines, section headings, business names and the group figures are filled with a light version of the flake texture (`src/assets/forged-metal.svg`), so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
+
+`node scripts/forged-carbon.mjs` redraws both textures from the same flakes.
+
+### Logo
+
+The MK monogram is one outline, kept in `src/components/logo.tsx` (the header, footer and menu), `src/assets/mk-mark.svg` (the forged emblem beside the home headline), `src/app/icon.svg` (the browser icon) and `src/lib/og-image.tsx` (share images). To replace it with the original artwork, change the path in those four places. `apple-icon.png` and `favicon.ico` are pictures of `icon.svg` and need exporting again if it changes.
 
 Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
 
@@ -85,6 +96,7 @@ Visitors who ask their device for more contrast get no reflections and a heavier
 
 ## Before launch
 
+- [ ] Replace the redrawn monogram with the original logo artwork and confirm the exact gold (see Logo above).
 - [ ] Confirm the registered company name in `src/content/site.ts` (used in the copyright line).
 - [ ] Add contact details and social links in `src/content/site.ts`.
 - [ ] Set the three email variables and send a test enquiry from each form.

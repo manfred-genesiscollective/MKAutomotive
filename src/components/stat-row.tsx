@@ -1,6 +1,6 @@
 import styles from "./stat-row.module.css";
 
-/** Large figures, each with a short red tick and a label. */
+/** Large figures, each with a short gold tick and a label. */
 export function StatRow({
   items,
   note,
@@ -17,7 +17,9 @@ export function StatRow({
         {items.map((item) => (
           <div key={item.label} className={styles.stat}>
             <dt className={styles.label}>{item.label}</dt>
-            <dd className={styles.value}>{item.value}</dd>
+            <dd className={styles.value}>
+              <span className={`forged-text ${styles.figure}`}>{item.value}</span>
+            </dd>
           </div>
         ))}
       </dl>

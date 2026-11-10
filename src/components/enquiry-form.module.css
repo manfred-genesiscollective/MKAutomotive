@@ -91,10 +91,18 @@ select.input {
   cursor: pointer;
 }
 
-/* Invalid fields get a red underline: a stripe, not red text. */
+/* Invalid fields get a gold underline: a stripe, not coloured text. */
 .input[aria-invalid="true"] {
-  border-bottom-color: var(--rosso);
-  box-shadow: 0 1px 0 0 var(--rosso);
+  border-bottom-color: var(--gold);
+  box-shadow: 0 1px 0 0 var(--gold);
+}
+
+/* Focused and invalid: the pearl focus line, with the gold stripe under it. */
+.input[aria-invalid="true"]:focus-visible {
+  border-bottom-color: var(--ink);
+  box-shadow:
+    0 1px 0 0 var(--ink),
+    0 4px 0 0 var(--gold);
 }
 
 .error {
@@ -111,7 +119,7 @@ select.input {
   flex: none;
   width: 7px;
   height: 7px;
-  background: var(--rosso);
+  background: var(--gold);
 }
 
 .chips {
@@ -208,7 +216,7 @@ select.input {
   width: 7px;
   height: 7px;
   margin-right: 10px;
-  background: var(--rosso);
+  background: var(--gold);
 }
 
 .done {

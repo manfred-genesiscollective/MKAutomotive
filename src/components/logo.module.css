@@ -1,43 +1,15 @@
 .logo {
   display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--ink);
+  color: var(--gold);
   line-height: 1;
-  white-space: nowrap;
 }
 
 .mark {
   flex: none;
-  height: 19px;
+  height: 36px;
   width: auto;
 }
 
-.word {
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-}
-
 .large .mark {
-  height: 30px;
-}
-
-.large .word {
-  font-size: 24px;
-  letter-spacing: -0.018em;
-}
-
-@media (max-width: 380px) {
-  .logo {
-    gap: 10px;
-  }
-
-  .mark {
-    height: 17px;
-  }
-
-  .word {
-    font-size: 15.5px;
-  }
+  height: 52px;
 }

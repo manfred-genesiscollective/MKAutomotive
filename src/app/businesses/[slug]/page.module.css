@@ -15,6 +15,19 @@
   align-items: start;
 }
 
+/* The name is sized from the width of its own column (14cqi keeps the
+   longest name, "The Car Lounge", on one line), so it fits whether the
+   column is half the page or all of it. */
+.heroMain {
+  container-type: inline-size;
+}
+
+@supports (width: 1cqi) {
+  .heroMain :global(.display) {
+    font-size: clamp(36px, 14cqi, 110px);
+  }
+}
+
 .eyebrow {
   margin-bottom: 22px;
 }
@@ -22,10 +35,12 @@
 .tagline {
   max-width: 720px;
   margin-top: 22px;
+  font-family: var(--font-display);
   font-size: clamp(22px, 2.7vw, 38px);
-  font-weight: 550;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.008em;
+  line-height: 1.14;
   text-wrap: balance;
 }
 
@@ -100,9 +115,11 @@
 }
 
 .neighbourName {
-  font-size: clamp(22px, 2.6vw, 34px);
-  font-weight: 550;
-  letter-spacing: -0.028em;
+  font-family: var(--font-display);
+  font-size: clamp(23px, 2.7vw, 36px);
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.012em;
   line-height: 1.1;
   text-decoration: underline;
   text-decoration-color: transparent;

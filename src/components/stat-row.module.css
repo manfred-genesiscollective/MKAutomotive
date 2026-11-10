@@ -18,10 +18,16 @@
 .value {
   position: relative;
   padding-bottom: 22px;
+  font-family: var(--font-display);
   font-size: clamp(56px, 7.4vw, 112px);
-  font-weight: 550;
-  letter-spacing: -0.048em;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   line-height: 0.95;
+}
+
+.figure {
+  display: inline-block;
 }
 
 .value::after {
@@ -31,7 +37,7 @@
   bottom: 0;
   width: 26px;
   height: 2px;
-  background: var(--rosso);
+  background: var(--gold);
 }
 
 .label {

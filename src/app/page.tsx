@@ -42,7 +42,7 @@ export default function HomePage() {
         }}
       />
 
-      <PageHero size="home" title={["The whole life", "of a car."]} ruled={false}>
+      <PageHero size="home" title={["The whole life", "of a car."]} ruled={false} emblem>
         <p className="lede">
           {site.name} is the Singapore holding company behind {countWord()} automotive
           businesses. Between them they look after how a car is rented, upgraded, serviced,

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import localFont from "next/font/local";
 
 import { RevealObserver } from "@/components/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
@@ -11,6 +12,17 @@ import { revealBootScript } from "@/lib/reveal-boot";
 import { getSiteUrl } from "@/lib/site-url";
 
 import "./globals.css";
+
+// Saira: headings, names, figures, navigation and buttons. Both files are
+// variable, so every weight comes from one download per style.
+const saira = localFont({
+  src: [
+    { path: "../assets/fonts/Saira-Variable.woff2", weight: "100 900", style: "normal" },
+    { path: "../assets/fonts/Saira-Italic-Variable.woff2", weight: "100 900", style: "italic" },
+  ],
+  variable: "--font-saira",
+  display: "swap",
+});
 
 // Every page is prerendered. If a page ever starts to depend on request-time
 // data, the build fails instead of quietly turning the page dynamic.
@@ -33,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-SG"
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${saira.variable}`}
       suppressHydrationWarning
     >
       <head>
