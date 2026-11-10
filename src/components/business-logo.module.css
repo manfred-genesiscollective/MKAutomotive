@@ -49,9 +49,9 @@
   --height: clamp(44px, 12cqi, 112px);
 }
 
-/* The rows of businesses on the home page and Our businesses. */
-.row {
-  --height: clamp(36px, 3.9vw, 54px);
+/* The tiles of the portfolio wall, sized by the tile (see portfolio-wall.module.css). */
+.wall {
+  --height: var(--logo-height, 32px);
 }
 
 /* Lists with a business on each line: Careers and Investors. */
@@ -60,17 +60,24 @@
   --shade: 0.3;
 }
 
-/* The stage directory under the home headline. 39px is the most a wordmark
-   can be and still fit its stage at the widest the page gets. */
-.rail {
-  --height: clamp(20px, 2.6vw, 39px);
-  --shade: 0.32;
-}
 
 /* The previous and next business at the foot of a business page. */
 .neighbour {
   --height: clamp(24px, 2.3vw, 32px);
   --shade: 0.3;
+}
+
+/* A business whose logo artwork has not arrived: its name in the headline
+   face, about as tall as a wordmark would be. */
+.word {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: calc(var(--height, 48px) * 1.2);
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 /* Where backgrounds are dropped, show the plain logo. */

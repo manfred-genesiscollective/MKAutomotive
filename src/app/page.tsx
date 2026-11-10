@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-import { BusinessRows } from "@/components/business-rows";
 import { CtaBand } from "@/components/cta-band";
 import { PageHero } from "@/components/page-hero";
+import { PortfolioWall } from "@/components/portfolio-wall";
 import { SectionHeading } from "@/components/section-heading";
-import { businesses, capitalise, countWord } from "@/content/businesses";
+import { businesses } from "@/content/businesses";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { getSiteUrl } from "@/lib/site-url";
@@ -46,26 +46,23 @@ export default function HomePage() {
         }}
       />
 
-      <PageHero size="home" title={["The whole life", "of a car."]} ruled={false} emblem>
+      <PageHero size="home" title={["Automotive", "specialists."]} ruled={false} emblem>
         <p className="lede">
-          {site.name} is a Singapore holding company with {countWord()} businesses across the
-          vehicle lifecycle: rental, performance parts and fitting, workshop booking, roadside
-          recovery and vehicle export.
+          {site.name} is a Singapore holding company with specialist businesses across every
+          aspect of automotive, each under its own brand.
         </p>
       </PageHero>
 
       <section className="section">
         <div className="container">
-          <SectionHeading layout="split" title={`${capitalise(countWord())} businesses, one lifecycle.`}>
+          <SectionHeading layout="split" eyebrow="Our businesses" title="The portfolio.">
             <p>
-              Every car registered in Singapore carries a ten-year Certificate of Entitlement
-              (COE). Over that period it is driven, upgraded, serviced and recovered; when the COE
-              ends, it is often exported. Each MK business serves one of those stages under its
-              own brand.
+              Rental, performance parts, recovery, export, service booking and software: each
+              business a specialist in its field.
             </p>
           </SectionHeading>
-          <div className={styles.rows}>
-            <BusinessRows showSites />
+          <div className={styles.wall}>
+            <PortfolioWall />
           </div>
         </div>
       </section>

@@ -13,7 +13,7 @@ type Props = {
   items: Item[];
   /** Heading level of each row title. */
   as?: "h2" | "h3";
-  /** Replaces the running number, for example a stage number. */
+  /** Replaces the running number with labels of your own. */
   labels?: string[];
 };
 

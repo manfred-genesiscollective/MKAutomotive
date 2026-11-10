@@ -76,8 +76,7 @@ function NeighbourLink({ business, direction }: { business: Business; direction:
       prefetch
     >
       <span className="meta">
-        {direction === "previous" ? "Previous stage" : "Next stage"} · {business.stage.number}{" "}
-        {business.stage.label}
+        {direction === "previous" ? "Previous" : "Next"} · {business.category}
       </span>
       <span className={styles.neighbourName}>
         {direction === "previous" ? (
@@ -126,7 +125,7 @@ export default async function BusinessPage({ params }: PageProps<"/businesses/[s
               className={`eyebrow fade-in ${styles.eyebrow}`}
               style={{ "--delay": "0.04s" } as React.CSSProperties}
             >
-              {business.stage.number} · {business.stage.label}
+              {business.category}
             </p>
             <h1 className={`fade-in ${styles.title}`} style={{ "--delay": "0.1s" } as React.CSSProperties}>
               <BusinessLogo slug={business.slug} alt={business.name} size="hero" priority />
@@ -161,10 +160,6 @@ export default async function BusinessPage({ params }: PageProps<"/businesses/[s
               status={live ? undefined : IN_DEVELOPMENT}
               rows={[
                 ...business.facts,
-                {
-                  label: "Stage",
-                  value: `${business.stage.number} · ${business.stage.label}`,
-                },
                 {
                   label: "Website",
                   value: business.url

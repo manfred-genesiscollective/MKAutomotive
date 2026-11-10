@@ -9,9 +9,9 @@ export const site = {
   name: "MK Automotive Group",
   /** Registered company name for the copyright line. */
   legalName: "MK Automotive Group",
-  tagline: "The whole life of a car.",
+  tagline: "Automotive specialists.",
   description:
-    "MK Automotive Group is a Singapore holding company with businesses across the vehicle lifecycle: rental, parts, service booking, recovery and export.",
+    "MK Automotive Group is a Singapore holding company with specialist businesses across every aspect of automotive, from rental and parts to export and software.",
   country: "Singapore",
 
   /** Shown on the Contact page and in the footer when filled in. */

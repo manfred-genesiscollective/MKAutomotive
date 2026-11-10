@@ -1,15 +1,15 @@
 # MK Automotive Group website
 
-The group website for MK Automotive Group, the Singapore holding company behind SwiftDrive, RevHub, The Car Lounge, Golden Hour and export.sg.
+The group website for MK Automotive Group, the Singapore holding company behind SwiftDrive, RevHub, Golden Hour, export.sg, The Car Lounge and GeneOS.
 
-The site is a hub. It says what the group is, then sends each visitor to the right business. The businesses are presented in the order of a car's life in Singapore: Drive, Upgrade, Maintain, Recover, Export.
+The site is the group's portfolio, written for partners and investors first. It says what the group is, shows each business by its logo, and sends each visitor to the right one. The businesses are listed with those that are open first, then those in development.
 
 ## Pages
 
 | Address | Page |
 | --- | --- |
-| `/` | Home: headline, the portfolio with a row per business, and a closing band for partners and investors |
-| `/businesses` | Every business, with a link to its own website |
+| `/` | Home: headline, the portfolio as a wall of logos with a tile per business, and a closing band for partners and investors |
+| `/businesses` | The same wall of logos, each tile leading to the business's page |
 | `/businesses/<slug>` | One page per business, generated from the content file |
 | `/about` | What the group is, how it works, mission and vision |
 | `/partners` | Who the group works with, and a partnership enquiry form |
@@ -22,8 +22,8 @@ The site is a hub. It says what the group is, then sends each visitor to the rig
 
 Everything a non-developer is likely to change lives in `src/content/`.
 
-- `businesses.ts` holds every business: name, stage, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry. To launch one marked `coming-soon`, set `status: "live"`, add its `url`, and rewrite the wording that says it is in development (`summary`, `seo`, `intro`, `description`, `services`, `cta`, `work`, `model`). `npm test` checks the rules the pages rely on, such as unique names and a website for every open business.
-- A few sentences name the stages in words ("rent, upgrade, recover and export"): the group description in `site.ts`, and the opening lines of the home, About and Investors pages. Update them by hand when a business is added or opens.
+- `businesses.ts` holds every business: name, category, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry: it gets a tile on the wall, a page and a share image with no other change (see Business logos for its logo). To launch one marked `coming-soon`, set `status: "live"`, add its `url`, and rewrite the wording that says it is in development (`summary`, `seo`, `intro`, `description`, `services`, `cta`, `work`, `model`). `npm test` checks the rules the pages rely on, such as unique names and a website for every open business.
+- A few sentences name the businesses' fields in words ("rental, performance parts, recovery, export, service booking and software"): the group description in `site.ts`, the line under "The portfolio." on the home page, and the opening lines of the About and Investors pages. Update them by hand when a business is added.
 - `site.ts` holds group details: tagline, contact details, social links, the four operating principles (named on the About page) and the partner types. Contact details left empty are simply not shown.
 - `forms.ts` holds the choices offered in the enquiry forms.
 
@@ -72,14 +72,14 @@ The palette is defined once in `src/app/globals.css`:
   - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
   - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground, such as the forms and the closing bands.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
-- **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text.
+- **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop and short stripes. Never a background, a button fill or body text.
 - **Platinum** is a finish, not a flat colour: a light version of the flake texture (`src/assets/forged-metal.svg`), so a shape looks cut from polished forged metal. The logo, the emblem beside the home headline and the large headings are made of it. `--platinum` (`#E5E4E2`) is the flat colour used where the texture cannot be shown, such as in print.
 
 Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the open carbon or inside a glass panel.
 
 ### Type
 
-- **Saira** (ExtraBold Italic) for headings, business names and figures, and upright for navigation and buttons. **Geist** for paragraphs, **Geist Mono** for small labels.
+- **Saira** (ExtraBold Italic) for headings and business names, and upright for navigation and buttons. **Geist** for paragraphs, **Geist Mono** for small labels.
 - **Forged-metal lettering**: page headlines and section headings are filled with the platinum finish, so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
 
 `node scripts/forged-carbon.mjs` redraws the three textures (carbon, metal, and the light and shade laid over the business logos) from the same flakes.
@@ -94,11 +94,12 @@ In the header and the phone menu the monogram has the group's name beside it, "M
 
 ### Business logos
 
-Each business is shown by its own logo, in its own colours: in the rows on the home page and Our businesses, as the headline of its page, in the stage list on About, in the lists on Careers and Investors, in the previous and next links, and in its share image.
+Each business is shown by its own logo, in its own colours: on the wall of logos on the home page, Our businesses and About, as the headline of its page, in the lists on Careers and Investors, in the previous and next links, and in its share image. A business with no logo yet, GeneOS at present, is shown by its name in the platinum lettering until its artwork is added.
 
 - The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied, lettering included. Golden Hour's and The Car Lounge's words are stacked to the right of their monograms, one word to a line, spanning the monogram's height. Two colours differ from those files: Golden Hour's words are in the monogram's orange rather than black, and the "Drive" of SwiftDrive is white rather than navy. Black and navy would disappear against the carbon.
 - The forged finish (`src/components/business-logo.module.css`): the carbon's flakes are laid over each logo as light and shade (`src/assets/forged-shade.svg`), cut to its shape, and the logo is slightly see-through. The strength, the transparency and each logo's relative size are in `src/lib/business-logos.ts`, which the share images read too.
 - To use the businesses' own vector artwork instead, replace the five SVG files (keep the names). Each needs a `viewBox` and solid fills.
+- To give a logo to a business that has none (GeneOS), add its SVG to `src/assets/logos`, list it in `IMAGES` in `src/components/business-logo.tsx`, and give it a size in `LOGO_STYLE` in `src/lib/business-logos.ts`.
 
 Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
 
@@ -152,7 +153,7 @@ To speed up listing, add www.mkholdings.asia to Google Search Console and Bing W
 
 The copy is written in a formal, corporate voice for partners and investors first, kept short, with every claim about a business taken from that business's own website. The lines below were drafted for the site and have no source beyond it. Approve, change or remove each one.
 
-- [ ] The tagline "The whole life of a car." and the five stage names: Drive, Upgrade, Maintain, Recover, Export.
+- [ ] The tagline "Automotive specialists." and the line built on it: specialist businesses "across every aspect of automotive".
 - [ ] The group description, the About page statements, and the mission and vision (`src/content/site.ts`, `src/app/about/page.tsx`).
 - [ ] The four operating principles (`habits` in `src/content/site.ts`), named on the About page.
 - [ ] The partner types (`partnerTypes` in `src/content/site.ts`). Two more were drafted and left out until confirmed: parts brands and distributors supplying RevHub, and founders bringing a business into the group.
@@ -160,8 +161,10 @@ The copy is written in a formal, corporate voice for partners and investors firs
 - [ ] The Investors page: whether investor enquiries are wanted in public, and whether there is a deck to offer. The page currently takes enquiries and offers no document.
 - [ ] The privacy notice (`/privacy`), including the registered name and a data protection contact.
 - [ ] The Car Lounge page. It says only that a remote booking desk for workshops and automotive services is in development.
+- [ ] The GeneOS page. It says only that GeneOS is an entire back-end system for automotive businesses, in development.
 
 ### Facts to confirm
 
 - [ ] Golden Hour: whether it handles accident claims, and who pays its service fee. Its own website describes accident recovery and promises "no commissions", so the page here says the same and does not mention claims.
 - [ ] SwiftDrive: the Partners page says leasing owners' cars is not on offer yet, as swiftdrive.sg does.
+- [ ] GeneOS: its website address. Its page gives geneos.digital, marked as in development, because the GeneOS app runs at app.geneos.digital. Correct `domain` in `src/content/businesses.ts` if the public site will be elsewhere, and send its logo when there is one.

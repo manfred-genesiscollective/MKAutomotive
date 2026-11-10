@@ -6,5 +6,5 @@ export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
-  return renderOgImage({ lines: ["The whole life", "of a car."], emblem: true });
+  return renderOgImage({ lines: ["Automotive", "specialists."], emblem: true });
 }

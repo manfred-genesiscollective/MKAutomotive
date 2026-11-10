@@ -5,8 +5,8 @@
  * link on the site: the home page, /businesses, each business page, the
  * footer, the contact form and the sitemap all read from it.
  *
- * To add a business, add an entry to `businesses` below. Order matters: the
- * list runs in the order of a car's life in Singapore.
+ * To add a business, add an entry to `businesses` below. The list is shown
+ * in this order: businesses that are open first, then those in development.
  */
 
 export type BusinessStatus = "live" | "coming-soon";
@@ -16,11 +16,6 @@ export type Business = {
   slug: string;
   /** Brand name exactly as the business writes it. */
   name: string;
-  /**
-   * Where the business sits in the life of a car. `afterCoe` marks a stage
-   * that begins once the car's ten-year Certificate of Entitlement ends.
-   */
-  stage: { number: string; label: string; afterCoe?: boolean };
   /** Short category, used in labels. */
   category: string;
   /** One line under the name. */
@@ -57,7 +52,6 @@ export const businesses: Business[] = [
   {
     slug: "swiftdrive",
     name: "SwiftDrive",
-    stage: { number: "01", label: "Drive" },
     category: "Car rental",
     tagline: "Weekly and monthly car\u00a0rental with door-to-door delivery.",
     need: "Rent a car",
@@ -134,7 +128,6 @@ export const businesses: Business[] = [
   {
     slug: "revhub",
     name: "RevHub",
-    stage: { number: "02", label: "Upgrade" },
     category: "Parts and fitting",
     tagline: "Performance parts and accessories, supplied and fitted.",
     need: "Upgrade a car",
@@ -204,56 +197,8 @@ export const businesses: Business[] = [
     model: "Online retail with in-house fitting.",
   },
   {
-    slug: "the-car-lounge",
-    name: "The Car Lounge",
-    stage: { number: "03", label: "Maintain" },
-    category: "Service booking",
-    tagline: "A booking desk for workshops and automotive services.",
-    need: "Book a workshop or service",
-    summary:
-      "A remote booking desk for workshops and automotive services, now in development.",
-    seo: "The Car Lounge is a remote booking desk for workshops and automotive services in Singapore, now in development.",
-    intro:
-      "The Car Lounge is the Group’s booking desk for workshops and automotive services. It is in development.",
-    description: [
-      "Drivers will book workshops and automotive services remotely, as easily as booking accommodation. Workshops and service providers will receive their bookings through it.",
-    ],
-    status: "coming-soon",
-    domain: "thecarlounge.sg",
-    facts: [
-      { label: "Business", value: "Booking desk for automotive services" },
-      { label: "Customers", value: "Drivers, workshops and service providers" },
-      { label: "Coverage", value: "Singapore" },
-    ],
-    servicesHeading: "The proposition",
-    services: [
-      {
-        title: "Remote booking",
-        text: "Drivers book a workshop or an automotive service without calling round.",
-      },
-      {
-        title: "A familiar model",
-        text: "See what is offered, then book it: the way travellers already book accommodation.",
-      },
-      {
-        title: "A desk for providers",
-        text: "Workshops and service providers receive and manage their bookings through The Car Lounge.",
-      },
-    ],
-    promisesHeading: "Customer commitments",
-    promises: [],
-    cta: {
-      heading: "Register your interest.",
-      text: "The Car Lounge is in development. Drivers, workshops and service providers can register their interest now.",
-      label: "Register your interest",
-    },
-    work: "Building the platform and bringing workshops and service providers onto it.",
-    model: "Booking platform for automotive services, in development.",
-  },
-  {
     slug: "golden-hour",
     name: "Golden Hour",
-    stage: { number: "04", label: "Recover" },
     category: "Towing and roadside assistance",
     tagline: "24/7 towing and roadside assistance, island-wide.",
     need: "Get a tow or roadside assistance",
@@ -331,7 +276,6 @@ export const businesses: Business[] = [
   {
     slug: "export-sg",
     name: "export.sg",
-    stage: { number: "05", label: "Export", afterCoe: true },
     category: "Vehicle export",
     tagline: "Singapore used cars, ready for export.",
     need: "Buy a car for export",
@@ -403,13 +347,95 @@ export const businesses: Business[] = [
     work: "Vehicle sourcing and preparation, export documentation and shipping, and work with overseas buyers.",
     model: "Cross-border trade in used vehicles.",
   },
+  {
+    slug: "the-car-lounge",
+    name: "The Car Lounge",
+    category: "Service booking",
+    tagline: "A booking desk for workshops and automotive services.",
+    need: "Book a workshop or service",
+    summary:
+      "A remote booking desk for workshops and automotive services, now in development.",
+    seo: "The Car Lounge is a remote booking desk for workshops and automotive services in Singapore, now in development.",
+    intro:
+      "The Car Lounge is the Group’s booking desk for workshops and automotive services. It is in development.",
+    description: [
+      "Drivers will book workshops and automotive services remotely, as easily as booking accommodation. Workshops and service providers will receive their bookings through it.",
+    ],
+    status: "coming-soon",
+    domain: "thecarlounge.sg",
+    facts: [
+      { label: "Business", value: "Booking desk for automotive services" },
+      { label: "Customers", value: "Drivers, workshops and service providers" },
+      { label: "Coverage", value: "Singapore" },
+    ],
+    servicesHeading: "The proposition",
+    services: [
+      {
+        title: "Remote booking",
+        text: "Drivers book a workshop or an automotive service without calling round.",
+      },
+      {
+        title: "A familiar model",
+        text: "See what is offered, then book it: the way travellers already book accommodation.",
+      },
+      {
+        title: "A desk for providers",
+        text: "Workshops and service providers receive and manage their bookings through The Car Lounge.",
+      },
+    ],
+    promisesHeading: "Customer commitments",
+    promises: [],
+    cta: {
+      heading: "Register your interest.",
+      text: "The Car Lounge is in development. Drivers, workshops and service providers can register their interest now.",
+      label: "Register your interest",
+    },
+    work: "Building the platform and bringing workshops and service providers onto it.",
+    model: "Booking platform for automotive services, in development.",
+  },
+  {
+    slug: "geneos",
+    name: "GeneOS",
+    category: "Business software",
+    tagline: "The back-end system for automotive businesses.",
+    need: "Run an automotive business",
+    summary: "An entire back-end system for automotive businesses, now in development.",
+    seo: "GeneOS is an entire back-end system for automotive businesses from MK Automotive Group, now in development.",
+    intro:
+      "GeneOS is the Group’s back-end system for automotive businesses. It is in development.",
+    description: [
+      "It is being built as an entire back-end system for automotive businesses.",
+    ],
+    status: "coming-soon",
+    domain: "geneos.digital",
+    facts: [
+      { label: "Business", value: "Back-end software" },
+      { label: "Customers", value: "Automotive businesses" },
+    ],
+    servicesHeading: "The proposition",
+    services: [
+      {
+        title: "One back-end system",
+        text: "The back-end software for an automotive business, in one system.",
+      },
+    ],
+    promisesHeading: "Customer commitments",
+    promises: [],
+    cta: {
+      heading: "Register your interest.",
+      text: "GeneOS is in development. Automotive businesses can register their interest now.",
+      label: "Register your interest",
+    },
+    work: "Building the software and bringing automotive businesses onto it.",
+    model: "Back-end software for automotive businesses, in development.",
+  },
 ];
 
 export function getBusiness(slug: string): Business | undefined {
   return businesses.find((business) => business.slug === slug);
 }
 
-/** The business before and after this one in the life of a car. */
+/** The business before and after this one in the list. */
 export function getNeighbours(slug: string): {
   previous?: Business;
   next?: Business;
@@ -444,11 +470,6 @@ const NUMBER_WORDS = [
 /** "five" for 5, so copy stays right when a business is added. */
 export function countWord(count: number = businesses.length): string {
   return NUMBER_WORDS[count] ?? String(count);
-}
-
-/** "Five" from "five": for a count at the start of a sentence. */
-export function capitalise(text: string): string {
-  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 /** "SwiftDrive, RevHub, The Car Lounge, Golden Hour and export.sg" */

@@ -1,0 +1,271 @@
+/*
+ * The wall: one glass panel ruled into equal tiles by hairlines. Each tile
+ * holds a business's logo, centred, with its category in the corner, one
+ * line under the logo and its website (or status) at the foot.
+ */
+.wall {
+  --cols: 3;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  border: 1px solid var(--line);
+  /* The glass's own lit edge is the top line. */
+  border-top-color: transparent;
+  /* Clips the outer half of the tiles' rules. */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Two across on tablets and phones; four across on a wide screen once the
+   portfolio reaches twelve. */
+@media (max-width: 899px) {
+  .wall {
+    --cols: 2;
+  }
+}
+
+@media (min-width: 1200px) {
+  .wall:has(> .tile:nth-child(12)) {
+    --cols: 4;
+  }
+}
+
+.tile {
+  --air: clamp(24px, 2.9vw, 42px);
+  position: relative;
+  display: grid;
+  grid-row: span 4;
+  /* Category, logo, line and foot sit on the same lines across a row. */
+  grid-template-rows: subgrid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 16px;
+  padding: 22px 26px;
+  /* Right and bottom rules; the panel clips the outer ones. */
+  box-shadow:
+    1px 0 0 var(--line),
+    0 1px 0 var(--line);
+}
+
+/* Soft light behind the logo on hover. */
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background:
+    radial-gradient(62% 56% at 50% 46%, rgba(238, 236, 230, 0.07), rgba(238, 236, 230, 0) 72%),
+    rgba(238, 236, 230, 0.018);
+  transition: opacity 0.5s var(--ease);
+}
+
+/* Row 1: category and arrow. */
+.category {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: start;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.go {
+  grid-row: 1;
+  grid-column: 2;
+  align-self: start;
+  width: 15px;
+  height: 15px;
+  margin-top: 1px;
+  color: var(--ink-4);
+  transition:
+    color 0.3s var(--ease),
+    transform 0.4s var(--ease);
+}
+
+/* Row 2: the logo, centred in a box as tall as the tallest logo, so every
+   logo in a row shares one centre line. The logo's size follows the width
+   of the tile (the slot is a container). */
+.name {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  margin-top: var(--air);
+  font: inherit;
+}
+
+.link {
+  display: block;
+  outline: none;
+}
+
+/* The link covers the whole tile and carries the gold stripe drawn in on hover. */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(var(--gold), var(--gold)) 0 0 / 0 2px no-repeat;
+  transition: background-size 0.5s var(--ease);
+}
+
+.link:focus-visible::after {
+  outline: 2px solid var(--ink);
+  outline-offset: -6px;
+}
+
+.slot {
+  --logo-height: clamp(18px, calc(10.4px + 7.39cqi), 40px);
+  display: block;
+  container-type: inline-size;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--logo-height) * 1.22);
+}
+
+/* Row 3: one line on what the business does. */
+.line {
+  grid-row: 3;
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 32ch;
+  margin: 14px 0 var(--air);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  text-wrap: balance;
+  transition:
+    color 0.4s var(--ease),
+    transform 0.5s var(--ease);
+}
+
+.whole {
+  white-space: nowrap;
+}
+
+/* Row 4: the website when the business is open, its status when not. */
+.foot {
+  grid-row: 4;
+  grid-column: 1;
+  align-self: end;
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+.site {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+.badge {
+  padding: 3px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Hover and keyboard focus. */
+.tile:hover::before,
+.tile:focus-within::before {
+  opacity: 1;
+}
+
+.tile:hover .link::after,
+.tile:focus-within .link::after {
+  background-size: 40px 2px;
+}
+
+.tile:hover .go,
+.tile:focus-within .go {
+  color: var(--ink);
+  transform: translateX(3px);
+}
+
+/* With a mouse the line rests quietly (still readable) and comes up on
+   hover; on a touch screen it is always at full strength. */
+@media (hover: hover) and (pointer: fine) {
+  .line {
+    color: var(--ink-4);
+    transform: translateY(3px);
+  }
+
+  .tile:hover .line,
+  .tile:focus-within .line {
+    color: var(--ink-2);
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile::before,
+  .tile *,
+  .link::after {
+    transition: none !important;
+  }
+
+  .line {
+    transform: none !important;
+  }
+}
+
+/* Two wide tiles across on a tablet: a little more air. */
+@media (min-width: 761px) and (max-width: 899px) {
+  .tile {
+    --air: clamp(30px, 4.2vw, 36px);
+  }
+}
+
+/* Phones: smaller labels, and the arrow moves to the foot so the category
+   has the full width. */
+@media (max-width: 760px) {
+  .tile {
+    --air: 24px;
+    padding: 14px 14px 15px;
+    column-gap: 8px;
+  }
+
+  .category {
+    grid-column: 1 / -1;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .go {
+    grid-row: 4;
+    align-self: center;
+    width: 13px;
+    height: 13px;
+    margin-top: 0;
+  }
+
+  .line {
+    margin-top: 10px;
+    max-width: none;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .site {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+
+  .badge {
+    padding: 2px 7px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+}

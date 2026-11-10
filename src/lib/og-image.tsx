@@ -3,7 +3,6 @@ import { join } from "node:path";
 
 import { ImageResponse } from "next/og";
 
-import { businesses } from "@/content/businesses";
 import { site } from "@/content/site";
 
 import { LOGO_FLAKE_TILE, LOGO_OPACITY, LOGO_SHADE, LOGO_STYLE } from "./business-logos";
@@ -312,12 +311,10 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false, logo }
           }}
         >
           <div style={{ display: "flex", gap: 30 }}>
-            {businesses.map((business) => (
-              <div key={business.slug} style={{ display: "flex", alignItems: "center", gap: 11 }}>
-                <div style={{ width: 8, height: 8, background: GOLD }} />
-                {business.stage.label}
-              </div>
-            ))}
+            <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+              <div style={{ width: 8, height: 8, background: GOLD }} />
+              {site.tagline.replace(/\.$/, "")}
+            </div>
           </div>
           <div style={{ display: "flex" }}>{site.name}</div>
         </div>

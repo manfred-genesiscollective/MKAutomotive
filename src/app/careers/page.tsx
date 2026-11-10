@@ -33,7 +33,6 @@ export default function CareersPage() {
           <div className={styles.rows}>
             <NumberedRows
               as="h3"
-              labels={businesses.map((business) => business.stage.number)}
               items={businesses.map((business) => ({
                 title: business.name,
                 logo: business.slug,

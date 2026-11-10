@@ -69,10 +69,10 @@ export async function SiteFooter() {
             <nav className={styles.column} aria-label="Businesses">
               <p className="eyebrow">Businesses</p>
               <ul>
-                {businesses.map((business) => (
+                {businesses.map((business, index) => (
                   <li key={business.slug}>
                     <Link href={`/businesses/${business.slug}`} prefetch>
-                      <span className={styles.index}>{business.stage.number}</span>
+                      <span className={styles.index}>{String(index + 1).padStart(2, "0")}</span>
                       {business.name}
                     </Link>
                   </li>

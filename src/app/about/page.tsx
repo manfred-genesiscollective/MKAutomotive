@@ -2,8 +2,8 @@ import Link from "next/link";
 
 import { CtaBand } from "@/components/cta-band";
 import { LabelRows } from "@/components/label-rows";
-import { LifecycleRail } from "@/components/lifecycle-rail";
 import { PageHero } from "@/components/page-hero";
+import { PortfolioWall } from "@/components/portfolio-wall";
 import { businesses, businessNameList, countWord } from "@/content/businesses";
 import { habits, site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
@@ -39,12 +39,9 @@ export default function AboutPage() {
 
       <section className="section surface-glass">
         <div className={`container ${styles.statement}`} data-reveal>
+          <p>Every aspect of automotive calls for a specialist.</p>
           <p>
-            Every car in Singapore passes through the same stages: rental, upgrade, servicing,
-            recovery and, after ten years, export.
-          </p>
-          <p>
-            The Group is building a business at each of them
+            {site.name} brings them together
             <span className="dot">.</span>
           </p>
         </div>
@@ -65,8 +62,8 @@ export default function AboutPage() {
                         : null}
                     </p>
                     <p className="body">
-                      {businessNameList()} serve successive stages of a car&rsquo;s life, from the
-                      first drive to the final export.
+                      {businessNameList()} each specialise in their own field, from rental and
+                      performance parts to recovery, export, service booking and software.
                     </p>
                   </>
                 ),
@@ -84,8 +81,8 @@ export default function AboutPage() {
                 label: "Mission",
                 content: (
                   <p className="statement">
-                    To make every stage of a car&rsquo;s life in Singapore simple, transparent and
-                    fairly priced.
+                    To bring specialist standards to every aspect of automotive in Singapore:
+                    simple, transparent and fairly priced.
                   </p>
                 ),
               },
@@ -93,8 +90,8 @@ export default function AboutPage() {
                 label: "Vision",
                 content: (
                   <p className="statement">
-                    To be the group drivers and partners rely on at every stage, from the
-                    first drive to the final export.
+                    To be the group that drivers, businesses and partners rely on for every
+                    aspect of automotive.
                   </p>
                 ),
               },
@@ -105,8 +102,8 @@ export default function AboutPage() {
             <h2 className="eyebrow" data-reveal>
               The portfolio
             </h2>
-            <div className={styles.rail} data-reveal>
-              <LifecycleRail />
+            <div className={styles.wall}>
+              <PortfolioWall />
             </div>
           </div>
         </div>

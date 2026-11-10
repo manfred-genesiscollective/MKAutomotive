@@ -8,8 +8,8 @@ type Props = {
   eyebrow?: string;
   /** One entry per line. End the last line with a full stop to get the gold dot. */
   title: string[];
-  /** "home" is the largest; "long" suits headlines of four words or more. */
-  size?: "home" | "page" | "long";
+  /** "home" is the largest. */
+  size?: "home" | "page";
   /** Usually the lede. Sits under a hairline below the headline. */
   children?: ReactNode;
   /** Set false on the home page, where the lede has no rule above it. */
@@ -27,8 +27,7 @@ export function PageHero({
   ruled = true,
   emblem = false,
 }: Props) {
-  const sizeClass =
-    size === "home" ? "display" : size === "long" ? "display display--long" : "display display--page";
+  const sizeClass = size === "home" ? "display" : "display display--page";
 
   return (
     <section className={`${styles.hero} ${size === "home" ? styles.home : ""}`}>

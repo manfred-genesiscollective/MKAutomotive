@@ -32,7 +32,7 @@ type Props = {
   /** Read out in place of the picture: the business's name. */
   alt: string;
   /** How large to draw it. The sizes are in business-logo.module.css. */
-  size: "hero" | "row" | "list" | "rail" | "neighbour";
+  size: "hero" | "wall" | "list" | "neighbour";
   /** The largest thing on the first screen: fetch it first. */
   priority?: boolean;
 };
@@ -41,7 +41,15 @@ type Props = {
 export function BusinessLogo({ slug, alt, size, priority = false }: Props) {
   const image = IMAGES[slug];
   const style = LOGO_STYLE[slug];
-  if (!image || !style) return null;
+  // A business without its logo artwork yet: its name, set in the site's
+  // own headline face with the forged finish, at the size a logo would be.
+  if (!image || !style) {
+    return (
+      <span className={`${styles.word} ${styles[size]}`}>
+        <span className="forged-text">{alt}</span>
+      </span>
+    );
+  }
   return (
     <span
       className={`${styles.logo} ${styles[size]}`}

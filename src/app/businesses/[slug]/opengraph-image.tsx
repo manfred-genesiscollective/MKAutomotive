@@ -17,7 +17,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   // anyone make the server render and store pictures for made-up addresses.
   if (!business) return new Response("Not found", { status: 404 });
   return renderOgImage({
-    eyebrow: `${business.stage.number} · ${business.stage.label}${business.status === "live" ? "" : ` · ${IN_DEVELOPMENT}`}`,
+    eyebrow: `${business.category}${business.status === "live" ? "" : ` · ${IN_DEVELOPMENT}`}`,
     lines: [business.name],
     logo: business.slug,
     subtitle: business.tagline,

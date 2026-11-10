@@ -433,7 +433,8 @@ svg {
   font-style: italic;
 }
 
-/* Sized so "The whole life" holds one line from 320px wide upwards. */
+/* Sized so each line of the home headline ("Automotive", "specialists.")
+   holds one line from 320px wide upwards. */
 .display {
   font-size: clamp(40px, min(13.2vw, 5.6vw + 50px), 150px);
   font-weight: 800;
@@ -449,11 +450,6 @@ svg {
     min(calc((100vw - 2 * var(--gutter)) / 8), 5vw + 48px),
     132px
   );
-}
-
-.display--long {
-  font-size: clamp(36px, min(10.4vw, 4.3vw + 42px), 110px);
-  line-height: 1;
 }
 
 .h2 {

@@ -1,7 +1,7 @@
 import { FormSection } from "@/components/form-section";
 import { NumberedRows } from "@/components/numbered-rows";
 import { PageHero } from "@/components/page-hero";
-import { IN_DEVELOPMENT, businesses, countWord } from "@/content/businesses";
+import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "Investors",
-  description: `${site.name} operates a business at each stage of a car’s life in Singapore, from rental to export.`,
+  description: `${site.name} owns specialist automotive businesses in Singapore, from rental and parts to recovery, export and software.`,
   path: "/investors",
 });
 
@@ -18,15 +18,10 @@ export default function InvestorsPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Investors"
-        size="long"
-        title={["One car,", `${countWord()} businesses.`]}
-      >
+      <PageHero eyebrow="Investors" title={["Specialists,", "under one group."]}>
         <p className="lede lede--lg">
-          Every car in Singapore runs on a ten-year Certificate of Entitlement (COE). Over that
-          period it creates demand for rental, upgrades, servicing and recovery; at the end, for
-          export. {site.name} operates a business at each stage.
+          {site.name} owns specialist businesses across the automotive sector in Singapore,
+          from rental, performance parts and recovery to export, service booking and software.
         </p>
       </PageHero>
 
@@ -48,15 +43,14 @@ export default function InvestorsPage() {
           <div className={styles.rows}>
             <NumberedRows
               as="h3"
-              labels={businesses.map((business) => business.stage.number)}
               items={businesses.map((business) => ({
                 title: business.name,
                 logo: business.slug,
                 text: business.model,
                 note:
                   business.status === "live"
-                    ? business.stage.label
-                    : `${business.stage.label} · ${IN_DEVELOPMENT}`,
+                    ? business.category
+                    : `${business.category} · ${IN_DEVELOPMENT}`,
               }))}
             />
           </div>

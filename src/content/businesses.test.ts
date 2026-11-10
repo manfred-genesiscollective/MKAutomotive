@@ -20,11 +20,6 @@ describe("businesses", () => {
     for (const business of businesses) assert.match(business.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });
 
-  it("numbers the stages in order: 01, 02, 03 ...", () => {
-    businesses.forEach((business, index) => {
-      assert.equal(business.stage.number, String(index + 1).padStart(2, "0"), business.name);
-    });
-  });
 
   it("gives every open business a website, and no website to one in development", () => {
     for (const business of businesses) {
@@ -39,10 +34,12 @@ describe("businesses", () => {
     }
   });
 
-  it("puts the stages that follow the COE at the end of the list", () => {
-    const first = businesses.findIndex((business) => business.stage.afterCoe);
-    if (first === -1) return;
-    for (const business of businesses.slice(first)) assert.equal(business.stage.afterCoe, true, business.name);
+  it("lists the businesses that are open before those in development", () => {
+    const firstInDevelopment = businesses.findIndex((business) => business.status !== "live");
+    if (firstInDevelopment === -1) return;
+    for (const business of businesses.slice(firstInDevelopment)) {
+      assert.notEqual(business.status, "live", business.name);
+    }
   });
 
   it("keeps the search description to one short sentence", () => {
