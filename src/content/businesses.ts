@@ -464,11 +464,16 @@ export function businessNameList(): string {
  *
  * Only real, checkable figures belong here. The second and third are single
  * businesses' own figures, taken from goldenhour.sg and export.sg, so each
- * label names its business. Replace or extend the list as group-level
+ * one names its business. Replace or extend the list as group-level
  * numbers (year founded, team size, vehicles handled) become available.
  */
-export const groupFacts: { value: string; label: string }[] = [
+export const groupFacts: {
+  value: string;
+  label: string;
+  /** The business the figure belongs to, when it is not a figure for the whole group. */
+  business?: string;
+}[] = [
   { value: String(businesses.length), label: "Businesses in the group" },
-  { value: "24/7", label: "Golden Hour towing and roadside help" },
-  { value: "15", label: "Destination countries listed by export.sg" },
+  { value: "24/7", label: "Towing and roadside help", business: "Golden Hour" },
+  { value: "15", label: "Destination countries listed", business: "export.sg" },
 ];

@@ -50,6 +50,14 @@
   color: var(--ink-3);
 }
 
+.business {
+  display: block;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--ink-2);
+}
+
 @media (max-width: 720px) {
   .stats {
     grid-template-columns: 1fr;
