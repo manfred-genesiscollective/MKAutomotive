@@ -1,18 +1,7 @@
-/* The one forged-carbon surface: a chopped-fibre texture in tints of the
-   brand carbon, faded behind the text so the words stay easy to read.
-   Drawn by scripts/forged-carbon.mjs. */
-.forged {
+/* On carbon the band lets more of the forged surface show (see .forged--open
+   in globals.css). The hairline marks where it begins. */
+.ruled {
   border-top: 1px solid var(--line);
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(27, 28, 31, 0.96) 0%,
-      rgba(27, 28, 31, 0.8) 42%,
-      rgba(27, 28, 31, 0.3) 100%
-    ),
-    url("/forged-carbon.svg");
-  background-position: center;
-  background-size: cover;
 }
 
 .band {

@@ -109,7 +109,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
 
   return (
     <>
-      <section className={styles.hero}>
+      <section className={`forged-reveal ${styles.hero}`}>
         <div className={`container ${styles.heroGrid}`}>
           <div className={styles.heroMain}>
             <p

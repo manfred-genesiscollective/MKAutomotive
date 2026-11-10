@@ -67,7 +67,7 @@ export function HeaderView({ pathname }: { pathname: string | null }) {
         </button>
       </div>
 
-      <dialog ref={menuRef} className={styles.menu} aria-label="Menu">
+      <dialog ref={menuRef} className={`forged ${styles.menu}`} aria-label="Menu">
         <div className={styles.menuBar}>
           <Link
             href="/"

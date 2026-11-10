@@ -18,12 +18,14 @@ const PEARL = "#eeece6";
 const ROSSO = "#d40000";
 const MUTED = "#9a9996";
 
-const fontDirectory = join(process.cwd(), "src/assets/fonts");
-const [semiBold, medium, mono] = await Promise.all([
-  readFile(join(fontDirectory, "Geist-SemiBold.ttf")),
-  readFile(join(fontDirectory, "Geist-Medium.ttf")),
-  readFile(join(fontDirectory, "GeistMono-Regular.ttf")),
+const assets = join(process.cwd(), "src/assets");
+const [semiBold, medium, mono, texture] = await Promise.all([
+  readFile(join(assets, "fonts/Geist-SemiBold.ttf")),
+  readFile(join(assets, "fonts/Geist-Medium.ttf")),
+  readFile(join(assets, "fonts/GeistMono-Regular.ttf")),
+  readFile(join(assets, "forged-carbon.svg")),
 ]);
+const textureUrl = `data:image/svg+xml;base64,${texture.toString("base64")}`;
 
 const MK =
   "M15.2 71H0V0h20.3l18.1 51.7L56.4 0h20.3v71H61.5V25L44.8 70.8h-13L15.2 25v46ZM103.7 71H88.5V0h15.2v31l25.8-31h17.7l-26.1 31.3L148.8 71h-17.3l-20.4-29.5-7.4 8.6V71Z";
@@ -49,12 +51,35 @@ export function renderOgImage({ eyebrow, lines, subtitle }: Options) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          position: "relative",
           padding: "64px 72px",
           background: CARBON,
           color: PEARL,
           fontFamily: "Geist",
         }}
       >
+        {/* The forged-carbon surface, with the brand colour laid over it
+            more heavily on the left, where the words are. */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- drawn into an image, not a page */}
+        <img
+          src={textureUrl}
+          alt=""
+          width={1200}
+          height={1200}
+          style={{ position: "absolute", top: 0, left: 0 }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            background:
+              "linear-gradient(90deg, rgba(27,28,31,0.62) 0%, rgba(27,28,31,0.5) 55%, rgba(27,28,31,0.12) 100%)",
+          }}
+        />
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
           <svg width="84" height="32" viewBox="0 0 186 71">
             <path d={MK} fill={PEARL} />

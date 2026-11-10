@@ -2,8 +2,9 @@
  * MK Automotive Group: global styles.
  *
  * Colour follows a 60 / 30 / 10 rule:
- *   60%  Forged Carbon   the main surface
- *   30%  Pearl White     type on carbon, and one light band per page
+ *   60%  Forged Carbon   the main surface: a real forged-carbon texture, not
+ *                        a flat grey (see "The forged-carbon surface" below)
+ *   30%  Pearl White     type on carbon, and flat light bands
  *   10%  Rosso Corsa     small details only: full stops, short stripes, tiny
  *                        markers. Never a background, a button fill or text.
  *
@@ -28,6 +29,12 @@
   --gutter: 40px;
   --header-height: 68px;
 
+  /* How much the flat brand colour is laid over the texture where there is
+     text: 0 shows the raw material, 1 hides it completely. */
+  --veil: rgba(27, 28, 31, 0.46);
+  /* Width of one repeat of the texture. Smaller means finer flakes. */
+  --flake: 1000px;
+
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
   --ease-line: cubic-bezier(0.19, 0.72, 0.2, 1);
 }
@@ -35,6 +42,7 @@
 @media (max-width: 720px) {
   :root {
     --gutter: 22px;
+    --flake: 760px;
   }
 }
 
@@ -47,9 +55,11 @@
   --bg-raised: #232428;
   --bg-tint: rgba(238, 236, 230, 0.045);
   --ink: var(--pearl);
-  --ink-2: #c0beba; /* 9.3:1 on carbon */
-  --ink-3: #9a9996; /* 6.0:1 */
-  --ink-4: #858482; /* 4.6:1 */
+  /* Ratios are against the flat brand colour; the second figure is the worst
+     case measured over the lightest flakes of the texture. */
+  --ink-2: #c0beba; /* 9.3:1, never below 7:1 */
+  --ink-3: #a4a3a0; /* 6.8:1, never below 5:1 */
+  --ink-4: #858482; /* 4.6:1 on flat carbon only: do not use on the texture */
   --line: rgba(238, 236, 230, 0.11);
   --line-strong: rgba(238, 236, 230, 0.24);
 }
@@ -69,8 +79,79 @@
 
 .surface-carbon,
 .surface-pearl {
-  background: var(--bg);
   color: var(--ink);
+}
+
+.surface-pearl {
+  background: var(--bg);
+}
+
+/* ---------- The forged-carbon surface ---------- */
+
+/*
+ * The carbon is a material, not a colour: chopped carbon-fibre flakes, drawn
+ * by scripts/forged-carbon.mjs as a seamless tile in tints that average back
+ * to #1B1C1F. The veil lays the flat brand colour over it so text stays easy
+ * to read; pearl surfaces are flat and cover it.
+ */
+body,
+.surface-carbon,
+.forged {
+  background-color: var(--carbon);
+  background-image:
+    linear-gradient(var(--veil), var(--veil)), url("../assets/forged-carbon.svg");
+  background-size:
+    auto,
+    var(--flake) var(--flake);
+}
+
+/* A closing band that lets more of the material show towards the right,
+   away from the text. */
+.forged--open {
+  background-image:
+    linear-gradient(90deg, var(--veil) 0%, var(--veil) 36%, rgba(27, 28, 31, 0.06) 100%),
+    url("../assets/forged-carbon.svg");
+}
+
+/*
+ * The top of a page: the raw material shows through in the open corner
+ * beside the headline and fades back into the veiled surface. The layer is
+ * lined up with the page's own texture (which starts above the header), so
+ * the flakes match exactly and there is no seam.
+ */
+.forged-reveal {
+  position: relative;
+}
+
+.forged-reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("../assets/forged-carbon.svg") 0 calc(-1 * (var(--header-height) + 1px)) /
+    var(--flake) var(--flake);
+  /* The fade: an ellipse anchored in the top right corner, no larger than
+     1300 by 760px, outside which nothing of this layer shows. */
+  -webkit-mask: radial-gradient(100% 100% at 100% 0%, #000 0%, rgba(0, 0, 0, 0.55) 32%, transparent 66%)
+    100% 0 / min(100%, 1300px) min(100%, 760px) no-repeat;
+  mask: radial-gradient(100% 100% at 100% 0%, #000 0%, rgba(0, 0, 0, 0.55) 32%, transparent 66%)
+    100% 0 / min(100%, 1300px) min(100%, 760px) no-repeat;
+}
+
+.forged-reveal > * {
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .forged--open {
+    background-image:
+      linear-gradient(var(--veil), var(--veil)), url("../assets/forged-carbon.svg");
+  }
+
+  /* On a narrow screen the text fills the width, so the reveal stays faint. */
+  .forged-reveal::before {
+    opacity: 0.45;
+  }
 }
 
 /* ---------- Base ---------- */
@@ -99,7 +180,6 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;

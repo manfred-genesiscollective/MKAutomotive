@@ -16,7 +16,7 @@ type Props = {
 export function CtaBand({ eyebrow, title, text, children, surface = "carbon" }: Props) {
   return (
     <section
-      className={`section surface-${surface} ${surface === "carbon" ? styles.forged : ""}`}
+      className={`section surface-${surface} ${surface === "carbon" ? `forged--open ${styles.ruled}` : ""}`}
     >
       <div className={`container ${styles.band}`} data-reveal>
         <div className={styles.copy}>

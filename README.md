@@ -65,8 +65,8 @@ Spam is limited by a hidden honeypot field and strict server-side validation. Fo
 
 Colour follows a 60 / 30 / 10 scheme, defined once in `src/app/globals.css`:
 
-- **Forged Carbon `#1B1C1F`**: the main surface.
-- **Pearl White `#EEECE6`**: type on carbon, and one light band per page.
+- **Forged Carbon `#1B1C1F`**: the main surface. It is drawn as the material, not as a flat grey: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) in tints that average back to `#1B1C1F`. `node scripts/forged-carbon.mjs` redraws it. Two variables in `globals.css` tune it: `--veil` (how much flat colour sits over the texture; raise it for a calmer surface) and `--flake` (the size of the flakes).
+- **Pearl White `#EEECE6`**: type on carbon, and flat light bands.
 - **Rosso Corsa `#D40000`**: small details only. The headline full stop, short stripes, stage markers. Never a background, a button fill or body text (red on carbon is about 3:1, too low for small text).
 
 Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on a carbon section or inside a `surface-pearl` one. The typeface is Geist with Geist Mono for labels.
