@@ -1,11 +1,3 @@
 .rows {
   margin-top: clamp(40px, 4.4vw, 56px);
 }
-
-.habits {
-  margin-top: clamp(56px, 7vw, 96px);
-}
-
-.habitRows {
-  margin-top: clamp(32px, 3.6vw, 48px);
-}

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { businesses, groupFacts } from "./businesses";
+import { businesses } from "./businesses";
 import { careerInterests, contactTopics, partnershipOptions } from "./forms";
 import { habits, partnerTypes, primaryNav, site } from "./site";
 
@@ -62,7 +62,7 @@ describe("businesses", () => {
   });
 
   it("leaves no placeholder contact details or straight apostrophes in the copy", () => {
-    const copy = JSON.stringify({ businesses, groupFacts, habits, partnerTypes, site });
+    const copy = JSON.stringify({ businesses, habits, partnerTypes, site });
     assert.doesNotMatch(copy, /example\.com|0000 0000|lorem ipsum/i);
     assert.doesNotMatch(copy, /\w'\w/);
   });

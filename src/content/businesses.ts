@@ -457,22 +457,3 @@ export function businessNameList(): string {
   if (names.length <= 1) return names.join("");
   return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
 }
-
-/**
- * Figures on the home page.
- *
- * Only real, checkable figures belong here. The second and third are single
- * businesses' own figures, taken from goldenhour.sg and export.sg, so each
- * one names its business. Replace or extend the list as group-level
- * numbers (year founded, team size, vehicles handled) become available.
- */
-export const groupFacts: {
-  value: string;
-  label: string;
-  /** The business the figure belongs to, when it is not a figure for the whole group. */
-  business?: string;
-}[] = [
-  { value: String(businesses.length), label: "Businesses in the portfolio" },
-  { value: "24/7", label: "Towing and roadside assistance", business: "Golden Hour" },
-  { value: "15", label: "Export destination countries listed", business: "export.sg" },
-];

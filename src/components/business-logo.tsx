@@ -12,10 +12,11 @@ import styles from "./business-logo.module.css";
 
 /*
  * Each business's own logo, traced from the artwork the group supplied and
- * kept in its own colours (src/assets/logos). Two changes from the artwork:
- * Golden Hour's words sit to the right of its monogram instead of under it,
- * in the monogram's orange (they were black), and the "Drive" of SwiftDrive
- * is white instead of navy. Black and navy would disappear on the carbon.
+ * kept in its own colours (src/assets/logos). Golden Hour's and The Car
+ * Lounge's words are stacked to the right of their monograms, one word to a
+ * line. Two colours differ from the artwork: Golden Hour's words take the
+ * monogram's orange (they were black) and the "Drive" of SwiftDrive is white
+ * instead of navy. Black and navy would disappear on the carbon.
  */
 const IMAGES: Record<string, StaticImageData> = {
   swiftdrive,

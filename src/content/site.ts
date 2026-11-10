@@ -41,9 +41,9 @@ export const primaryNav: { label: string; href: string }[] = [
 export const contactNav = { label: "Contact", href: "/contact" };
 
 /**
- * The operating principles the group's businesses share. Shown on the home
- * page, and listed in one sentence on the About page, which is built from
- * these titles: write each title as a short noun phrase.
+ * The operating principles the group's businesses share, listed in one
+ * sentence on the About page. The sentence is built from these titles, so
+ * write each title as a short noun phrase.
  */
 export const habits: { title: string; text: string }[] = [
   {

@@ -2,12 +2,10 @@ import Link from "next/link";
 
 import { BusinessRows } from "@/components/business-rows";
 import { CtaBand } from "@/components/cta-band";
-import { NumberedRows } from "@/components/numbered-rows";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
-import { StatRow } from "@/components/stat-row";
-import { businesses, capitalise, countWord, groupFacts } from "@/content/businesses";
-import { habits, site } from "@/content/site";
+import { businesses, capitalise, countWord } from "@/content/businesses";
+import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -72,23 +70,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section surface-glass">
-        <div className="container">
-          <StatRow items={groupFacts} />
-          {/* The About page links here: the habits, not the figures above them. */}
-          <div className={styles.habits} id="habits">
-            <SectionHeading
-              eyebrow="How we operate"
-              title={`${capitalise(countWord(habits.length))} principles, applied across the portfolio.`}
-            />
-            <div className={styles.habitRows}>
-              <NumberedRows items={habits} />
-            </div>
-          </div>
-        </div>
-      </section>
-
       <CtaBand
+        surface="glass"
         eyebrow="Partnerships and investment"
         title="Work with the Group."
         text="Enquiries about partnerships, supply, investment and careers are reviewed by the Group and directed to the business concerned."

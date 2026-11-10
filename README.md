@@ -8,7 +8,7 @@ The site is a hub. It says what the group is, then sends each visitor to the rig
 
 | Address | Page |
 | --- | --- |
-| `/` | Home: headline, the five stages, a row per business, group facts, the four habits |
+| `/` | Home: headline, the portfolio with a row per business, and a closing band for partners and investors |
 | `/businesses` | Every business, with a link to its own website |
 | `/businesses/<slug>` | One page per business, generated from the content file |
 | `/about` | What the group is, how it works, mission and vision |
@@ -24,7 +24,7 @@ Everything a non-developer is likely to change lives in `src/content/`.
 
 - `businesses.ts` holds every business: name, stage, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry. To launch one marked `coming-soon`, set `status: "live"`, add its `url`, and rewrite the wording that says it is in development (`summary`, `seo`, `intro`, `description`, `services`, `cta`, `work`, `model`). `npm test` checks the rules the pages rely on, such as unique names and a website for every open business.
 - A few sentences name the stages in words ("rent, upgrade, recover and export"): the group description in `site.ts`, and the opening lines of the home, About and Investors pages. Update them by hand when a business is added or opens.
-- `site.ts` holds group details: tagline, contact details, social links, the four habits and the partner types. Contact details left empty are simply not shown.
+- `site.ts` holds group details: tagline, contact details, social links, the four operating principles (named on the About page) and the partner types. Contact details left empty are simply not shown.
 - `forms.ts` holds the choices offered in the enquiry forms.
 
 Page-specific wording (About, Careers, Investors and so on) is in each page file under `src/app/`.
@@ -70,7 +70,7 @@ The palette is defined once in `src/app/globals.css`:
 - **Forged Carbon `#1B1C1F`** is the main colour, shown as the material under dark glass. On screen it is kept close to black, so that the platinum and Pearl White on it stand out.
   - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `--carbon-deep` is that tone and `--veil` sets how much of it covers the flakes (higher is darker): change these two to lighten or darken the whole site. `--flake` sets the size of the flakes.
   - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
-  - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground: the group figures and the forms.
+  - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground, such as the forms and the closing bands.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
 - **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text.
 - **Platinum** is a finish, not a flat colour: a light version of the flake texture (`src/assets/forged-metal.svg`), so a shape looks cut from polished forged metal. The logo, the emblem beside the home headline and the large headings are made of it. `--platinum` (`#E5E4E2`) is the flat colour used where the texture cannot be shown, such as in print.
@@ -80,7 +80,7 @@ Components read surface variables (`--bg`, `--ink`, `--line`), so any component 
 ### Type
 
 - **Saira** (ExtraBold Italic) for headings, business names and figures, and upright for navigation and buttons. **Geist** for paragraphs, **Geist Mono** for small labels.
-- **Forged-metal lettering**: page headlines, section headings, business names and the group figures are filled with the platinum finish, so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
+- **Forged-metal lettering**: page headlines and section headings are filled with the platinum finish, so the letters look cut from polished forged metal. It is ordinary text with a textured fill: add the class `forged-text` to give anything else the same finish. Smaller headings stay solid Pearl White, because the texture needs size to read.
 
 `node scripts/forged-carbon.mjs` redraws the three textures (carbon, metal, and the light and shade laid over the business logos) from the same flakes.
 
@@ -96,7 +96,7 @@ In the header and the phone menu the monogram has the group's name beside it, "M
 
 Each business is shown by its own logo, in its own colours: in the rows on the home page and Our businesses, as the headline of its page, in the stage list on About, in the lists on Careers and Investors, in the previous and next links, and in its share image.
 
-- The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied, lettering included. Two changes from those files: Golden Hour's words sit to the right of its monogram rather than under it, in the monogram's orange rather than black, and the "Drive" of SwiftDrive is white rather than navy. Black and navy would disappear against the carbon. The Car Lounge is as supplied, words on the right.
+- The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied, lettering included. Golden Hour's and The Car Lounge's words are stacked to the right of their monograms, one word to a line, spanning the monogram's height. Two colours differ from those files: Golden Hour's words are in the monogram's orange rather than black, and the "Drive" of SwiftDrive is white rather than navy. Black and navy would disappear against the carbon.
 - The forged finish (`src/components/business-logo.module.css`): the carbon's flakes are laid over each logo as light and shade (`src/assets/forged-shade.svg`), cut to its shape, and the logo is slightly see-through. The strength, the transparency and each logo's relative size are in `src/lib/business-logos.ts`, which the share images read too.
 - To use the businesses' own vector artwork instead, replace the five SVG files (keep the names). Each needs a `viewBox` and solid fills.
 
@@ -154,7 +154,7 @@ The copy is written in a formal, corporate voice for partners and investors firs
 
 - [ ] The tagline "The whole life of a car." and the five stage names: Drive, Upgrade, Maintain, Recover, Export.
 - [ ] The group description, the About page statements, and the mission and vision (`src/content/site.ts`, `src/app/about/page.tsx`).
-- [ ] The four operating principles (`habits` in `src/content/site.ts`).
+- [ ] The four operating principles (`habits` in `src/content/site.ts`), named on the About page.
 - [ ] The partner types (`partnerTypes` in `src/content/site.ts`). Two more were drafted and left out until confirmed: parts brands and distributors supplying RevHub, and founders bringing a business into the group.
 - [ ] The Careers page: whether open applications are wanted, and the kinds of work listed for each business (`work` in `src/content/businesses.ts`).
 - [ ] The Investors page: whether investor enquiries are wanted in public, and whether there is a deck to offer. The page currently takes enquiries and offers no document.
@@ -163,6 +163,5 @@ The copy is written in a formal, corporate voice for partners and investors firs
 
 ### Facts to confirm
 
-- [ ] The home page figures (`groupFacts` in `src/content/businesses.ts`). "24/7" is from goldenhour.sg and "15" from export.sg.
 - [ ] Golden Hour: whether it handles accident claims, and who pays its service fee. Its own website describes accident recovery and promises "no commissions", so the page here says the same and does not mention claims.
 - [ ] SwiftDrive: the Partners page says leasing owners' cars is not on offer yet, as swiftdrive.sg does.

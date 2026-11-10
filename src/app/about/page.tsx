@@ -74,17 +74,10 @@ export default function AboutPage() {
               {
                 label: "Operating principles",
                 content: (
-                  <>
-                    <p className="lead">
-                      {habitCount.charAt(0).toUpperCase() + habitCount.slice(1)} principles apply
-                      across the businesses in operation: {habitSentence}.
-                    </p>
-                    <p className="body">
-                      <Link href="/#habits" className="text-link">
-                        The principles in practice
-                      </Link>
-                    </p>
-                  </>
+                  <p className="lead">
+                    {habitCount.charAt(0).toUpperCase() + habitCount.slice(1)} principles apply
+                    across the businesses in operation: {habitSentence}.
+                  </p>
                 ),
               },
               {
