@@ -45,6 +45,9 @@ const saira = localFont({
   ],
   variable: "--font-saira",
   display: "swap",
+  // See "Saira Stand-in" in globals.css for why the automatic one is not used.
+  adjustFontFallback: false,
+  fallback: ["Saira Stand-in"],
 });
 
 // Every page is prerendered. If a page ever starts to depend on request-time

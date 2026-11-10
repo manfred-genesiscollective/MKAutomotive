@@ -34,6 +34,7 @@ export async function generateMetadata({
     title: `${business.name}: ${business.category.toLowerCase()}`,
     description: business.seo,
     path: `/businesses/${business.slug}`,
+    ownImage: true,
   });
 }
 

@@ -345,6 +345,26 @@ textarea {
 
 /* ---------- Type ---------- */
 
+/*
+ * What headings are drawn in for the moment before Saira has loaded.
+ *
+ * Headline sizes are worked out so that each line just fits in Saira. An
+ * ordinary stand-in is wider, so a headline would wrap onto a second line
+ * and then jump back when Saira arrived. This one is a system face shrunk
+ * until nothing is wider than it will be in Saira, and given Saira's line
+ * metrics so the baseline stays where it is.
+ */
+@font-face {
+  font-family: "Saira Stand-in";
+  src:
+    local("Arial"), local("Helvetica Neue"), local("Roboto"), local("Segoe UI"),
+    local("Liberation Sans");
+  size-adjust: 96%;
+  ascent-override: 118.23%;
+  descent-override: 45.73%;
+  line-gap-override: 0%;
+}
+
 .display,
 .h2,
 .h3 {

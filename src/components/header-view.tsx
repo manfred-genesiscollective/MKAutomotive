@@ -15,9 +15,24 @@ export function HeaderWithPath() {
 
 const menuItems = [{ label: "Home", href: "/" }, ...primaryNav, contactNav];
 
+const MENU_ID = "site-menu";
+
+/*
+ * Lets the menu buttons work before the page's scripts have run, and with
+ * scripts off, in browsers that support command buttons. The click handlers
+ * below cover every other browser. The attribute names are newer than
+ * React's type definitions, hence the cast.
+ */
+const commands = (command: "show-modal" | "close") =>
+  ({ commandfor: MENU_ID, command }) as object;
+
 export function HeaderView({ pathname }: { pathname: string | null }) {
   const menuRef = useRef<HTMLDialogElement>(null);
-  const openMenu = () => menuRef.current?.showModal();
+  // The command attributes may already have done the work: only act if not.
+  const openMenu = () => {
+    const menu = menuRef.current;
+    if (menu && !menu.open) menu.showModal();
+  };
   const closeMenu = () => menuRef.current?.close();
 
   // A change of page closes the menu, however it came about: a link in the
@@ -67,13 +82,14 @@ export function HeaderView({ pathname }: { pathname: string | null }) {
           aria-label="Open menu"
           aria-haspopup="dialog"
           onClick={openMenu}
+          {...commands("show-modal")}
         >
           <span />
           <span />
         </button>
       </div>
 
-      <dialog ref={menuRef} className={`forged ${styles.menu}`} aria-label="Menu">
+      <dialog ref={menuRef} id={MENU_ID} className={`forged ${styles.menu}`} aria-label="Menu">
         <div className={styles.menuBar}>
           <Link
             href="/"
@@ -88,6 +104,7 @@ export function HeaderView({ pathname }: { pathname: string | null }) {
             className={`${styles.burger} ${styles.close}`}
             aria-label="Close menu"
             onClick={closeMenu}
+            {...commands("close")}
           >
             <span />
             <span />

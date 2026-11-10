@@ -41,10 +41,10 @@ const securityHeaders = [
   ...(process.env.NODE_ENV === "production"
     ? [
         { key: "Content-Security-Policy", value: contentSecurityPolicy },
-        {
-          key: "Strict-Transport-Security",
-          value: "max-age=63072000; includeSubDomains",
-        },
+        // No includeSubDomains: the site's own domain may have subdomains
+        // that are not on HTTPS, and this header would lock visitors out of
+        // them for two years.
+        { key: "Strict-Transport-Security", value: "max-age=63072000" },
       ]
     : []),
 ];

@@ -6,9 +6,12 @@ export const defaultTitle = `${site.name} | Automotive holding company, Singapor
 
 /**
  * The group's share image (src/app/opengraph-image.tsx). A page that sets
- * its own openGraph block replaces the inherited one, image included, so
- * every page has to name the image again. The home page and the business
- * pages still show their own: an image file beside a page takes priority.
+ * its own openGraph block replaces the inherited one, image included, so a
+ * page without an image of its own has to name the group's again.
+ *
+ * A page that does have its own image file (the home page and each business
+ * page have an opengraph-image.tsx beside them) must NOT name one here: an
+ * image named in this object wins over the file.
  */
 const shareImage = {
   url: "/opengraph-image",
@@ -25,13 +28,17 @@ export function pageMetadata({
   title,
   description,
   path,
+  ownImage = false,
 }: {
   /** Leave out on the home page to use the site's default title. */
   title?: string;
   description: string;
   path: string;
+  /** Set when the page has its own opengraph-image file beside it. */
+  ownImage?: boolean;
 }): Metadata {
   const fullTitle = title ? `${title} | ${site.name}` : defaultTitle;
+  const images = ownImage ? {} : { images: [shareImage] };
   return {
     ...(title ? { title } : {}),
     description,
@@ -43,13 +50,13 @@ export function pageMetadata({
       url: path,
       title: fullTitle,
       description,
-      images: [shareImage],
+      ...images,
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [shareImage],
+      ...images,
     },
   };
 }

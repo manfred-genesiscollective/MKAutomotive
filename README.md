@@ -84,7 +84,7 @@ Components read surface variables (`--bg`, `--ink`, `--line`), so any component 
 
 ### Logo
 
-The MK monogram is one outline, kept in `src/components/logo.tsx` (the header, footer and menu), `src/assets/mk-mark.svg` (the forged emblem beside the home headline), `src/app/icon.svg` (the browser icon) and `src/lib/og-image.tsx` (share images). To replace it with the original artwork, change the path in those four places. `apple-icon.png` and `favicon.ico` are pictures of `icon.svg` and need exporting again if it changes.
+The MK monogram is one outline, kept in `src/lib/mk-mark.ts` (used by the header, footer, menu and share images), `src/assets/mk-mark.svg` (the forged emblem beside the home headline) and `src/app/icon.svg` (the browser icon). To replace it with the original artwork, change the path in those three places. `apple-icon.png` and `favicon.ico` are pictures of `icon.svg` and need exporting again if it changes.
 
 Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
 

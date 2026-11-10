@@ -1,16 +1,12 @@
-import { Suspense } from "react";
-
-import { HeaderView, HeaderWithPath } from "./header-view";
+import { HeaderWithPath } from "./header-view";
 
 /**
- * The sticky header. The current page is read on the client, so it sits in a
- * Suspense boundary: pages whose address is not known at build time fall back
- * to the same header without a highlighted link.
+ * The sticky header. It reads the current page to mark the section the
+ * visitor is in. There is deliberately no Suspense boundary around it: with
+ * one, the server sent a stand-in header first and the real one afterwards,
+ * so pages carried two headers and marked no section without JavaScript.
+ * Every page's address is known when the site is built, so none is needed.
  */
 export function SiteHeader() {
-  return (
-    <Suspense fallback={<HeaderView pathname={null} />}>
-      <HeaderWithPath />
-    </Suspense>
-  );
+  return <HeaderWithPath />;
 }

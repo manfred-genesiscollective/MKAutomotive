@@ -14,7 +14,11 @@ import { getSiteUrl } from "@/lib/site-url";
 
 import styles from "./page.module.css";
 
-export const metadata = pageMetadata({ description: site.description, path: "/" });
+export const metadata = pageMetadata({
+  description: site.description,
+  path: "/",
+  ownImage: true,
+});
 
 export default function HomePage() {
   const siteUrl = getSiteUrl();
@@ -84,7 +88,7 @@ export default function HomePage() {
           <div className={styles.habits}>
             <SectionHeading
               eyebrow="How we work"
-              title="Different businesses, the same four habits."
+              title={`Different businesses, the same ${countWord(habits.length)} habits.`}
             />
             <div className={styles.habitRows}>
               <NumberedRows items={habits} />

@@ -6,6 +6,8 @@ import { ImageResponse } from "next/og";
 import { businesses } from "@/content/businesses";
 import { site } from "@/content/site";
 
+import { MK_MARK } from "./mk-mark";
+
 /**
  * The image shown when a page is shared on social media or in a chat app.
  * Drawn in code so it always matches the site: forged carbon, forged-metal
@@ -19,10 +21,6 @@ const CARBON = "#1b1c1f";
 const PEARL = "#eeece6";
 const GOLD = "#bd9c66";
 const MUTED = "#9a9996";
-
-/** The MK monogram: the same outline as src/components/logo.tsx. */
-const MARK =
-  "M0 0 319 319 638 0V743H542V385L317 610 430 743H322L222 630V743H132V250L95 213V743H0ZM222 340 319 437 542 214V275L222 595Z";
 
 const assets = join(process.cwd(), "src/assets");
 const [display, medium, mono, carbon, metal] = await Promise.all([
@@ -41,8 +39,8 @@ const metalUrl = svgUrl(metal);
 
 /** The monogram cut from forged metal: the texture, clipped to the mark. */
 const emblemUrl = svgUrl(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 638 743">` +
-    `<defs><clipPath id="mark"><path clip-rule="evenodd" d="${MARK}"/></clipPath></defs>` +
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MK_MARK.viewBox}">` +
+    `<defs><clipPath id="mark"><path clip-rule="evenodd" d="${MK_MARK.path}"/></clipPath></defs>` +
     `<g clip-path="url(#mark)"><g transform="translate(-150 -90) scale(0.94)">` +
     metal.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "") +
     `</g></g></svg>`,
@@ -59,12 +57,28 @@ type Options = {
   emblem?: boolean;
 };
 
+/**
+ * Roughly how wide a line is in Saira ExtraBold Italic, in em. Counting
+ * characters is not enough: capitals are much wider than small letters. The
+ * figures err on the wide side, so a headline sized from them fits.
+ */
+function emWidth(line: string): number {
+  let width = 0;
+  for (const character of line) {
+    if (/[MW]/.test(character)) width += 0.95;
+    else if (/[A-Z0-9&]/.test(character)) width += 0.64;
+    else if (/[iljft.,:;'’! ]/.test(character)) width += 0.36;
+    else if (/[mw]/.test(character)) width += 0.8;
+    else width += 0.56;
+  }
+  return width;
+}
+
 export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Options) {
-  const longest = Math.max(...lines.map((line) => line.length));
-  // Saira ExtraBold Italic runs about 0.48em a character. Keep the headline
-  // inside the width that is free: all of it, or what the emblem leaves.
+  // Keep the headline on one line inside the width that is free: all of it,
+  // or what the emblem leaves.
   const room = emblem ? 720 : 1040;
-  const headlineSize = Math.round(Math.min(124, room / (longest * 0.48)));
+  const headlineSize = Math.round(Math.min(124, room / Math.max(...lines.map(emWidth))));
 
   return new ImageResponse(
     (
@@ -129,8 +143,8 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false }: Opti
           />
         ) : null}
 
-        <svg width="55" height="64" viewBox="0 0 638 743">
-          <path d={MARK} fill={GOLD} fillRule="evenodd" />
+        <svg width="55" height="64" viewBox={MK_MARK.viewBox}>
+          <path d={MK_MARK.path} fill={GOLD} fillRule="evenodd" />
         </svg>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
