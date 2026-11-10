@@ -10,15 +10,17 @@
  *                            background: the site has no light sections.
  *   Champagne Gold  #BD9C66  the colour of the logo. Small details only:
  *                            the logo, full stops, short stripes, tiny
- *                            markers. Never a fill or a block.
+ *                            markers, selected text. Never a band, a panel
+ *                            or a button.
  *
  * Type: Saira (ExtraBold Italic for headings, as on export.sg) with a plain
  * face for paragraphs and a mono face for small labels. Large headings are
  * filled with forged metal: see "Forged-metal lettering" below.
  *
- * Components never use the brand colours directly. They read the surface
- * variables (--bg, --ink, --line ...) so the same component works on the
- * open carbon and inside a glass panel.
+ * Components take their text and line colours from the surface variables
+ * (--bg, --ink, --line ...), so the same component works on the open carbon
+ * and inside a glass panel. The one brand colour they name directly is
+ * --gold, for the small details.
  */
 
 :root {
@@ -198,17 +200,14 @@ footer {
   box-sizing: border-box;
 }
 
+/* No scroll-behavior: smooth here. The browser would apply it to every
+   change of page as well, so a new page would open part-way down and glide
+   to the top. */
 html {
   background: var(--carbon-deep);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-height) + 24px);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 body {
@@ -334,25 +333,8 @@ textarea {
   padding-block: clamp(56px, 7vw, 104px);
 }
 
-.section--tight {
-  padding-block: clamp(40px, 5vw, 72px);
-}
-
 .section--flush-top {
   padding-top: 0;
-}
-
-.rule {
-  border: 0;
-  border-top: 1px solid var(--line);
-  margin: 0;
-}
-
-.split {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
-  gap: 32px 72px;
-  align-items: start;
 }
 
 .stack {
@@ -537,10 +519,6 @@ textarea {
   background: var(--gold);
 }
 
-.eyebrow--plain::before {
-  display: none;
-}
-
 .meta {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -568,7 +546,8 @@ textarea {
   text-decoration-color: currentColor;
 }
 
-/* Mono "learn more" link. The stripe grows on hover. */
+/* Mono "learn more" label inside a row that is itself the link. The stripe
+   grows when the row is hovered. */
 .arrow-link {
   display: inline-flex;
   align-items: center;
@@ -590,8 +569,6 @@ textarea {
   transition: width 0.3s var(--ease);
 }
 
-a:hover > .arrow-link::before,
-a.arrow-link:hover::before,
 .arrow-link-host:hover .arrow-link::before {
   width: 30px;
 }
@@ -705,25 +682,18 @@ a.arrow-link:hover::before,
   }
 }
 
-/* Sections fade up as they enter the viewport. RevealObserver plays the
-   animation; this only keeps them out of sight until it does. */
-html[data-js] [data-reveal] {
-  opacity: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .line > span,
   .fade-in {
     animation: none;
   }
-
-  html[data-js] [data-reveal] {
-    opacity: 1;
-  }
 }
 
+/* Sections with data-reveal fade up as they scroll into view. Nothing in
+   this stylesheet hides them: RevealObserver holds back only what is below
+   the screen, and only once it is running. On paper everything shows. */
 @media print {
-  html[data-js] [data-reveal] {
+  [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
   }

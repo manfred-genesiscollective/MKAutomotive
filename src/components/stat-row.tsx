@@ -1,13 +1,7 @@
 import styles from "./stat-row.module.css";
 
 /** Large figures, each with a short gold tick and a label. */
-export function StatRow({
-  items,
-  note,
-}: {
-  items: { value: string; label: string }[];
-  note?: string;
-}) {
+export function StatRow({ items }: { items: { value: string; label: string }[] }) {
   return (
     <div data-reveal>
       <dl
@@ -23,7 +17,6 @@ export function StatRow({
           </div>
         ))}
       </dl>
-      {note ? <p className={`meta ${styles.note}`}>{note}</p> : null}
     </div>
   );
 }

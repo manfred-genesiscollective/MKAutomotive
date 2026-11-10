@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { businesses } from "@/content/businesses";
+import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 
 import styles from "./business-rows.module.css";
 
@@ -26,7 +26,7 @@ export function BusinessRows({ as: Heading = "h3", showSites = false }: Props) {
               {business.stage.number} · {business.stage.label} · {business.category}
             </p>
             {business.status === "coming-soon" ? (
-              <span className={styles.badge}>Coming soon</span>
+              <span className={styles.badge}>{IN_DEVELOPMENT}</span>
             ) : null}
           </div>
 
@@ -48,7 +48,7 @@ export function BusinessRows({ as: Heading = "h3", showSites = false }: Props) {
               <p className="body">{business.summary}</p>
               <div className={styles.links}>
                 <span className="arrow-link" aria-hidden="true">
-                  Learn more about {business.name} <span>→</span>
+                  Learn more <span>→</span>
                 </span>
                 {showSites && business.url ? (
                   <a

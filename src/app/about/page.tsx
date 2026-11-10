@@ -5,27 +5,36 @@ import { LabelRows } from "@/components/label-rows";
 import { LifecycleRail } from "@/components/lifecycle-rail";
 import { PageHero } from "@/components/page-hero";
 import { businesses, businessNameList, countWord } from "@/content/businesses";
-import { site } from "@/content/site";
+import { habits, site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
 import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "About the group",
-  description: `${site.name} is a Singapore holding company that owns and builds businesses for every stage in the life of a car: ${businessNameList()}.`,
+  description: `${site.name} is a Singapore holding company with ${countWord()} automotive businesses: ${businessNameList()}.`,
   path: "/about",
 });
 
 export default function AboutPage() {
   const first = businesses[0];
   const last = businesses[businesses.length - 1];
+  const upcoming = businesses.filter((business) => business.status !== "live");
+  // "the price comes first, we come to you, ... and proof before promises"
+  const habitList = habits.map(
+    (habit) => habit.title.charAt(0).toLowerCase() + habit.title.slice(1).replace(/\.$/, ""),
+  );
+  const habitSentence =
+    habitList.length > 1
+      ? `${habitList.slice(0, -1).join(", ")} and ${habitList[habitList.length - 1]}`
+      : habitList.join("");
+  const habitCount = countWord(habits.length);
 
   return (
     <>
       <PageHero eyebrow="The group" title={["About the group."]}>
         <p className="lede lede--lg">
-          {site.name} is a Singapore holding company. We own and build businesses that look
-          after cars at every stage of their life here.
+          {site.name} is a Singapore holding company for {countWord()} automotive businesses.
         </p>
       </PageHero>
 
@@ -33,11 +42,11 @@ export default function AboutPage() {
         <div className={`container ${styles.statement}`} data-reveal>
           <p>
             A car in Singapore is rented, upgraded, serviced, sometimes rescued and, when its ten
-            years are up, often shipped overseas. Those moments are usually handled by companies
-            that never meet.
+            years are up, often shipped overseas.
           </p>
           <p>
-            We are building one group that handles each of them<span className="dot">.</span>
+            We are building one group that looks after each of those moments
+            <span className="dot">.</span>
           </p>
         </div>
       </section>
@@ -51,13 +60,14 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="lead">
-                      A holding company with {countWord()} businesses, each with its own name, its
-                      own website and its own customers.
+                      A holding company with {countWord()} businesses, each run under its own name.
+                      {upcoming.length > 0
+                        ? ` ${upcoming.map((business) => business.name).join(" and ")} ${upcoming.length === 1 ? "is" : "are"} still in development.`
+                        : null}
                     </p>
                     <p className="body">
                       {businessNameList()} sit at different points in a car&rsquo;s life:{" "}
                       {first.name} at the start, {last.name} at the end and the others in between.
-                      The group exists so that each one is run to the same standard.
                     </p>
                   </>
                 ),
@@ -67,9 +77,8 @@ export default function AboutPage() {
                 content: (
                   <>
                     <p className="lead">
-                      Every business in the group shares four habits: the price comes first, we
-                      come to you, we do the work ourselves, and we show proof before we make
-                      promises.
+                      {habitCount.charAt(0).toUpperCase() + habitCount.slice(1)} habits run through
+                      the businesses we operate today: {habitSentence}.
                     </p>
                     <p className="body">
                       <Link href="/#habits" className="text-link">
@@ -114,7 +123,7 @@ export default function AboutPage() {
       <CtaBand
         eyebrow="Work with us"
         title="Talk to the group."
-        text="Partnerships, supply, investment or a role in one of our businesses: tell us what you have in mind and we'll point you to the right person."
+        text="Tell us what you have in mind and we will pass it to the right business."
       >
         <Link href="/contact" className="button button--large">
           Contact us

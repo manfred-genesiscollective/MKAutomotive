@@ -22,7 +22,8 @@ The site is a hub. It says what the group is, then sends each visitor to the rig
 
 Everything a non-developer is likely to change lives in `src/content/`.
 
-- `businesses.ts` holds every business: name, stage, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry. To launch one marked `coming-soon`, set `status: "live"` and add its `url`.
+- `businesses.ts` holds every business: name, stage, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry. To launch one marked `coming-soon`, set `status: "live"`, add its `url`, and rewrite the wording that says it is in development (`summary`, `seo`, `intro`, `description`, `services`, `cta`, `work`, `model`). `npm test` checks the rules the pages rely on, such as unique names and a website for every open business.
+- A few sentences name the stages in words ("rent, upgrade, recover and export"): the group description in `site.ts`, and the opening lines of the home, About and Investors pages. Update them by hand when a business is added or opens.
 - `site.ts` holds group details: tagline, contact details, social links, the four habits and the partner types. Contact details left empty are simply not shown.
 - `forms.ts` holds the choices offered in the enquiry forms.
 
@@ -44,7 +45,7 @@ Then open http://localhost:3000.
 | `npm run start` | Serves the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript |
-| `npm test` | Unit tests for the enquiry form logic |
+| `npm test` | Unit tests: the enquiry logic, the rate limit and the rules the content files must keep |
 
 ## Enquiry forms
 
@@ -57,9 +58,9 @@ All four forms post to one server action (`src/app/actions.ts`), which validates
 | `ENQUIRY_TO_EMAIL` | Where enquiries go. Separate several addresses with commas |
 | `NEXT_PUBLIC_SITE_URL` | The live address. Not needed on Vercel, which supplies it |
 
-Until the three email variables are set, nothing is delivered. In development the email is printed to the terminal instead. On a live deployment the visitor is told the message could not be sent, so no enquiry is lost silently.
+Until the three email variables are set, nothing is delivered. In development the email is printed to the terminal instead. On a live deployment the visitor is told the message could not be sent, so no enquiry is lost silently. If a request fails outright (no connection, or a server error), the form stays on the page with what was typed and says so.
 
-Spam is limited by a hidden honeypot field and strict server-side validation. For rate limiting, add a rule in the Vercel Firewall for `POST` requests.
+Spam is limited in three ways: a hidden honeypot field, strict server-side validation, and a brake of five enquiries per sender every ten minutes (60 overall). Set `ENQUIRY_RATE_LIMIT` to change the per-sender figure. The brake counts in memory, so on a host that runs several copies of the server each keeps its own count: add a firewall rule for `POST` requests as well.
 
 ## Design rules
 
@@ -91,8 +92,10 @@ Visitors who ask their device for more contrast get no reflections and a heavier
 
 - [Next.js](https://nextjs.org) 16 App Router with Cache Components. Every page is prerendered; `ensureStatic = "navigation"` in the root layout makes the build fail if a page ever starts depending on request-time data.
 - TypeScript and CSS Modules. No UI framework and no client-side data fetching.
-- Client JavaScript is limited to the header menu, the forms and the scroll reveal. With JavaScript off, every page still reads in full.
-- `sitemap.xml`, `robots.txt`, the favicon and the social-sharing images are generated from the same content.
+- Client JavaScript is limited to the header menu, the forms and the scroll reveal. With JavaScript off, every page still reads in full and the forms still send.
+- `sitemap.xml`, `robots.txt` and the social-sharing images are generated from the same content. The browser icons (`src/app/icon.svg`, `apple-icon.png`, `favicon.ico`) are files.
+- Security headers, including a Content-Security-Policy that allows only this site's own scripts, styles, fonts and images, are set in `next.config.ts`. A third-party script or embed added later must be allowed there.
+- Business pages are complete in the HTML that is served, so they read without JavaScript. Scroll animations never hide anything that is already on screen.
 
 ## Before launch
 
@@ -100,6 +103,25 @@ Visitors who ask their device for more contrast get no reflections and a heavier
 - [ ] Confirm the registered company name in `src/content/site.ts` (used in the copyright line).
 - [ ] Add contact details and social links in `src/content/site.ts`.
 - [ ] Set the three email variables and send a test enquiry from each form.
-- [ ] Review the draft wording: mission, vision and the four habits (`/about`, `/`), the partner types (`/partners`), the investor thesis (`/investors`) and the privacy notice (`/privacy`).
-- [ ] Confirm the group facts in `src/content/businesses.ts` (`groupFacts`). The second and third come from goldenhour.sg and export.sg.
+- [ ] Add a firewall rule that limits `POST` requests (on Vercel: Firewall, rate limiting), as a second brake behind the built-in one.
+- [ ] Open all four business addresses in a signed-out browser. At the time of writing goldenhour.sg sends the public to a Vercel login, and revhub.sg and export.sg show placeholder contact details.
 - [ ] Point the domain at the deployment and check `sitemap.xml` shows the live address.
+
+### Wording to approve
+
+These were drafted for the site and have no source beyond it. Approve, change or remove each one.
+
+- [ ] The tagline "The whole life of a car." and the five stage names: Drive, Upgrade, Maintain, Recover, Export.
+- [ ] The group description, the About page statements, and the mission and vision (`src/content/site.ts`, `src/app/about/page.tsx`).
+- [ ] The four habits (`habits` in `src/content/site.ts`).
+- [ ] The partner types (`partnerTypes` in `src/content/site.ts`). Two more were drafted and left out until confirmed: parts brands and distributors supplying RevHub, and founders bringing a business into the group.
+- [ ] The Careers page: whether open applications are wanted, and the kinds of work listed for each business (`work` in `src/content/businesses.ts`).
+- [ ] The Investors page: whether investor enquiries are wanted in public, and whether there is a deck to offer. The page currently takes enquiries and offers no document.
+- [ ] The privacy notice (`/privacy`), including the registered name and a data protection contact.
+- [ ] The Car Lounge page. It says only that a remote booking desk for workshops and automotive services is in development.
+
+### Facts to confirm
+
+- [ ] The home page figures (`groupFacts` in `src/content/businesses.ts`). "24/7" is from goldenhour.sg and "15" from export.sg.
+- [ ] Golden Hour: whether it handles accident claims, and who pays its service fee. Its own website describes accident recovery and promises "no commissions", so the page here says the same and does not mention claims.
+- [ ] SwiftDrive: the Partners page says leasing owners' cars is not on offer yet, as swiftdrive.sg does.

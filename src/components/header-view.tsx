@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { contactNav, primaryNav, site } from "@/content/site";
 
@@ -19,6 +19,12 @@ export function HeaderView({ pathname }: { pathname: string | null }) {
   const menuRef = useRef<HTMLDialogElement>(null);
   const openMenu = () => menuRef.current?.showModal();
   const closeMenu = () => menuRef.current?.close();
+
+  // A change of page closes the menu, however it came about: a link in the
+  // menu, or the browser's Back and Forward buttons.
+  useEffect(() => {
+    menuRef.current?.close();
+  }, [pathname]);
 
   /** "page" for the page itself, "true" for the section it belongs to. */
   const current = (href: string) => {

@@ -67,7 +67,7 @@ export const ENQUIRY_FORMS: Record<
   { title: string; fields: FormRules }
 > = {
   contact: {
-    title: "Contact",
+    title: "Contact enquiry",
     fields: {
       name,
       email,
@@ -94,13 +94,14 @@ export const ENQUIRY_FORMS: Record<
     },
   },
   partners: {
-    title: "Partnership",
+    title: "Partnership enquiry",
     fields: {
       name,
       email,
+      // Optional: private car owners are invited to use this form too.
       company: {
         label: "Company",
-        required: true,
+        required: false,
         max: 160,
         missing: "Enter your company name.",
       },
@@ -121,20 +122,20 @@ export const ENQUIRY_FORMS: Record<
     },
   },
   investors: {
-    title: "Investor deck request",
+    title: "Investor enquiry",
     fields: {
       name,
       email,
       company: {
         label: "Firm",
-        required: true,
+        required: false,
         max: 160,
         missing: "Enter your fund or firm name.",
       },
     },
   },
   careers: {
-    title: "Careers",
+    title: "Careers application",
     fields: {
       name,
       email,
@@ -202,18 +203,32 @@ export function isEnquiryKind(value: unknown): value is EnquiryKind {
   );
 }
 
-/* Control characters, apart from tab and newline (handled per field below). */
-const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/*
+ * Characters that are never shown but can change how text reads: control
+ * characters, and invisible formatting such as the marks that reverse the
+ * direction of the text after them. The two joiners that some scripts and
+ * emoji need (U+200C, U+200D) are kept. Tab and newline are dealt with per
+ * field below.
+ */
+const INVISIBLE = /(?![\t\n\u200C\u200D])[\p{Cc}\p{Cf}]/gu;
+
+/*
+ * A deliberately plain check: one @, no spaces or brackets, a local part
+ * without stray dots, and a domain of dot-separated labels. It is not a full
+ * RFC parser; the address is only ever used as the reply-to of an email.
+ */
+const EMAIL_PATTERN =
+  /^[^\s@<>()[\],;:"\\.]+(?:\.[^\s@<>()[\],;:"\\.]+)*@[\p{L}\p{N}](?:[\p{L}\p{N}-]*[\p{L}\p{N}])?(?:\.[\p{L}\p{N}](?:[\p{L}\p{N}-]*[\p{L}\p{N}])?)+$/u;
 
 function cleanLine(value: string): string {
-  return value.replace(CONTROL_CHARS, "").replace(/\s+/g, " ").trim();
+  return value.normalize("NFC").replace(/\s+/g, " ").replace(INVISIBLE, "").trim();
 }
 
 function cleanText(value: string): string {
   return value
+    .normalize("NFC")
     .replace(/\r\n?/g, "\n")
-    .replace(CONTROL_CHARS, "")
+    .replace(INVISIBLE, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
@@ -262,7 +277,7 @@ export function parseEnquiry(
       continue;
     }
     if (rule.type === "url" && !isHttpUrl(value)) {
-      fieldErrors[field] = "Enter a full link, starting with https://";
+      fieldErrors[field] = "Enter the full address, including https:// at the start.";
       continue;
     }
     if (rule.options && !rule.options.includes(value)) {
@@ -318,7 +333,7 @@ export function formatEnquiryEmail(
 
   const topic = enquiry.topic ? ` (${enquiry.topic})` : "";
   return {
-    subject: `${form.title} enquiry${topic} from ${enquiry.name ?? "the website"}`,
+    subject: `${form.title}${topic} from ${enquiry.name ?? "the website"}`,
     text: lines.join("\n"),
   };
 }
@@ -348,7 +363,14 @@ export function readDeliveryConfig(
 
 export type DeliveryResult =
   | { ok: true }
-  | { ok: false; reason: "rejected" | "unreachable"; detail: string };
+  | {
+      ok: false;
+      reason: "rejected" | "unreachable";
+      /** For the server log. Never shown to the visitor. */
+      detail: string;
+      /** The HTTP status of a rejected request. */
+      status?: number;
+    };
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
@@ -375,10 +397,13 @@ export async function deliverEnquiry(
       signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok) {
+      // The provider explains a refusal in the body: keep the start of it for the log.
+      const body = (await response.text().catch(() => "")).replace(/\s+/g, " ").trim();
       return {
         ok: false,
         reason: "rejected",
-        detail: `Resend responded with HTTP ${response.status}`,
+        status: response.status,
+        detail: `Resend responded with HTTP ${response.status}${body ? `: ${body.slice(0, 300)}` : ""}`,
       };
     }
     return { ok: true };

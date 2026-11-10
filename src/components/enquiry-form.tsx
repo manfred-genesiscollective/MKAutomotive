@@ -1,7 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useId, useRef, useState } from "react";
+import {
+  Component,
+  useActionState,
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { submitEnquiry } from "@/app/actions";
 import { businesses } from "@/content/businesses";
@@ -12,10 +22,12 @@ import {
 } from "@/content/forms";
 import {
   ENQUIRY_FORMS,
+  FIELD_NAMES,
   HONEYPOT_FIELD,
   type EnquiryKind,
   type EnquiryState,
   type FieldName,
+  type FieldValues,
 } from "@/lib/enquiry";
 
 import styles from "./enquiry-form.module.css";
@@ -43,20 +55,20 @@ const COPY: Record<EnquiryKind, FormCopy> = {
     submit: "Submit enquiry",
     successTitle: "Enquiry received",
     successText: "Thank you. We will review your enquiry and reply by email.",
-    company: { label: "Company", placeholder: "Company name" },
+    company: { label: "Company", placeholder: "Company name (optional)" },
     topic: { label: "Partnership type", options: partnershipOptions, control: "select" },
     message: { placeholder: "How would you like to work together?" },
   },
   investors: {
-    submit: "Request deck",
-    successTitle: "Request received",
-    successText: "Thank you. A member of our team will be in touch.",
-    company: { label: "Firm", placeholder: "Fund or firm name" },
+    submit: "Send enquiry",
+    successTitle: "Enquiry received",
+    successText: "Thank you. We will reply by email.",
+    company: { label: "Firm", placeholder: "Fund or firm name (optional)" },
   },
   careers: {
     submit: "Send application",
     successTitle: "Application received",
-    successText: "Thank you. We will get in touch when there is a fit.",
+    successText: "Thank you. We will reply if there is a role.",
     topic: { label: "Which business interests you?", options: careerInterests, control: "chips" },
     message: { placeholder: "What you do, and what you are looking for" },
   },
@@ -64,21 +76,87 @@ const COPY: Record<EnquiryKind, FormCopy> = {
 
 const initialState: EnquiryState = { status: "idle" };
 
+const UNREACHABLE =
+  "We could not reach the server, so your message was not sent. Check your connection and try again.";
+
+/**
+ * Catches a request that fails outright: no connection, or a server error.
+ * React reports that as an error while drawing the form, which would
+ * otherwise replace the whole page with an error screen and lose what the
+ * visitor typed.
+ */
+class RequestBoundary extends Component<
+  { onFailure: () => void; children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch() {
+    this.props.onFailure();
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
 /**
  * One enquiry form. `kind` decides which fields are shown; the same rules in
  * src/lib/enquiry.ts are applied again on the server.
  */
 export function EnquiryForm({ kind }: { kind: EnquiryKind }) {
-  // Changing the key gives a fresh, empty form after a successful send.
+  // Changing the key gives a fresh form: empty after a successful send, or
+  // refilled with what was typed after a request that failed.
   const [round, setRound] = useState(0);
-  return <Form key={round} kind={kind} onStartAgain={() => setRound((value) => value + 1)} />;
+  const [startWith, setStartWith] = useState<EnquiryState>(initialState);
+  const lastSent = useRef<FieldValues>({});
+
+  const startAgain = useCallback(() => {
+    setStartWith(initialState);
+    setRound((value) => value + 1);
+  }, []);
+
+  const recover = useCallback(() => {
+    setStartWith({
+      status: "error",
+      message: UNREACHABLE,
+      fieldErrors: {},
+      values: lastSent.current,
+    });
+    setRound((value) => value + 1);
+  }, []);
+
+  const remember = useCallback((values: FieldValues) => {
+    lastSent.current = values;
+  }, []);
+
+  return (
+    <RequestBoundary key={round} onFailure={recover}>
+      <Form kind={kind} startWith={startWith} onSend={remember} onStartAgain={startAgain} />
+    </RequestBoundary>
+  );
 }
 
-function Form({ kind, onStartAgain }: { kind: EnquiryKind; onStartAgain: () => void }) {
-  const [state, formAction, pending] = useActionState(submitEnquiry, initialState);
+function Form({
+  kind,
+  startWith,
+  onSend,
+  onStartAgain,
+}: {
+  kind: EnquiryKind;
+  startWith: EnquiryState;
+  onSend: (values: FieldValues) => void;
+  onStartAgain: () => void;
+}) {
+  const [state, formAction, pending] = useActionState(submitEnquiry, startWith);
   const id = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
 
   const copy = COPY[kind];
   const rules = ENQUIRY_FORMS[kind].fields;
@@ -86,15 +164,19 @@ function Form({ kind, onStartAgain }: { kind: EnquiryKind; onStartAgain: () => v
   const values = state.status === "error" ? state.values : {};
 
   // A link such as /contact?topic=the-car-lounge preselects that business.
+  // Only when nothing is chosen yet: this runs again each time the page is
+  // shown, and must not undo the visitor's own choice.
   useEffect(() => {
+    const radios = Array.from(
+      formRef.current?.querySelectorAll<HTMLInputElement>('input[name="topic"]') ?? [],
+    );
+    if (radios.some((input) => input.checked)) return;
     const slug = new URLSearchParams(window.location.search).get("topic");
     const match = businesses.find((business) => business.slug === slug);
     if (!match) return;
-    formRef.current
-      ?.querySelectorAll<HTMLInputElement>('input[name="topic"]')
-      .forEach((input) => {
-        if (input.value === match.name) input.checked = true;
-      });
+    for (const input of radios) {
+      if (input.value === match.name) input.checked = true;
+    }
   }, []);
 
   // Move focus to the result so it is announced and visible.
@@ -105,16 +187,35 @@ function Form({ kind, onStartAgain }: { kind: EnquiryKind; onStartAgain: () => v
       const firstInvalid = formRef.current?.querySelector<HTMLElement>(
         '[aria-invalid="true"]',
       );
-      firstInvalid?.focus();
+      (firstInvalid ?? statusRef.current)?.focus();
     }
   }, [state]);
+
+  // Pages stay in memory after the visitor moves on. If they come back to a
+  // form that was sent, show a fresh one, not the old "sent" message.
+  const sent = state.status === "success";
+  const startingAgain = useRef(false);
+  useLayoutEffect(() => {
+    if (!sent) return;
+    return () => {
+      // "Send another" has already asked for a fresh form.
+      if (!startingAgain.current) onStartAgain();
+    };
+  }, [sent, onStartAgain]);
 
   if (state.status === "success") {
     return (
       <div ref={doneRef} tabIndex={-1} className={styles.done} role="status">
         <p className="eyebrow">{copy.successTitle}</p>
         <p className={styles.doneText}>{copy.successText}</p>
-        <button type="button" className={styles.again} onClick={onStartAgain}>
+        <button
+          type="button"
+          className={styles.again}
+          onClick={() => {
+            startingAgain.current = true;
+            onStartAgain();
+          }}
+        >
           Send another
         </button>
       </div>
@@ -133,7 +234,21 @@ function Form({ kind, onStartAgain }: { kind: EnquiryKind; onStartAgain: () => v
     ) : null;
 
   return (
-    <form ref={formRef} action={formAction} className={styles.form}>
+    <form
+      ref={formRef}
+      action={formAction}
+      className={styles.form}
+      // Keep a copy of what is being sent, in case the request never arrives.
+      onSubmit={(event) => {
+        const data = new FormData(event.currentTarget);
+        const values: FieldValues = {};
+        for (const field of FIELD_NAMES) {
+          const value = data.get(field);
+          if (typeof value === "string" && value) values[field] = value;
+        }
+        onSend(values);
+      }}
+    >
       <input type="hidden" name="form" value={kind} />
       {/* Honeypot: hidden from people, tempting to bots. See HONEYPOT_FIELD. */}
       <div className={styles.trap} aria-hidden="true">
@@ -177,7 +292,7 @@ function Form({ kind, onStartAgain }: { kind: EnquiryKind; onStartAgain: () => v
             name="email"
             type="email"
             className={styles.input}
-            placeholder="you@company.com"
+            placeholder="Your email address"
             autoComplete="email"
             required
             maxLength={rules.email?.max}
@@ -330,12 +445,12 @@ function Form({ kind, onStartAgain }: { kind: EnquiryKind; onStartAgain: () => v
           </span>
         </button>
         <p className={styles.note}>
-          We use these details only to reply to you. See our{" "}
-          <Link href="/privacy">privacy notice</Link>.
+          We use these details to answer your enquiry and to pass it to the right business. See
+          our <Link href="/privacy">privacy notice</Link>.
         </p>
       </div>
 
-      <p className={styles.status} role="alert">
+      <p ref={statusRef} tabIndex={-1} className={styles.status} role="alert">
         {state.status === "error" ? state.message : ""}
       </p>
     </form>

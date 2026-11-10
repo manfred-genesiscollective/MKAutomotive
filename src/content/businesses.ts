@@ -29,12 +29,14 @@ export type Business = {
   need: string;
   /** Two sentences for lists and rows. */
   summary: string;
+  /** One sentence for search results and link previews: 155 characters at most. */
+  seo: string;
   /** Opening statement on the business page. */
   intro: string;
   /** Body paragraphs on the business page. */
   description: string[];
   status: BusinessStatus;
-  /** The business's own website. Leave undefined until that site is live. */
+  /** The business's own website. Leave undefined until that site is open to the public. */
   url?: string;
   /** Domain as shown to visitors. */
   domain: string;
@@ -61,11 +63,12 @@ export const businesses: Business[] = [
     need: "Rent a car",
     summary:
       "SwiftDrive rents its own cars by the week or the month and brings each one to your door, anywhere in Singapore and at any hour. One all-in price covers delivery, collection and unlimited kilometres.",
+    seo: "SwiftDrive rents its own cars by the week or the month and delivers them anywhere in Singapore, at any hour, for one all-in price.",
     intro:
-      "SwiftDrive is the group's car rental business. It owns its fleet, looks after the cars itself and brings each one to the customer.",
+      "SwiftDrive is the group’s car rental business. It owns its fleet, looks after the cars itself and brings each one to the customer.",
     description: [
       "Cars are delivered to a home, an office, a hotel or the arrivals hall at Changi Airport, at any hour, and collected again when the trip ends. There is no counter to visit.",
-      "Most customers rent for weeks or months: between cars, while their own is in the workshop, or for a long stay. The price shown at checkout is all-in, with delivery, collection, roadside assistance and unlimited kilometres included.",
+      "Many customers rent for weeks or months: between cars, or while their own is in the workshop. The price shown at checkout is all-in, with delivery, collection, roadside assistance and unlimited kilometres included.",
     ],
     status: "live",
     url: "https://www.swiftdrive.sg/",
@@ -75,15 +78,15 @@ export const businesses: Business[] = [
       { label: "For", value: "Residents, visitors and anyone between cars" },
       { label: "Coverage", value: "Island-wide, at any hour" },
     ],
-    servicesHeading: "What SwiftDrive does",
+    servicesHeading: "What it does",
     services: [
       {
         title: "Weekly and monthly rental",
-        text: "Rent for a week, a month or longer. Weekly and monthly rates apply on their own, and a trip can be extended online.",
+        text: "Rentals run for a week, a month or longer. Weekly and monthly rates are applied automatically, and a trip can be extended online.",
       },
       {
         title: "Delivery and collection",
-        text: "A driver brings the car to you within a 30-minute window you choose, walks round it with you, and comes back for it when you are done.",
+        text: "A driver brings the car within a 30-minute window the customer chooses, walks round it with them, and comes back for it when the rental ends.",
       },
       {
         title: "One all-in price",
@@ -91,7 +94,7 @@ export const businesses: Business[] = [
       },
       {
         title: "Trips into Malaysia",
-        text: "Cars can be driven into Peninsular Malaysia for a daily fee, and each one already carries its own VEP tag.",
+        text: "Cars can be driven into Peninsular Malaysia for a daily fee, and each one already carries its own tag for Malaysia’s Vehicle Entry Permit (VEP).",
       },
     ],
     promisesHeading: "What customers can count on",
@@ -137,12 +140,13 @@ export const businesses: Business[] = [
     tagline: "Performance parts and accessories, supplied and fitted.",
     need: "Upgrade a car",
     summary:
-      "RevHub sells car upgrades online and fits them at its own workshop in Singapore. It starts with big brake kits, and every order is checked against the car's chassis before it ships.",
+      "RevHub sells car upgrades online and fits them at its own workshop in Singapore. It starts with big brake kits, and every order is checked against the car’s chassis before it ships.",
+    seo: "RevHub sells car upgrades online, starting with big brake kits, and fits them at its own workshop in Singapore.",
     intro:
-      "RevHub is the group's online store and fitting workshop for car upgrades.",
+      "RevHub is the group’s online store and fitting workshop for car upgrades.",
     description: [
-      "Customers set their car once and the catalogue filters itself to parts that fit. Every order is checked by hand against the chassis before it ships, and the lead time is confirmed before payment.",
-      "The range starts with big brake kits, pads, rotors and lines. Rims, headlights, ambient lighting, seats, steering wheels and exterior parts are on the way. Anything bought can be booked in for fitting at RevHub's own workshop.",
+      "Customers choose their car once and the catalogue shows only the parts that fit. Every order is checked by hand against the chassis before it ships, and the lead time is confirmed before payment.",
+      "The range starts with big brake kits, pads, rotors and lines. Rims, headlights, ambient lighting, seats, steering wheels and exterior parts are on the way. RevHub can fit anything it sells at its own workshop.",
     ],
     status: "live",
     url: "https://www.revhub.sg/",
@@ -152,14 +156,14 @@ export const businesses: Business[] = [
       { label: "For", value: "Drivers upgrading their car" },
       {
         label: "Coverage",
-        value: "Delivery across Singapore; fitting at RevHub's workshop",
+        value: "Delivery across Singapore; fitting at RevHub’s workshop",
       },
     ],
-    servicesHeading: "What RevHub does",
+    servicesHeading: "What it does",
     services: [
       {
         title: "Online parts store",
-        text: "Shop by vehicle. Listings filter to the parts that fit your chassis.",
+        text: "Customers shop by vehicle, and the listings show only the parts that fit their chassis.",
       },
       {
         title: "Big brake kits",
@@ -195,7 +199,7 @@ export const businesses: Business[] = [
     ],
     cta: {
       heading: "Shop by vehicle.",
-      text: "Set your car and browse the parts that fit at revhub.sg.",
+      text: "Choose your car and browse the parts that fit at revhub.sg.",
       label: "Visit revhub.sg",
     },
     work: "Fitting parts in the workshop, checking fitment by hand and running the online store.",
@@ -209,44 +213,45 @@ export const businesses: Business[] = [
     tagline: "A booking desk for workshops and car services.",
     need: "Book a workshop or service",
     summary:
-      "The Car Lounge will be a remote booking desk for workshops and automotive services: find the service you need and book a slot without phoning around. It is in development.",
+      "The Car Lounge will be a remote booking desk for workshops and automotive services. It is in development.",
+    seo: "The Car Lounge will be a remote booking desk for workshops and automotive services in Singapore. It is in development.",
     intro:
-      "The Car Lounge is the group's booking platform for workshops and automotive services. It is in development.",
+      "The Car Lounge will be the group’s remote booking desk for workshops and automotive services. It is in development.",
     description: [
-      "The idea is simple: booking a workshop or a car service should be as easy as booking a place to stay. Drivers will be able to find a service and reserve a slot remotely, without phoning around.",
-      "For workshops and service providers, The Car Lounge will act as a remote booking desk: a place to list what they offer and take bookings.",
+      "Booking a workshop or a car service should be as easy as booking a place to stay. That is the idea behind The Car Lounge.",
+      "For workshops and service providers, it will act as a remote booking desk.",
     ],
     status: "coming-soon",
     domain: "thecarlounge.sg",
     facts: [
-      { label: "Business", value: "Booking platform for automotive services" },
+      { label: "Business", value: "Booking desk for automotive services" },
       { label: "For", value: "Drivers, workshops and service providers" },
       { label: "Coverage", value: "Singapore" },
     ],
-    servicesHeading: "What The Car Lounge will do",
+    servicesHeading: "The idea",
     services: [
       {
         title: "Remote booking",
-        text: "Find a workshop or service and reserve a slot online, without phoning around.",
+        text: "Drivers will book a workshop or an automotive service remotely.",
       },
       {
-        title: "Workshops and services in one place",
-        text: "Servicing, repairs and other automotive services, listed side by side.",
+        title: "Like booking a place to stay",
+        text: "The model is one travellers already know: see what is on offer, then book it.",
       },
       {
         title: "A booking desk for providers",
-        text: "Workshops and service providers list what they offer and take bookings through one desk.",
+        text: "Workshops and service providers will take their bookings through The Car Lounge.",
       },
     ],
     promisesHeading: "What customers can count on",
     promises: [],
     cta: {
-      heading: "Hear when it opens.",
-      text: "Tell us you are interested, as a driver or as a workshop, and we will let you know when The Car Lounge opens for bookings.",
+      heading: "Interested in The Car Lounge?",
+      text: "It is still being built. If you are a driver or a workshop and would like to hear more, send us a note.",
       label: "Register your interest",
     },
-    work: "Building and launching a new platform, and bringing workshops and service providers onto it.",
-    model: "Booking platform for automotive services, in development.",
+    work: "Building and launching the booking desk, and bringing workshops and service providers onto it.",
+    model: "Booking desk for automotive services, in development.",
   },
   {
     slug: "golden-hour",
@@ -257,11 +262,12 @@ export const businesses: Business[] = [
     need: "Get a tow or roadside help",
     summary:
       "Golden Hour sends tow trucks and roadside help anywhere in Singapore, at any hour. You see an estimate in about a minute, and the price is confirmed before a truck sets off.",
+    seo: "Golden Hour sends tow trucks and roadside help anywhere in Singapore, at any hour, and confirms the price before a truck sets off.",
     intro:
-      "Golden Hour is the group's towing, recovery and roadside assistance business.",
+      "Golden Hour is the group’s towing, recovery and roadside help business.",
     description: [
-      "It works anywhere in Singapore, 24 hours a day, for cars, vans and small lorries. A request takes a few taps: what happened, where the vehicle is and where it is going. An estimate appears as the questions are answered.",
-      "The price is confirmed before a truck is sent, and the driver's name and plate appear on the customer's phone. After an accident, Golden Hour takes the vehicle to the owner's insurer or to a workshop of their choice, and its accident guide sets out what to report and when.",
+      "It operates anywhere in Singapore, 24 hours a day, for cars, vans and small lorries. A request takes a few taps: what happened, where the vehicle is and where it is going. An estimate appears as the questions are answered.",
+      "The price is confirmed before a truck is sent, and the driver’s name and plate appear on the customer’s phone. After an accident, Golden Hour takes the vehicle to the owner’s insurer or to a workshop of their choice, and its accident guide sets out what to report and when.",
     ],
     status: "live",
     url: "https://www.goldenhour.sg/",
@@ -274,15 +280,15 @@ export const businesses: Business[] = [
       },
       { label: "Coverage", value: "Island-wide, 24 hours, every day" },
     ],
-    servicesHeading: "What Golden Hour does",
+    servicesHeading: "What it does",
     services: [
       {
         title: "Towing",
-        text: "Breakdowns and non-starters, taken wherever the owner chooses. Tows to a workshop, inspection centre or scrapyard can be booked ahead.",
+        text: "Cars that have broken down or will not start, taken wherever the owner chooses. Tows to a workshop, inspection centre or scrapyard can be booked ahead.",
       },
       {
         title: "Accident recovery",
-        text: "After a collision, to the owner's insurer or to a workshop of their choice, with a guide to what to report and when.",
+        text: "After a collision, to the owner’s insurer or to a workshop of their choice, with a guide to what to report and when.",
       },
       {
         title: "Car park and specialist recovery",
@@ -297,23 +303,23 @@ export const businesses: Business[] = [
     promises: [
       {
         title: "No higher than your estimate",
-        text: "The price is confirmed before a truck is sent.",
+        text: "Unless the job turns out different from what you described, and then only if you agree.",
       },
       {
-        title: "ERP and car-park charges included",
+        title: "ERP and car-park exit charges included",
         text: "They are part of the price you accept, never added afterwards.",
       },
       {
         title: "Free cancellation",
-        text: "At no cost until the driver is on the way.",
+        text: "Until the driver is on the way.",
       },
       {
         title: "You will know it is the right truck",
-        text: "The driver's name, the truck and its plate are on your status page.",
+        text: "The driver’s name, the truck and its plate are on your status page.",
       },
       {
-        title: "No commissions",
-        text: "Your car goes wherever you choose.",
+        title: "No chase trucks, no commissions",
+        text: "Your car goes wherever you choose. Golden Hour never recommends a workshop for a fee.",
       },
       {
         title: "All four wheels off the ground",
@@ -336,11 +342,12 @@ export const businesses: Business[] = [
     tagline: "Singapore used cars, ready to export.",
     need: "Buy a car for export",
     summary:
-      "export.sg sells Singapore used cars to overseas dealers and importers. Every car carries an open FOB price, a video and at least 25 photos, with the landed cost to the buyer's port on request.",
-    intro: "export.sg is the group's vehicle export business.",
+      "export.sg sells Singapore used cars to overseas dealers and importers. Every car carries an open FOB price, a video and at least 25 photos, with the landed cost to the buyer’s port on request.",
+    seo: "export.sg sells Singapore used cars to overseas dealers and importers, with an open FOB price, a video and at least 25 photos of every car.",
+    intro: "export.sg is the group’s vehicle export business.",
     description: [
-      "It buys cars at the end of their ten-year COE, prepares them in a licensed export processing zone and ships them to dealers and individual buyers in Africa, the Caribbean, Oceania and Europe. Every unit lists its FOB price, with the landed cost to the buyer's port and that country's import rules alongside.",
-      "For owners in Singapore it is also a way out of a car whose COE is running down: send the plate number and LTA access code, and an indicative offer follows within one business day.",
+      "It buys cars at the end of their ten-year Certificate of Entitlement (COE), prepares them in a licensed export processing zone and ships them to dealers and individual buyers in Africa, the Caribbean, Oceania and Europe. Every unit lists its FOB price and the import rules for the buyer’s country; the landed cost to the buyer’s port is quoted on request.",
+      "It also buys cars from Singapore owners whose COE is about to expire: send the plate number and an LTA Access Code, and an indicative offer follows within one business day.",
     ],
     status: "live",
     url: "https://www.export.sg/",
@@ -356,7 +363,7 @@ export const businesses: Business[] = [
         value: "Singapore to ports in Africa, the Caribbean, Oceania and Europe",
       },
     ],
-    servicesHeading: "What export.sg does",
+    servicesHeading: "What it does",
     services: [
       {
         title: "Export stock with open prices",
@@ -368,11 +375,11 @@ export const businesses: Business[] = [
       },
       {
         title: "Import rules by country",
-        text: "Each destination's import regulations are checked and shown alongside the car.",
+        text: "Each destination’s import regulations are checked and shown alongside the car.",
       },
       {
         title: "Buying cars with an expiring COE",
-        text: "Owners get an indicative offer within one business day, with PARF and COE rebates handled.",
+        text: "Owners get an indicative offer within one business day, and export.sg claims the PARF and COE rebates due when the car is deregistered.",
       },
     ],
     promisesHeading: "What buyers can count on",
@@ -383,7 +390,7 @@ export const businesses: Business[] = [
       },
       {
         title: "Video and at least 25 photos",
-        text: "Of every car before it is listed, wear included.",
+        text: "Every car is filmed and photographed before it is listed, wear included.",
       },
       {
         title: "Landed cost to your port",
@@ -418,10 +425,11 @@ export function getNeighbours(slug: string): {
   return { previous: businesses[index - 1], next: businesses[index + 1] };
 }
 
-/** Label for a business's status, as shown to visitors. */
-export function statusLabel(business: Business): string {
-  return business.status === "live" ? "Live" : "Coming soon";
-}
+/**
+ * The words shown beside a business that is not open yet. Businesses that
+ * are open carry no label: the site makes no claim about how they trade.
+ */
+export const IN_DEVELOPMENT = "In development";
 
 const NUMBER_WORDS = [
   "zero",
@@ -452,14 +460,15 @@ export function businessNameList(): string {
 }
 
 /**
- * "Group at a glance" figures on the home page.
+ * Figures on the home page.
  *
- * Only real, checkable figures belong here. The second and third come from
- * goldenhour.sg and export.sg; replace or extend the list as group-level
+ * Only real, checkable figures belong here. The second and third are single
+ * businesses' own figures, taken from goldenhour.sg and export.sg, so each
+ * label names its business. Replace or extend the list as group-level
  * numbers (year founded, team size, vehicles handled) become available.
  */
 export const groupFacts: { value: string; label: string }[] = [
   { value: String(businesses.length), label: "Businesses in the group" },
-  { value: "24/7", label: "Towing and roadside help, island-wide" },
-  { value: "15", label: "Export markets served" },
+  { value: "24/7", label: "Golden Hour towing and roadside help" },
+  { value: "15", label: "Destination countries listed by export.sg" },
 ];

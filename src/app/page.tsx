@@ -25,12 +25,15 @@ export default function HomePage() {
     url: siteUrl,
     description: site.description,
     address: { "@type": "PostalAddress", addressCountry: "SG" },
-    subOrganization: businesses.map((business) => ({
-      "@type": "Organization",
-      name: business.name,
-      description: business.tagline,
-      ...(business.url ? { url: business.url } : {}),
-    })),
+    // Only businesses that are open, each with its own website.
+    subOrganization: businesses
+      .filter((business) => business.url)
+      .map((business) => ({
+        "@type": "Organization",
+        name: business.name,
+        description: business.tagline,
+        url: business.url,
+      })),
   };
 
   return (
@@ -45,8 +48,8 @@ export default function HomePage() {
       <PageHero size="home" title={["The whole life", "of a car."]} ruled={false} emblem>
         <p className="lede">
           {site.name} is the Singapore holding company behind {countWord()} automotive
-          businesses. Between them they look after how a car is rented, upgraded, serviced,
-          recovered and, when its time here is done, exported.
+          businesses. Between them they rent, upgrade, recover and export cars, and a booking
+          desk for workshops is in development.
         </p>
       </PageHero>
 
@@ -58,11 +61,14 @@ export default function HomePage() {
 
       <section className="section">
         <div className="container">
-          <SectionHeading layout="split" title="One group, every stage of ownership.">
+          <SectionHeading
+            layout="split"
+            title={`One group, ${countWord()} stages in the life of a car.`}
+          >
             <p>
               A car registered in Singapore comes with a ten-year Certificate of Entitlement.
               Over those years it is driven, upgraded, serviced and sometimes rescued, and when
-              the certificate runs out many are shipped overseas. Each MK business looks after
+              the certificate runs out it is often shipped overseas. Each MK business looks after
               one of those moments under its own name.
             </p>
           </SectionHeading>
@@ -90,7 +96,7 @@ export default function HomePage() {
       <CtaBand
         eyebrow="Work with us"
         title="Talk to the group."
-        text="Partnerships, supply, investment or a role in one of our businesses: tell us what you have in mind and we'll point you to the right person."
+        text="A partnership, supplying one of our businesses, investment or a job: tell us what you have in mind and we will point you to the right person."
       >
         <Link href="/contact" className="button button--large">
           Contact us

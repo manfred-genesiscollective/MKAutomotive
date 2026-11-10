@@ -8,7 +8,6 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { site } from "@/content/site";
 import { defaultTitle } from "@/lib/metadata";
-import { revealBootScript } from "@/lib/reveal-boot";
 import { getSiteUrl } from "@/lib/site-url";
 
 import "./globals.css";
@@ -43,14 +42,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en-SG"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${saira.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
-      </head>
+    <html lang="en-SG" className={`${GeistSans.variable} ${GeistMono.variable} ${saira.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           Skip to content

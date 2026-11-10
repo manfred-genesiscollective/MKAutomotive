@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 import { CtaBand } from "@/components/cta-band";
 import { Dotted } from "@/components/dotted";
@@ -10,6 +9,7 @@ import { PromiseCards } from "@/components/promise-cards";
 import { SectionHeading } from "@/components/section-heading";
 import { SpecSheet } from "@/components/spec-sheet";
 import {
+  IN_DEVELOPMENT,
   businesses,
   getBusiness,
   getNeighbours,
@@ -29,10 +29,10 @@ export async function generateMetadata({
 }: PageProps<"/businesses/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const business = getBusiness(slug);
-  if (!business) return {};
+  if (!business) return { title: "Page not found" };
   return pageMetadata({
     title: `${business.name}: ${business.category.toLowerCase()}`,
-    description: business.summary,
+    description: business.seo,
     path: `/businesses/${business.slug}`,
   });
 }
@@ -55,9 +55,10 @@ function PrimaryAction({ business }: { business: Business }) {
       </a>
     );
   }
+  // No website to send people to: the contact form, with this business chosen.
   return (
     <Link href={`/contact?topic=${business.slug}`} className="button button--large">
-      {business.cta.label}
+      {business.status === "live" ? `Ask us about ${business.name}` : business.cta.label}
       <span className="button-arrow" aria-hidden="true">
         →
       </span>
@@ -86,20 +87,19 @@ function NeighbourLink({ business, direction }: { business: Business; direction:
 }
 
 /*
- * The address is only known once a link is followed, so everything that
- * depends on it sits inside Suspense. Each business is still prerendered in
- * full at build time (see generateStaticParams), and links to these pages
- * prefetch them, so the placeholder is rarely seen.
+ * Every business is prerendered in full at build time (see
+ * generateStaticParams), so the whole page is in the HTML that is served:
+ * it reads without JavaScript and by crawlers that do not run scripts.
+ *
+ * `instant = false` is what allows that. Without it the address would have
+ * to be read inside a Suspense boundary, which sends the page as an empty
+ * shell that a script fills in. The cost is small: a link to one of these
+ * pages waits for the page instead of showing a placeholder first, and
+ * every such link prefetches it.
  */
-export default function BusinessPage({ params }: PageProps<"/businesses/[slug]">) {
-  return (
-    <Suspense fallback={<div className={styles.placeholder} aria-hidden="true" />}>
-      <BusinessContent params={params} />
-    </Suspense>
-  );
-}
+export const instant = false;
 
-async function BusinessContent({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BusinessPage({ params }: PageProps<"/businesses/[slug]">) {
   const { slug } = await params;
   const business = getBusiness(slug);
   if (!business) notFound();
@@ -150,7 +150,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
           >
             <SpecSheet
               title="At a glance"
-              status={{ label: live ? "Live" : "In development", live }}
+              status={live ? undefined : IN_DEVELOPMENT}
               rows={[
                 ...business.facts,
                 {
@@ -159,7 +159,9 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
                 },
                 {
                   label: "Website",
-                  value: live ? business.domain : `${business.domain} (coming soon)`,
+                  value: business.url
+                    ? business.domain
+                    : `${business.domain}, ${live ? "opening soon" : IN_DEVELOPMENT.toLowerCase()}`,
                   href: business.url,
                 },
                 { label: "Group", value: site.name },
@@ -188,7 +190,7 @@ async function BusinessContent({ params }: { params: Promise<{ slug: string }> }
               <PromiseCards items={business.promises} />
             </div>
             <p className={`meta ${styles.source}`}>
-              As published at {business.domain}, where the full terms are set out.
+              As published at {business.domain}.
             </p>
           </div>
         </section>

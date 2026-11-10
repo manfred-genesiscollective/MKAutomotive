@@ -30,9 +30,9 @@ export default function PrivacyPage() {
             <h2 className="h3">What we collect</h2>
             <p>
               When you send an enquiry through a form on this site, we receive the details you
-              enter: your name, your email address and anything else you choose to tell us, such as
-              your company, your phone number or a link to your CV. We do not ask for more than we
-              need to reply.
+              enter: your name, your email address and, depending on the form, your company, your
+              phone number, a link to your CV and your message. We do not ask for more than we need
+              to reply.
             </p>
           </section>
 
@@ -57,7 +57,9 @@ export default function PrivacyPage() {
             <h2 className="h3">How long we keep it</h2>
             <p>
               We keep an enquiry for as long as we need it to deal with your request and to keep a
-              record of our dealings with you.
+              record of our dealings with you. Open job applications and requests to hear about a
+              business that is still in development are kept until they are dealt with or you
+              withdraw them.
             </p>
           </section>
 
@@ -69,8 +71,8 @@ export default function PrivacyPage() {
           <section>
             <h2 className="h3">Our businesses&rsquo; websites</h2>
             <p>
-              Each of our businesses runs its own website with its own privacy notice. When you
-              follow a link to one of them, that notice applies.
+              Our businesses&rsquo; websites are run separately. When you follow a link to one of
+              them, that site&rsquo;s own terms and privacy practices apply, not this notice.
             </p>
           </section>
 

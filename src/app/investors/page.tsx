@@ -1,7 +1,7 @@
 import { FormSection } from "@/components/form-section";
 import { NumberedRows } from "@/components/numbered-rows";
 import { PageHero } from "@/components/page-hero";
-import { businesses, countWord, statusLabel } from "@/content/businesses";
+import { IN_DEVELOPMENT, businesses, countWord } from "@/content/businesses";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -9,42 +9,39 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "Investors",
-  description: `${site.name} builds a separate business at each point in the life of a car in Singapore. Request the investor deck.`,
+  description: `${site.name} has a separate business at each point in the life of a car in Singapore.`,
   path: "/investors",
 });
 
 export default function InvestorsPage() {
-  const live = businesses.filter((business) => business.status === "live");
   const upcoming = businesses.filter((business) => business.status !== "live");
-  const liveCount = countWord(live.length);
 
   return (
     <>
       <PageHero
-        eyebrow="Investor relations"
+        eyebrow="Investors"
         size="long"
         title={["One car,", `${countWord()} businesses.`]}
       >
         <p className="lede lede--lg">
-          A car in Singapore creates a decade of needs: something to drive, upgrades, servicing,
-          help when things go wrong and, at the end of its COE, a buyer overseas. {site.name}{" "}
-          builds a business at each of those points.
+          Driving in Singapore runs on a ten-year clock. In that time people need a car to rent,
+          upgrades, servicing, help when things go wrong and, when the Certificate of Entitlement
+          (COE) ends, a buyer overseas. {site.name} has a business at each of those points.
         </p>
       </PageHero>
 
       <section className="section section--flush-top">
         <div className={`container ${styles.body}`} data-reveal>
           <p className="body">
-            Each business stands on its own, with its own brand, its own website and its own
-            customers. Together they cover the life of a car from the first rental to the final
-            export.
+            Each business stands on its own, under its own brand, at a different point between a
+            first rental and a final export.
           </p>
-          <p className="body">
-            {liveCount.charAt(0).toUpperCase() + liveCount.slice(1)} are operating today
-            {upcoming.length > 0
-              ? `, and ${upcoming.map((business) => business.name).join(" and ")} ${upcoming.length === 1 ? "is" : "are"} in development.`
-              : "."}
-          </p>
+          {upcoming.length > 0 ? (
+            <p className="body">
+              {upcoming.map((business) => business.name).join(" and ")}{" "}
+              {upcoming.length === 1 ? "is" : "are"} in development.
+            </p>
+          ) : null}
         </div>
 
         <div className={`container ${styles.portfolio}`}>
@@ -58,7 +55,10 @@ export default function InvestorsPage() {
               items={businesses.map((business) => ({
                 title: business.name,
                 text: business.model,
-                note: `${business.stage.label} · ${statusLabel(business)}`,
+                note:
+                  business.status === "live"
+                    ? business.stage.label
+                    : `${business.stage.label} · ${IN_DEVELOPMENT}`,
               }))}
             />
           </div>
@@ -67,10 +67,9 @@ export default function InvestorsPage() {
 
       <FormSection
         kind="investors"
-        eyebrow="Request"
-        title="Request our investor deck."
-        lead={`Interested in learning more about ${site.name}?`}
-        text="Complete the form and a member of our team will be in touch."
+        eyebrow="Enquire"
+        title="Investor enquiries."
+        text="Tell us who you are and we will reply by email."
       >
         <p className={`meta ${styles.disclaimer}`}>
           This page is for information only. It is not an offer or an invitation to invest.

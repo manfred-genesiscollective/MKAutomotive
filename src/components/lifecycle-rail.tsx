@@ -1,12 +1,10 @@
 import Link from "next/link";
 
-import { businesses } from "@/content/businesses";
+import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 
 import styles from "./lifecycle-rail.module.css";
 
 type Props = {
-  /** Slug of the business whose page is being shown, if any. */
-  current?: string;
   /** Show the ten-year COE scale above the stages. */
   scale?: boolean;
 };
@@ -18,7 +16,7 @@ const AFTER = "When it runs out";
  * The five stages in the life of a car, each leading to the business that
  * looks after it. Doubles as a one-click directory.
  */
-export function LifecycleRail({ current, scale = false }: Props) {
+export function LifecycleRail({ scale = false }: Props) {
   const firstAfter = businesses.findIndex((business) => business.stage.afterCoe);
   const during = firstAfter === -1 ? businesses.length : firstAfter;
   const showScale = scale && during > 0 && during < businesses.length;
@@ -56,7 +54,6 @@ export function LifecycleRail({ current, scale = false }: Props) {
               href={`/businesses/${business.slug}`}
               className={styles.stop}
               prefetch
-              aria-current={current === business.slug ? "page" : undefined}
             >
               <span className={styles.node} aria-hidden="true" />
               <span className={styles.stage}>
@@ -64,7 +61,7 @@ export function LifecycleRail({ current, scale = false }: Props) {
               </span>
               <span className={styles.name}>{business.name}</span>
               <span className={styles.category}>
-                {business.status === "coming-soon" ? "Coming soon" : business.category}
+                {business.status === "live" ? business.category : IN_DEVELOPMENT}
               </span>
             </Link>
           </li>

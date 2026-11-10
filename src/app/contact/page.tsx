@@ -1,6 +1,6 @@
 import { EnquiryForm } from "@/components/enquiry-form";
 import { PageHero } from "@/components/page-hero";
-import { businesses } from "@/content/businesses";
+import { IN_DEVELOPMENT, businesses } from "@/content/businesses";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "Contact",
-  description: `Contact ${site.name} about partnerships, supply, investment or careers, or go straight to one of its businesses.`,
+  description: `Contact ${site.name} about a partnership, supplying one of its businesses, investment or a job, or go straight to one of the businesses.`,
   path: "/contact",
 });
 
@@ -24,8 +24,9 @@ export default function ContactPage() {
         <div className={`container ${styles.grid}`}>
           <div className={styles.aside} data-reveal>
             <p className={styles.lead}>
-              Partnerships, supply, investment or a role in one of our businesses: tell us what
-              you have in mind and we will point you to the right person.
+              Write to the group about a partnership, supplying one of our businesses, investment
+              or a job. For anything a business handles itself, its own website is the quickest
+              way in.
             </p>
 
             <div className={styles.block}>
@@ -45,7 +46,7 @@ export default function ContactPage() {
                         <span className="visually-hidden"> (opens in a new tab)</span>
                       </a>
                     ) : (
-                      <span className={styles.soon}>Coming soon</span>
+                      <span className={styles.soon}>{IN_DEVELOPMENT}</span>
                     )}
                   </li>
                 ))}

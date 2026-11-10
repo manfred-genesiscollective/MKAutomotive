@@ -1,4 +1,4 @@
-import { businesses, getBusiness } from "@/content/businesses";
+import { IN_DEVELOPMENT, businesses, getBusiness } from "@/content/businesses";
 import { site } from "@/content/site";
 import { ogContentType, ogSize, renderOgImage } from "@/lib/og-image";
 
@@ -13,11 +13,11 @@ export function generateStaticParams() {
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const business = getBusiness(slug);
-  if (!business) {
-    return renderOgImage({ lines: ["The whole life", "of a car."], emblem: true });
-  }
+  // No image for an address that is not a business: drawing one would let
+  // anyone make the server render and store pictures for made-up addresses.
+  if (!business) return new Response("Not found", { status: 404 });
   return renderOgImage({
-    eyebrow: `${business.stage.number} · ${business.stage.label}`,
+    eyebrow: `${business.stage.number} · ${business.stage.label}${business.status === "live" ? "" : ` · ${IN_DEVELOPMENT}`}`,
     lines: [business.name],
     subtitle: business.tagline,
   });

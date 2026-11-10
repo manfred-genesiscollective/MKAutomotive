@@ -3,20 +3,20 @@ import Link from "next/link";
 import { BusinessRows } from "@/components/business-rows";
 import { CtaBand } from "@/components/cta-band";
 import { PageHero } from "@/components/page-hero";
-import { businessNameList } from "@/content/businesses";
+import { businessNameList, countWord } from "@/content/businesses";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Our businesses",
-  description: `The businesses of ${site.name}: ${businessNameList()}. Each looks after one stage in the life of a car in Singapore.`,
+  description: `${businessNameList()}: the ${countWord()} businesses of ${site.name}, each at one stage in the life of a car in Singapore.`,
   path: "/businesses",
 });
 
 export default function BusinessesPage() {
   return (
     <>
-      <PageHero eyebrow="Our businesses" title={["Our businesses."]}>
+      <PageHero eyebrow={`${countWord()} businesses`} title={["Our businesses."]}>
         <p className="lede lede--lg">
           Each MK business looks after one stage in the life of a car in Singapore. Start with
           the one you need.

@@ -2,7 +2,8 @@ import styles from "./spec-sheet.module.css";
 
 type Props = {
   title: string;
-  status: { label: string; live: boolean };
+  /** A short note beside the title, for example "In development". */
+  status?: string;
   rows: { label: string; value: string; href?: string }[];
 };
 
@@ -12,10 +13,12 @@ export function SpecSheet({ title, status, rows }: Props) {
     <div className={styles.sheet}>
       <div className={styles.head}>
         <p className="meta">{title}</p>
-        <p className={styles.status}>
-          <span className={status.live ? styles.live : styles.pending} aria-hidden="true" />
-          {status.label}
-        </p>
+        {status ? (
+          <p className={styles.status}>
+            <span className={styles.pending} aria-hidden="true" />
+            {status}
+          </p>
+        ) : null}
       </div>
       <dl className={styles.rows}>
         {rows.map((row) => (

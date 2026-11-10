@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "Partner with us",
-  description: `${site.name} works with workshops, parts brands, overseas dealers, car owners, fleets and founders across the life of a car in Singapore.`,
+  description: `Partner with the businesses of ${site.name} in Singapore: workshops, overseas dealers, car owners and fleets.`,
   path: "/partners",
 });
 
@@ -16,16 +16,10 @@ export default function PartnersPage() {
   return (
     <>
       <PageHero eyebrow="Partnerships" title={["Partner with us."]}>
-        <div className={styles.intro}>
-          <p className="lede lede--lg">
-            {site.name} works with workshops, brands, dealers, fleets and car owners across the
-            life of a car.
-          </p>
-          <p className="body">
-            Each of our businesses has its own kind of partner. Find yours below, or tell us what
-            you have in mind and we will point you to the right person.
-          </p>
-        </div>
+        <p className="lede lede--lg">
+          Each of our businesses has its own kind of partner. Find yours below, or tell us what
+          you have in mind and we will point you to the right person.
+        </p>
       </PageHero>
 
       <section className="section section--flush-top">
@@ -43,7 +37,7 @@ export default function PartnersPage() {
         kind="partners"
         eyebrow="Enquire"
         title="Interested in working with us?"
-        text="Tell us about your organisation and how you would like to work together. We will review your enquiry and reply by email."
+        text="Tell us who you are and how you would like to work together. We will review your enquiry and reply by email."
       />
     </>
   );

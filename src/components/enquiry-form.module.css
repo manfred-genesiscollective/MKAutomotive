@@ -210,6 +210,11 @@ select.input {
   display: none;
 }
 
+/* Focus is moved here by script after a failed send, so it needs no ring. */
+.status:focus {
+  outline: none;
+}
+
 .status::before {
   content: "";
   display: inline-block;

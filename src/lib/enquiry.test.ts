@@ -86,6 +86,28 @@ describe("parseEnquiry", () => {
     assert.equal(result.enquiry.name, "Jane Bcc: someone@example.com");
   });
 
+  it("removes invisible characters that could disguise a name or a subject line", () => {
+    const result = parseEnquiry(
+      "contact",
+      form({ ...validContact, name: "Jane\u202Eevil\u200B\u2066 Tan", message: "Hello\u202E there\u0007" }),
+    );
+    assert.equal(result.ok, true);
+    if (!result.ok) return;
+    assert.equal(result.enquiry.name, "Janeevil Tan");
+    assert.equal(result.enquiry.message, "Hello there");
+  });
+
+  it("accepts ordinary email addresses and rejects malformed ones", () => {
+    const check = (address: string) =>
+      parseEnquiry("contact", form({ ...validContact, email: address })).ok;
+    for (const good of ["jane@example.com", "jane.tan+mk@mail.example.com.sg", "j_t@ex-ample.sg"]) {
+      assert.equal(check(good), true, good);
+    }
+    for (const bad of ["a@b.c,", "x@y..z", "<a@b.co>", ".a@b.co", "a.@b.co", "a@-b.co", "a@b", "a b@c.co"]) {
+      assert.equal(check(bad), false, bad);
+    }
+  });
+
   it("keeps paragraphs in the message but tidies them", () => {
     const result = parseEnquiry(
       "contact",
@@ -117,7 +139,7 @@ describe("parseEnquiry", () => {
     });
   });
 
-  it("requires a company on the partners form", () => {
+  it("accepts a partners enquiry without a company, as a private car owner would send", () => {
     const result = parseEnquiry(
       "partners",
       form({
@@ -127,9 +149,16 @@ describe("parseEnquiry", () => {
         message: "Hello",
       }),
     );
+    assert.equal(result.ok, true);
+    if (!result.ok) return;
+    assert.equal("company" in result.enquiry, false);
+  });
+
+  it("still requires a partnership type and a message on the partners form", () => {
+    const result = parseEnquiry("partners", form({ name: "Sam Lee", email: "sam@example.com" }));
     assert.equal(result.ok, false);
     if (result.ok) return;
-    assert.deepEqual(Object.keys(result.fieldErrors), ["company"]);
+    assert.deepEqual(Object.keys(result.fieldErrors).sort(), ["message", "topic"]);
   });
 
   it("only accepts http and https links on the careers form", () => {
@@ -187,7 +216,7 @@ describe("formatEnquiryEmail", () => {
       { kind: "investors", name: "Sam Lee", email: "sam@fund.example", company: "Example Capital" },
       context,
     );
-    assert.match(email.text, /^Form: Investor deck request$/m);
+    assert.match(email.text, /^Form: Investor enquiry$/m);
     assert.match(email.text, /^Firm: Example Capital$/m);
     assert.match(email.text, /^Email: sam@fund\.example$/m);
     assert.doesNotMatch(email.text, /Message:/);
@@ -261,13 +290,15 @@ describe("deliverEnquiry", () => {
     });
   });
 
-  it("reports a rejected request without throwing", async () => {
-    const fakeFetch = (async () => new Response("no", { status: 422 })) as typeof fetch;
+  it("reports a rejected request without throwing, with the provider's reason for the log", async () => {
+    const fakeFetch = (async () =>
+      new Response('{"message":"Invalid `reply_to` field."}', { status: 422 })) as typeof fetch;
     const result = await deliverEnquiry(email, config, fakeFetch);
     assert.deepEqual(result, {
       ok: false,
       reason: "rejected",
-      detail: "Resend responded with HTTP 422",
+      status: 422,
+      detail: 'Resend responded with HTTP 422: {"message":"Invalid `reply_to` field."}',
     });
   });
 

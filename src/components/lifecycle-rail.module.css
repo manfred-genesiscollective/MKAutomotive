@@ -41,8 +41,7 @@
   transition: transform 0.3s var(--ease);
 }
 
-.stop:hover .node,
-.stop[aria-current] .node {
+.stop:hover .node {
   transform: scale(1.7);
 }
 

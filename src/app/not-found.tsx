@@ -3,10 +3,8 @@ import Link from "next/link";
 
 import { PageHero } from "@/components/page-hero";
 
-export const metadata: Metadata = {
-  title: "Page not found",
-  robots: { index: false },
-};
+// The framework already tells search engines not to index a 404.
+export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (

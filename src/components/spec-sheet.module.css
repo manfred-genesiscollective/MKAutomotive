@@ -30,20 +30,11 @@
   color: var(--ink);
 }
 
-/* A small square marker: solid gold when the business is live, an outline
-   while it is still being built. */
-.live,
+/* A small outlined square beside the note: not filled in yet. */
 .pending {
   flex: none;
   width: 7px;
   height: 7px;
-}
-
-.live {
-  background: var(--gold);
-}
-
-.pending {
   border: 1px solid var(--ink-3);
 }
 
