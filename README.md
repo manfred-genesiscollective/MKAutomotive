@@ -97,6 +97,16 @@ Visitors who ask their device for more contrast get no reflections and a heavier
 - Security headers, including a Content-Security-Policy that allows only this site's own scripts, styles, fonts and images, are set in `next.config.ts`. A third-party script or embed added later must be allowed there.
 - Business pages are complete in the HTML that is served, so they read without JavaScript. Scroll animations never hide anything that is already on screen.
 
+## Deployment
+
+The site is deployed on Vercel as the project `mkautomotive`, linked to this repository. Every push to the repository's default branch is built and published at https://mkautomotive.vercel.app.
+
+Set the enquiry variables (see Enquiry forms) in the project's settings on Vercel, under Environment Variables, then redeploy. Until then the forms tell visitors their message could not be sent.
+
+### Search engines
+
+While the site lives on a `vercel.app` address, or on a developer's machine, every page asks search engines not to list it (a `noindex` mark on each page and on every file). Nothing has to be switched: the first build after the site's own domain is connected, or after `NEXT_PUBLIC_SITE_URL` is set to it, removes the mark and adds the sitemap to `robots.txt`. The rule is `isIndexable()` in `src/lib/site-url.ts`.
+
 ## Before launch
 
 - [ ] Replace the redrawn monogram with the original logo artwork and confirm the exact gold (see Logo above).
@@ -105,7 +115,7 @@ Visitors who ask their device for more contrast get no reflections and a heavier
 - [ ] Set the three email variables and send a test enquiry from each form.
 - [ ] Add a firewall rule that limits `POST` requests (on Vercel: Firewall, rate limiting), as a second brake behind the built-in one.
 - [ ] Open all four business addresses in a signed-out browser. At the time of writing goldenhour.sg sends the public to a Vercel login, and revhub.sg and export.sg show placeholder contact details.
-- [ ] Point the domain at the deployment and check `sitemap.xml` shows the live address.
+- [ ] Connect the domain to the Vercel project, redeploy, and check that `sitemap.xml` shows the live address and that `robots.txt` now names the sitemap (see Search engines below).
 
 ### Wording to approve
 

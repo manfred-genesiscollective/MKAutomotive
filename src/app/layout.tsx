@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { site } from "@/content/site";
 import { defaultTitle } from "@/lib/metadata";
-import { getSiteUrl } from "@/lib/site-url";
+import { getSiteUrl, isIndexable } from "@/lib/site-url";
 
 import forgedMetal from "@/assets/forged-metal.svg";
 
@@ -57,6 +57,8 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   formatDetection: { telephone: false },
+  // Until the site has its own domain, ask search engines not to list it.
+  ...(isIndexable() ? {} : { robots: { index: false } }),
 };
 
 export const viewport: Viewport = {

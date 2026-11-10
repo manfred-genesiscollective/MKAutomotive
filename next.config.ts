@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import { isIndexable } from "./src/lib/site-url";
+
 /*
  * Content-Security-Policy. Every page is prerendered, so there is no
  * per-request nonce to give the framework's inline scripts and the inline
@@ -31,6 +33,9 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
   },
+  // Until the site has its own domain, nothing on it should be listed by
+  // search engines: this covers images and files, which have no page to mark.
+  ...(isIndexable() ? [] : [{ key: "X-Robots-Tag", value: "noindex" }]),
   // The development server needs eval and a websocket for live reloading,
   // so these two are for production only.
   ...(process.env.NODE_ENV === "production"
