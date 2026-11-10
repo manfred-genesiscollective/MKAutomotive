@@ -13,10 +13,13 @@
 }
 
 .disclaimer {
-  max-width: 420px;
+  max-width: 440px;
   margin-top: 8px;
   padding-top: 20px;
   border-top: 1px solid var(--line);
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  letter-spacing: 0;
+  line-height: 1.55;
   text-transform: none;
-  letter-spacing: 0.04em;
 }

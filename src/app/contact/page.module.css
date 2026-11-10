@@ -32,16 +32,21 @@
   max-width: 520px;
 }
 
+/* The need on the left, the address on the right, in every row: a long need
+   wraps, the address does not. */
 .direct li {
   display: flex;
-  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
   gap: 4px 24px;
-  padding-block: 11px;
+  padding-block: 12px;
   border-bottom: 1px solid var(--line);
-  font-size: 15px;
+  font-size: clamp(16px, 0.9rem + 0.2vw, 17.5px);
   line-height: 1.5;
+}
+
+.direct li > :first-child {
+  min-width: 0;
 }
 
 .direct li:last-child {
@@ -50,11 +55,13 @@
 
 .direct a {
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .soon {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
+  white-space: nowrap;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -64,7 +71,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 15.5px;
+  font-size: clamp(16.5px, 0.9rem + 0.3vw, 18px);
   line-height: 1.6;
 }
 

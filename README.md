@@ -70,7 +70,7 @@ The palette is defined once in `src/app/globals.css`:
 - **Forged Carbon `#1B1C1F`** is the main colour, shown as the material under dark glass. On screen it is kept close to black, so that the platinum and Pearl White on it stand out.
   - *The carbon*: a seamless texture of chopped-fibre flakes (`src/assets/forged-carbon.svg`) with a deep carbon tone laid over it. `--carbon-deep` is that tone and `--veil` sets how much of it covers the flakes (higher is darker): change these two to lighten or darken the whole site. `--flake` sets the size of the flakes.
   - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
-  - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground: the stage directory, the group figures and the forms.
+  - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground: the group figures and the forms.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
 - **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop, short stripes, stage markers. Never a background, a button fill or body text.
 - **Platinum** is a finish, not a flat colour: a light version of the flake texture (`src/assets/forged-metal.svg`), so a shape looks cut from polished forged metal. The logo, the emblem beside the home headline and the large headings are made of it. `--platinum` (`#E5E4E2`) is the flat colour used where the texture cannot be shown, such as in print.
@@ -94,9 +94,9 @@ In the header and the phone menu the monogram has the group's name beside it, "M
 
 ### Business logos
 
-Each business is shown by its own logo, in its own colours: in the rows on the home page and Our businesses, as the headline of its page, in the stage directory, in the lists on Careers and Investors, in the previous and next links, and in its share image.
+Each business is shown by its own logo, in its own colours: in the rows on the home page and Our businesses, as the headline of its page, in the stage list on About, in the lists on Careers and Investors, in the previous and next links, and in its share image.
 
-- The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied. Two changes from those files: Golden Hour and The Car Lounge are their monograms alone, without the small words that came with them, and the "Drive" of SwiftDrive is white rather than navy, which would disappear against the carbon.
+- The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied, lettering included. Two changes from those files: Golden Hour's words sit to the right of its monogram rather than under it, in the monogram's orange rather than black, and the "Drive" of SwiftDrive is white rather than navy. Black and navy would disappear against the carbon. The Car Lounge is as supplied, words on the right.
 - The forged finish (`src/components/business-logo.module.css`): the carbon's flakes are laid over each logo as light and shade (`src/assets/forged-shade.svg`), cut to its shape, and the logo is slightly see-through. The strength, the transparency and each logo's relative size are in `src/lib/business-logos.ts`, which the share images read too.
 - To use the businesses' own vector artwork instead, replace the five SVG files (keep the names). Each needs a `viewBox` and solid fills.
 
@@ -139,7 +139,7 @@ To launch: remove `SITE_PRELAUNCH` (or set it to `false`) in Vercel and redeploy
 ## Before launch
 
 - [ ] Replace the redrawn monogram with the original logo artwork and confirm the exact gold (see Logo above).
-- [ ] Replace the traced business logos with each business's own vector files, if they have them, and confirm SwiftDrive's white "Drive" (see Business logos above).
+- [ ] Replace the traced business logos with each business's own vector files, if they have them, and confirm SwiftDrive's white "Drive" and Golden Hour's orange words (see Business logos above).
 - [ ] Confirm the registered company name in `src/content/site.ts` (used in the copyright line).
 - [ ] Add contact details and social links in `src/content/site.ts`.
 - [ ] Set the three email variables and send a test enquiry from each form.

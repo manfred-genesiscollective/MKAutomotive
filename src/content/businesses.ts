@@ -59,7 +59,7 @@ export const businesses: Business[] = [
     name: "SwiftDrive",
     stage: { number: "01", label: "Drive" },
     category: "Car rental",
-    tagline: "Weekly and monthly car rental, delivered to your door.",
+    tagline: "Weekly and monthly car\u00a0rental, delivered to your door.",
     need: "Rent a car",
     summary:
       "SwiftDrive rents its own cars by the week or the month and brings each one to your door, anywhere in Singapore and at any hour. One all-in price covers delivery, collection and unlimited kilometres.",

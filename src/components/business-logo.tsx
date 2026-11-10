@@ -13,9 +13,9 @@ import styles from "./business-logo.module.css";
 /*
  * Each business's own logo, traced from the artwork the group supplied and
  * kept in its own colours (src/assets/logos). Two changes from the artwork:
- * the Golden Hour and The Car Lounge monograms are used without the small
- * words that came with them, and the "Drive" of SwiftDrive is white instead
- * of navy, which would disappear against the carbon.
+ * Golden Hour's words sit to the right of its monogram instead of under it,
+ * in the monogram's orange (they were black), and the "Drive" of SwiftDrive
+ * is white instead of navy. Black and navy would disappear on the carbon.
  */
 const IMAGES: Record<string, StaticImageData> = {
   swiftdrive,

@@ -475,6 +475,7 @@ svg {
   font-weight: 700;
   letter-spacing: -0.006em;
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 /* ---------- Forged-metal lettering ---------- */
@@ -551,8 +552,8 @@ svg {
 }
 
 .lede {
-  max-width: 720px;
-  font-size: clamp(17px, 1.8vw, 21px);
+  max-width: 760px;
+  font-size: clamp(17.5px, 1rem + 0.45vw, 23px);
   font-weight: 500;
   letter-spacing: -0.012em;
   line-height: 1.6;
@@ -569,15 +570,16 @@ svg {
   text-wrap: balance;
 }
 
+/* Descriptive text: a little larger on a large screen, where the headings are. */
 .body {
-  font-size: 15.5px;
-  line-height: 1.75;
+  font-size: clamp(16.5px, 0.9rem + 0.3vw, 18.5px);
+  line-height: 1.7;
   color: var(--ink-2);
   text-wrap: pretty;
 }
 
 .body--strong {
-  font-size: 17px;
+  font-size: clamp(17.5px, 1rem + 0.2vw, 19.5px);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.45;
@@ -588,13 +590,14 @@ svg {
   max-width: 560px;
 }
 
-/* Small mono label with a short gold stripe: the site's signature detail. */
+/* Small mono label with a short gold stripe: the site's signature detail.
+   The stripe stays level with the first line if the label wraps. */
 .eyebrow {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 400;
   letter-spacing: 0.1em;
   line-height: 1.5;
@@ -607,12 +610,13 @@ svg {
   flex: none;
   width: 14px;
   height: 2px;
+  margin-top: calc(0.75em - 1px);
   background: var(--gold);
 }
 
 .meta {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   line-height: 1.6;
   text-transform: uppercase;
@@ -641,10 +645,10 @@ svg {
    grows when the row is hovered. */
 .arrow-link {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12.5px;
   letter-spacing: 0.08em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -656,6 +660,7 @@ svg {
   flex: none;
   width: 14px;
   height: 2px;
+  margin-top: calc(0.75em - 1px);
   background: var(--gold);
   transition: width 0.3s var(--ease);
 }
@@ -731,6 +736,15 @@ svg {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+/* On the narrowest screens a long label may wrap rather than run off the edge. */
+@media (max-width: 400px) {
+  .button {
+    padding-block: 10px;
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 /* ---------- Motion ---------- */

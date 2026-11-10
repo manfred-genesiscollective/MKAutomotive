@@ -2,15 +2,15 @@
  * How each business logo is drawn (the artwork is in src/assets/logos). Kept
  * apart from the images so the share images can use it on the server.
  *
- * `scale` evens out their weight: the two monograms are compact, so they are
- * drawn taller than the three wordmarks. `flakes` moves the forged texture so
- * that no two logos show the same patch of it.
+ * `scale` evens out their weight: Golden Hour's monogram carries its words
+ * small beside it, so it is drawn a little taller than the others. `flakes`
+ * moves the forged texture so that no two logos show the same patch of it.
  */
 export const LOGO_STYLE: Record<string, { scale: number; flakes: [number, number] }> = {
   swiftdrive: { scale: 1, flakes: [12, 30] },
   revhub: { scale: 1, flakes: [64, 18] },
-  "the-car-lounge": { scale: 1.3, flakes: [38, 72] },
-  "golden-hour": { scale: 1.45, flakes: [82, 56] },
+  "the-car-lounge": { scale: 1, flakes: [38, 72] },
+  "golden-hour": { scale: 1.12, flakes: [82, 56] },
   "export-sg": { scale: 1, flakes: [26, 88] },
 };
 

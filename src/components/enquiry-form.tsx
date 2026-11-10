@@ -234,8 +234,12 @@ function Form({
 
   const fieldId = (field: FieldName) => `${id}-${field}`;
   const errorId = (field: FieldName) => `${id}-${field}-error`;
+  // Stated either way: a required field that is still empty would otherwise
+  // be announced as invalid before anything has been sent.
   const describe = (field: FieldName) =>
-    errors[field] ? { "aria-invalid": true, "aria-describedby": errorId(field) } : {};
+    errors[field]
+      ? { "aria-invalid": true, "aria-describedby": errorId(field) }
+      : { "aria-invalid": false };
   const renderError = (field: FieldName) =>
     errors[field] ? (
       <p id={errorId(field)} className={styles.error}>

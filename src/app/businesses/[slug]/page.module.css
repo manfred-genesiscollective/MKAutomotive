@@ -74,8 +74,11 @@
 
 .source {
   margin-top: 22px;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  letter-spacing: 0;
+  line-height: 1.55;
   text-transform: none;
-  letter-spacing: 0.04em;
 }
 
 .neighbours {

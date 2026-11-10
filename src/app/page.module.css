@@ -1,15 +1,3 @@
-/* The directory: a glass panel straight under the headline, so the five
-   businesses are one click away from the first screen. */
-.rail {
-  padding-block: 30px 34px;
-}
-
-@media (max-width: 900px) {
-  .rail {
-    padding-block: 26px 22px;
-  }
-}
-
 .rows {
   margin-top: clamp(40px, 4.4vw, 56px);
 }

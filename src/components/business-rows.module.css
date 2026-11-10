@@ -27,7 +27,7 @@
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11.5px;
   letter-spacing: 0.1em;
   line-height: 1.4;
   text-transform: uppercase;
@@ -64,9 +64,9 @@
 }
 
 .tagline {
-  max-width: 440px;
+  max-width: 480px;
   margin-top: 22px;
-  font-size: 17px;
+  font-size: clamp(18px, 1rem + 0.3vw, 21px);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.4;
@@ -77,7 +77,7 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
-  max-width: 560px;
+  max-width: 620px;
   padding-top: 6px;
 }
 
@@ -89,12 +89,16 @@
 }
 
 /* Sits above the row-wide link so it can be clicked on its own. The address
-   is shown as it is typed, in lower case. */
+   is shown as it is typed, in lower case. The padding makes it an easier
+   target without moving it. */
 .site {
   position: relative;
   z-index: 1;
+  display: inline-block;
+  padding-block: 8px;
+  margin-block: -8px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 13.5px;
   letter-spacing: 0.03em;
   line-height: 1.5;
   color: var(--ink-3);

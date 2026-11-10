@@ -32,10 +32,16 @@
   gap: 14px;
 }
 
+/* A legend is not laid out with the fieldset's other children, so the gap
+   above does not reach it. */
+.fieldset > legend {
+  margin-bottom: 14px;
+}
+
 .label {
   padding: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -68,6 +74,10 @@
 .input:focus-visible {
   border-bottom-color: var(--ink);
   box-shadow: 0 1px 0 0 var(--ink);
+  /* Unseen here; drawn in the system colour in Windows contrast themes,
+     which remove the shadow above. */
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 textarea.input {
@@ -91,6 +101,23 @@ select.input {
   cursor: pointer;
 }
 
+/* Nothing chosen yet: the prompt reads as a placeholder, not an answer. */
+select.input:invalid {
+  color: var(--ink-4);
+}
+
+select.input option {
+  color: var(--ink);
+}
+
+/* Contrast themes remove the drawn arrow: use the system's own. */
+@media (forced-colors: active) {
+  select.input {
+    appearance: auto;
+    background-image: none;
+  }
+}
+
 /* Invalid fields get a gold underline: a stripe, not coloured text. */
 .input[aria-invalid="true"] {
   border-bottom-color: var(--gold);
@@ -109,7 +136,7 @@ select.input {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  font-size: 13.5px;
+  font-size: 14.5px;
   line-height: 1.45;
   color: var(--ink);
 }
@@ -145,10 +172,10 @@ select.input {
 }
 
 .chip span {
-  padding: 10px 18px;
+  padding: 11px 18px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 500;
   line-height: 1.2;
   color: var(--ink-2);
@@ -183,9 +210,9 @@ select.input {
 }
 
 .note {
-  flex: 1 1 220px;
-  max-width: 320px;
-  font-size: 12.5px;
+  flex: 1 1 240px;
+  max-width: 360px;
+  font-size: 14px;
   line-height: 1.55;
   color: var(--ink-3);
 }
@@ -200,8 +227,12 @@ select.input {
   color: var(--ink);
 }
 
+/* The marker stays beside the first line when the message wraps. */
 .status {
-  font-size: 14.5px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 15.5px;
   line-height: 1.5;
   color: var(--ink);
 }
@@ -217,10 +248,9 @@ select.input {
 
 .status::before {
   content: "";
-  display: inline-block;
+  flex: none;
   width: 7px;
   height: 7px;
-  margin-right: 10px;
   background: var(--gold);
 }
 
@@ -245,7 +275,7 @@ select.input {
   padding: 0;
   border: 0;
   background: none;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
   color: var(--ink-2);
   text-decoration: underline;

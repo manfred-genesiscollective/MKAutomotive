@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { BusinessRows } from "@/components/business-rows";
 import { CtaBand } from "@/components/cta-band";
-import { LifecycleRail } from "@/components/lifecycle-rail";
 import { NumberedRows } from "@/components/numbered-rows";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
@@ -57,12 +56,6 @@ export default function HomePage() {
         </p>
       </PageHero>
 
-      <section className={`surface-glass ${styles.rail}`}>
-        <div className="container fade-in" style={{ "--delay": "0.7s" } as React.CSSProperties}>
-          <LifecycleRail scale />
-        </div>
-      </section>
-
       <section className="section">
         <div className="container">
           <SectionHeading
@@ -82,10 +75,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section surface-glass" id="habits">
+      <section className="section surface-glass">
         <div className="container">
           <StatRow items={groupFacts} />
-          <div className={styles.habits}>
+          {/* The About page links here: the habits, not the figures above them. */}
+          <div className={styles.habits} id="habits">
             <SectionHeading
               eyebrow="How we work"
               title={`Different businesses, the same ${countWord(habits.length)} habits.`}

@@ -24,11 +24,11 @@ export default function PartnersPage() {
 
       <section className="section section--flush-top">
         <div className="container">
-          <p className="eyebrow" data-reveal>
+          <h2 className="eyebrow" data-reveal>
             Who we work with
-          </p>
+          </h2>
           <div className={styles.rows}>
-            <NumberedRows items={partnerTypes} as="h2" />
+            <NumberedRows items={partnerTypes} as="h3" />
           </div>
         </div>
       </section>

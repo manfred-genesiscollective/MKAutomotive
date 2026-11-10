@@ -12,7 +12,7 @@
 .item::before {
   content: "";
   position: absolute;
-  top: 3px;
+  top: 3.5px;
   left: 0;
   right: 0;
   border-top: 1px solid var(--line-strong);
@@ -22,21 +22,24 @@
   border-top-style: dashed;
 }
 
+/* The space between stages is a margin, outside the link, so a stage's
+   keyboard focus ring never runs over the next one. */
 .stop {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   height: 100%;
-  padding: 30px 20px 4px 0;
+  margin-right: 20px;
+  padding: clamp(28px, min(2.8vw, 4.5vh), 44px) 0 4px;
 }
 
 .node {
   position: absolute;
   top: 0;
   left: 0;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   background: var(--gold);
   transition: transform 0.3s var(--ease);
 }
@@ -47,7 +50,7 @@
 
 .stage {
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: clamp(12.5px, 0.6rem + 0.3vw, 15px);
   letter-spacing: 0.1em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -64,12 +67,13 @@
 .name {
   display: flex;
   align-items: center;
-  height: 40px;
+  min-width: 0;
+  height: clamp(38px, min(4.2vw, 7vh), 72px);
   margin-block: 2px;
 }
 
 .category {
-  font-size: 13.5px;
+  font-size: clamp(15px, 0.85rem + 0.3vw, 19px);
   line-height: 1.45;
   color: var(--ink-3);
 }
@@ -79,7 +83,7 @@
 .scale {
   display: grid;
   grid-template-columns: repeat(var(--columns, 5), minmax(0, 1fr));
-  margin-bottom: 22px;
+  margin-bottom: clamp(18px, 3vh, 28px);
 }
 
 .phase {
@@ -88,7 +92,7 @@
   gap: 14px;
   padding-right: 20px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: clamp(12px, 0.55rem + 0.3vw, 14px);
   letter-spacing: 0.1em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -105,8 +109,15 @@
   background: linear-gradient(var(--line-strong), var(--line-strong)) center / 100% 1px no-repeat;
 }
 
+/* The phase each stage belongs to, read out with the list. On a wide screen
+   the scale above shows it, so here it is for screen readers only. */
 .caption {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
@@ -132,10 +143,15 @@
   }
 
   .caption {
-    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
     padding: 14px 0 6px 28px;
     font-family: var(--font-mono);
-    font-size: 10.5px;
+    font-size: 12px;
     letter-spacing: 0.1em;
     line-height: 1.5;
     text-transform: uppercase;
@@ -148,12 +164,21 @@
 
   .stop {
     display: grid;
-    grid-template-columns: 108px 1fr;
+    grid-template-columns: 124px 1fr;
     align-items: center;
     column-gap: 12px;
     row-gap: 2px;
     height: auto;
-    padding: 13px 0 13px 28px;
+    margin-right: 0;
+    padding: 14px 0 14px 28px;
+  }
+
+  .stage {
+    font-size: 12px;
+  }
+
+  .name {
+    height: 40px;
   }
 
   .node {
@@ -168,5 +193,9 @@
 @media (max-width: 420px) {
   .stop {
     grid-template-columns: 96px 1fr;
+  }
+
+  .stage {
+    font-size: 11.5px;
   }
 }

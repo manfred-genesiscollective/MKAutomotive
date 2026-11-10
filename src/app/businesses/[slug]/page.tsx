@@ -181,11 +181,11 @@ export default async function BusinessPage({ params }: PageProps<"/businesses/[s
 
       <section className="section section--flush-top">
         <div className="container">
-          <p className="eyebrow" data-reveal>
+          <h2 className="eyebrow" data-reveal>
             {business.servicesHeading}
-          </p>
+          </h2>
           <div className={styles.services}>
-            <NumberedRows items={business.services} as="h2" />
+            <NumberedRows items={business.services} as="h3" />
           </div>
         </div>
       </section>

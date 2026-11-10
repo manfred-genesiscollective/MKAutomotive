@@ -45,12 +45,12 @@ export default function InvestorsPage() {
         </div>
 
         <div className={`container ${styles.portfolio}`}>
-          <p className="eyebrow" data-reveal>
+          <h2 className="eyebrow" data-reveal>
             The portfolio
-          </p>
+          </h2>
           <div className={styles.rows}>
             <NumberedRows
-              as="h2"
+              as="h3"
               labels={businesses.map((business) => business.stage.number)}
               items={businesses.map((business) => ({
                 title: business.name,

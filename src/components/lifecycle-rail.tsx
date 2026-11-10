@@ -25,11 +25,13 @@ export function LifecycleRail({ scale = false }: Props) {
   return (
     <nav className={styles.rail} aria-label="Businesses, in the order of a car's life">
       {showScale ? (
-        // Wide screens: one scale across the top. Narrow screens use the
-        // captions inside the list instead, so only one of the two is ever shown.
+        // Wide screens: one scale across the top. Narrow screens show the
+        // captions inside the list instead. Screen readers always get the
+        // captions, which sit with the stages they describe.
         <div
           className={styles.scale}
           style={{ "--columns": businesses.length } as React.CSSProperties}
+          aria-hidden="true"
         >
           <p className={styles.phase} style={{ gridColumn: `1 / span ${during}` }}>
             <span>{DURING}</span>

@@ -132,8 +132,8 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
@@ -151,6 +151,14 @@
 .close {
   display: inline-flex;
   gap: 0;
+}
+
+/* Contrast themes paint backgrounds over: draw the bars in the button colour. */
+@media (forced-colors: active) {
+  .burger span {
+    forced-color-adjust: none;
+    background: ButtonText;
+  }
 }
 
 .close span:first-child {
@@ -201,7 +209,12 @@
   overflow: hidden;
 }
 
+/* Stays at the top while the menu scrolls (on a phone held sideways), so the
+   close button is always in reach. */
 .menuBar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   flex: none;
   align-items: center;
@@ -210,6 +223,9 @@
   height: var(--header-height);
   padding-inline: var(--gutter);
   border-bottom: 1px solid var(--line);
+  background: rgba(6, 7, 9, 0.86);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
 }
 
 .menuNav {
@@ -234,7 +250,7 @@
 
 .menuIndex {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--ink-3);
 }
@@ -261,6 +277,21 @@
   font-style: italic;
   font-weight: 600;
   color: var(--ink-3);
+}
+
+/* A short screen: fit more of the menu on it. */
+@media (max-height: 480px) {
+  .menuNav {
+    padding-top: 6px;
+  }
+
+  .menuLink {
+    padding-block: 9px;
+  }
+
+  .menuLabel {
+    font-size: 24px;
+  }
 }
 
 @keyframes menu-in {
