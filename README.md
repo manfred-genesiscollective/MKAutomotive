@@ -156,17 +156,18 @@ To speed up listing, add www.mkholdings.asia to Google Search Console and Bing W
 The copy is written in a formal, corporate voice for partners and investors first, kept short, with every claim about a business taken from that business's own website. The lines below were drafted for the site and have no source beyond it. Approve, change or remove each one.
 
 - [ ] The tagline "Automotive specialists." and the line built on it: specialist businesses "across every aspect of automotive".
-- [ ] The group description, the About page statements, and the mission and vision (`src/content/site.ts`, `src/app/about/page.tsx`).
+- [x] The mission on the About page: approved.
+- [ ] The group description, the About page statements and the vision (`src/content/site.ts`, `src/app/about/page.tsx`).
 - [ ] The four operating principles (`habits` in `src/content/site.ts`), named on the About page.
 - [ ] The partner types (`partnerTypes` in `src/content/site.ts`). Two more were drafted and left out until confirmed: parts brands and distributors supplying RevHub, and founders bringing a business into the group.
 - [ ] The Careers page: whether open applications are wanted, and the kinds of work listed for each business (`work` in `src/content/businesses.ts`).
 - [ ] The Investors page: whether investor enquiries are wanted in public, and whether there is a deck to offer. The page currently takes enquiries and offers no document.
 - [ ] The privacy notice (`/privacy`), including the registered name and a data protection contact.
 - [ ] The Car Lounge page. It says only that a remote booking desk for workshops and automotive services is in development.
-- [ ] The GeneOS page. It says only that GeneOS is an entire back-end system for automotive businesses, in development.
+- [x] The GeneOS page: approved. It says only that GeneOS is the Group's software business, being built to run the entire back end of an automotive business, and that it is in development.
 
 ### Facts to confirm
 
 - [ ] Golden Hour: whether it handles accident claims, and who pays its service fee. Its own website describes accident recovery and promises "no commissions", so the page here says the same and does not mention claims.
 - [ ] SwiftDrive: the Partners page says leasing owners' cars is not on offer yet, as swiftdrive.sg does.
-- [ ] GeneOS: its website address. Its page gives geneos.digital, marked as in development, because the GeneOS app runs at app.geneos.digital. Correct `domain` in `src/content/businesses.ts` if the public site will be elsewhere.
+- [x] GeneOS: its website address is geneos.digital (confirmed). Its page shows it as in development; when the site opens, set `status: "live"` and its `url` (see Changing the content).
