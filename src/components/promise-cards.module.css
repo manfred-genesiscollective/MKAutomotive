@@ -26,11 +26,15 @@
   background: var(--bg-raised);
 }
 
+/* A short stripe of forged gold (globals.css). */
 .tick {
   width: 14px;
   height: 2px;
   margin-bottom: 8px;
-  background: var(--gold);
+  background:
+    linear-gradient(var(--gold-tint), var(--gold-tint)),
+    url("../assets/forged-metal.svg") 0 0 / 160px 160px var(--gold);
+  background-blend-mode: multiply, normal;
 }
 
 .title {

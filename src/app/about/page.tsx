@@ -12,7 +12,7 @@ import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
   title: "About the Group",
-  description: `${site.name} is a Singapore holding company with ${countWord()} automotive businesses, each under its own brand: ${businessNameList()}.`,
+  description: `${site.name} is a Singapore holding company with ${countWord()} automotive businesses: ${businessNameList()}.`,
   path: "/about",
 });
 
@@ -81,8 +81,8 @@ export default function AboutPage() {
                 label: "Mission",
                 content: (
                   <p className="statement">
-                    To bring specialist standards to every aspect of automotive in Singapore:
-                    simple, transparent and fairly priced.
+                    To make every aspect of automotive in Singapore simple, transparent and
+                    fairly priced, to a specialist’s standard.
                   </p>
                 ),
               },

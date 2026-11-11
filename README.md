@@ -22,8 +22,8 @@ The site is the group's portfolio, written for partners and investors first. It 
 
 Everything a non-developer is likely to change lives in `src/content/`.
 
-- `businesses.ts` holds every business: name, category, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry: it gets a tile on the wall, a page and a share image with no other change (see Business logos for its logo). To launch one marked `coming-soon`, set `status: "live"`, add its `url`, and rewrite the wording that says it is in development (`summary`, `seo`, `intro`, `description`, `services`, `cta`, `work`, `model`). `npm test` checks the rules the pages rely on, such as unique names and a website for every open business.
-- A few sentences name the businesses' fields in words ("rental, performance parts, recovery, export, service booking and software"): the group description in `site.ts`, the line under "The portfolio." on the home page, and the opening lines of the About and Investors pages. Update them by hand when a business is added.
+- `businesses.ts` holds every business: name, category, tagline, descriptions, services, promises and website. The home page, `/businesses`, each business page, the footer, the contact form and the sitemap all read from this one list. To add a business, add an entry: it gets a tile on the wall, a page and a share image with no other change (see Business logos for its logo). To launch one marked `coming-soon`, set `status: "live"`, add its `url`, and rewrite the wording that says it is in development (`seo`, `intro`, `description`, `services`, `cta`, `work`, `model`). `npm test` checks the rules the pages rely on, such as unique names and a website for every open business.
+- A few sentences name the businesses' fields in words ("rental, performance parts, recovery, export, service booking and software"): the group description in `site.ts`, the line under "The portfolio." on the home page, the Structure row on the About page, and the opening line and search description of the Investors page. Update them by hand when a business is added.
 - `site.ts` holds group details: tagline, contact details, social links, the four operating principles (named on the About page) and the partner types. Contact details left empty are simply not shown.
 - `forms.ts` holds the choices offered in the enquiry forms.
 
@@ -72,7 +72,8 @@ The palette is defined once in `src/app/globals.css`:
   - *The glass*: two layers fixed to the screen, between the carbon and the content. One carries soft reflections, blended so they brighten the flakes they fall on. The other is a smoked tint (`--glass-tint`) with a vignette. The page scrolls underneath them.
   - *Glass panels* (`surface-glass`): sheets of darker glass with the carbon faintly visible through them, for the bands that need a calm ground, such as the forms and the closing bands.
 - **Pearl White `#EEECE6`** is for type, hairlines and buttons only. There are no light sections.
-- **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop and short stripes. Never a background, a button fill or body text.
+- **Champagne Gold `#BD9C66`** (`--gold`) is for small details only: the headline full stop, short stripes and small markers. Never a background, a button fill or body text.
+  - *Forged gold*: like the platinum, the gold is a finish. The full stops, stripes and markers are cut from the same flakes in polished gold: the platinum texture with `--gold-tint` multiplied over it, which on average comes out at the gold (`globals.css`, "Forged gold"; the share images work the same colours out in `src/lib/og-image.tsx`). Focus underlines stay solid gold, so they always show.
 - **Platinum** is a finish, not a flat colour: a light version of the flake texture (`src/assets/forged-metal.svg`), so a shape looks cut from polished forged metal. The logo, the emblem beside the home headline and the large headings are made of it. `--platinum` (`#E5E4E2`) is the flat colour used where the texture cannot be shown, such as in print.
 
 Components read surface variables (`--bg`, `--ink`, `--line`), so any component works on the open carbon or inside a glass panel.
@@ -94,12 +95,13 @@ In the header and the phone menu the monogram has the group's name beside it, "M
 
 ### Business logos
 
-Each business is shown by its own logo, in its own colours: on the wall of logos on the home page, Our businesses and About, as the headline of its page, in the lists on Careers and Investors, in the previous and next links, and in its share image. A business with no logo yet, GeneOS at present, is shown by its name in the platinum lettering until its artwork is added.
+Each business is shown by its own logo, in its own colours: on the wall of logos on the home page, Our businesses and About, as the headline of its page, in the lists on Careers and Investors, in the previous and next links, and in its share image. A business added without a logo is shown by its name in the platinum lettering until its artwork is added.
 
 - The artwork is in `src/assets/logos`, one SVG per business. It was traced from the logo files the group supplied, lettering included. Golden Hour's and The Car Lounge's words are stacked to the right of their monograms, one word to a line, spanning the monogram's height. Two colours differ from those files: Golden Hour's words are in the monogram's orange rather than black, and the "Drive" of SwiftDrive is white rather than navy. Black and navy would disappear against the carbon.
+- GeneOS is traced from its supplied lockup: GeneOS over Automotive beside the G, with "Gene" and "Automotive" in white and the G and "OS" in red. The G is redrawn as exact geometry: straight edges cut at 18°, as in the artwork, and its four rounded corners measured from it.
 - The forged finish (`src/components/business-logo.module.css`): the carbon's flakes are laid over each logo as light and shade (`src/assets/forged-shade.svg`), cut to its shape, and the logo is slightly see-through. The strength, the transparency and each logo's relative size are in `src/lib/business-logos.ts`, which the share images read too.
-- To use the businesses' own vector artwork instead, replace the five SVG files (keep the names). Each needs a `viewBox` and solid fills.
-- To give a logo to a business that has none (GeneOS), add its SVG to `src/assets/logos`, list it in `IMAGES` in `src/components/business-logo.tsx`, and give it a size in `LOGO_STYLE` in `src/lib/business-logos.ts`.
+- To use the businesses' own vector artwork instead, replace the SVG files (keep the names). Each needs a `viewBox` and solid or gradient fills.
+- To give a logo to a business that has none, add its SVG to `src/assets/logos`, list it in `IMAGES` in `src/components/business-logo.tsx`, give it a size in `LOGO_STYLE` in `src/lib/business-logos.ts`, and add its file to the `readFile` list and its slug to `LOGO_SLUGS` in `src/lib/og-image.tsx` (the two lists match by position), so that its share image shows it too.
 
 Visitors who ask their device for more contrast get no reflections and a heavier veil over the texture.
 
@@ -167,4 +169,4 @@ The copy is written in a formal, corporate voice for partners and investors firs
 
 - [ ] Golden Hour: whether it handles accident claims, and who pays its service fee. Its own website describes accident recovery and promises "no commissions", so the page here says the same and does not mention claims.
 - [ ] SwiftDrive: the Partners page says leasing owners' cars is not on offer yet, as swiftdrive.sg does.
-- [ ] GeneOS: its website address. Its page gives geneos.digital, marked as in development, because the GeneOS app runs at app.geneos.digital. Correct `domain` in `src/content/businesses.ts` if the public site will be elsewhere, and send its logo when there is one.
+- [ ] GeneOS: its website address. Its page gives geneos.digital, marked as in development, because the GeneOS app runs at app.geneos.digital. Correct `domain` in `src/content/businesses.ts` if the public site will be elsewhere.

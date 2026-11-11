@@ -28,8 +28,7 @@ export default function InvestorsPage() {
       <section className="section section--flush-top">
         <div className={`container ${styles.body}`} data-reveal>
           <p className="body">
-            Each business operates independently under its own brand, at a different point
-            between a first rental and a final export.
+            Each business operates independently under its own brand.
             {upcoming.length > 0
               ? ` ${upcoming.map((business) => business.name).join(" and ")} ${upcoming.length === 1 ? "is" : "are"} in development.`
               : null}

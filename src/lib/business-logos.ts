@@ -2,9 +2,9 @@
  * How each business logo is drawn (the artwork is in src/assets/logos). Kept
  * apart from the images so the share images can use it on the server.
  *
- * `scale` evens out their weight: Golden Hour and The Car Lounge are a
- * monogram with their words stacked beside it, narrower than the three
- * wordmarks, so they are drawn a little taller. `flakes` moves the forged
+ * `scale` evens out their weight: Golden Hour, The Car Lounge and GeneOS are
+ * a monogram with their words stacked beside it, so their words are smaller
+ * than the three wordmarks' and they are drawn a little taller. `flakes` moves the forged
  * texture so that no two logos show the same patch of it.
  */
 export const LOGO_STYLE: Record<string, { scale: number; flakes: [number, number] }> = {
@@ -13,6 +13,7 @@ export const LOGO_STYLE: Record<string, { scale: number; flakes: [number, number
   "the-car-lounge": { scale: 1.22, flakes: [38, 72] },
   "golden-hour": { scale: 1.12, flakes: [82, 56] },
   "export-sg": { scale: 1, flakes: [26, 88] },
+  geneos: { scale: 1.12, flakes: [52, 44] },
 };
 
 /** How see-through a logo is, so the carbon behind it shows a little. */

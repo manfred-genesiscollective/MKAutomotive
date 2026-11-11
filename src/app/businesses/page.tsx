@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Our businesses",
-  description: `${businessNameList()}: the specialist businesses of ${site.name} in Singapore, each under its own brand.`,
+  description: `${businessNameList()}: the specialist businesses of ${site.name} in Singapore.`,
   path: "/businesses",
 });
 

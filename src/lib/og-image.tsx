@@ -38,8 +38,9 @@ const [display, medium, mono, carbon, metal, shade, ...logoFiles] = await Promis
   readFile(join(assets, "logos/the-car-lounge.svg"), "utf8"),
   readFile(join(assets, "logos/golden-hour.svg"), "utf8"),
   readFile(join(assets, "logos/export-sg.svg"), "utf8"),
+  readFile(join(assets, "logos/geneos.svg"), "utf8"),
 ]);
-const LOGO_SLUGS = ["swiftdrive", "revhub", "the-car-lounge", "golden-hour", "export-sg"];
+const LOGO_SLUGS = ["swiftdrive", "revhub", "the-car-lounge", "golden-hour", "export-sg", "geneos"];
 const logoArtwork = new Map(LOGO_SLUGS.map((slug, index) => [slug, logoFiles[index]]));
 
 const svgUrl = (svg: string | Buffer) =>
@@ -47,6 +48,27 @@ const svgUrl = (svg: string | Buffer) =>
 
 const carbonUrl = svgUrl(carbon);
 const metalUrl = svgUrl(metal);
+
+/**
+ * The same flakes in forged gold, as on the site (globals.css, "Forged
+ * gold"): each platinum tone with --gold-tint multiplied over it. The share
+ * image cannot blend layers, so the colours are worked out here.
+ */
+const GOLD_TINT = [0xd7, 0xb2, 0x77];
+const goldUrl = svgUrl(
+  metal.replace(/fill="#([0-9a-f]{6})"/gi, (_, hex: string) => {
+    const channels = GOLD_TINT.map((tint, i) =>
+      Math.round((parseInt(hex.slice(i * 2, i * 2 + 2), 16) * tint) / 255),
+    );
+    return `fill="#${channels.map((v) => v.toString(16).padStart(2, "0")).join("")}"`;
+  }),
+);
+/** A stripe or marker of forged gold. */
+const goldPatch = {
+  backgroundColor: GOLD,
+  backgroundImage: `url(${goldUrl})`,
+  backgroundSize: "160px 160px",
+} as const;
 
 /** What is inside an SVG file's outer element. */
 const contents = (svg: string) => svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
@@ -107,7 +129,7 @@ const emblemUrl = forgedMark("-150 -90", 0.94);
 const logoUrl = forgedMark("-745 -951", 3.12, 0.45);
 
 type Options = {
-  /** Small label above the headline, for example "01 · Drive". */
+  /** Small label above the headline, for example "Business software · In development". */
   eyebrow?: string;
   /** Headline lines. A final full stop is drawn in gold. */
   lines: string[];
@@ -229,7 +251,7 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false, logo }
                 color: MUTED,
               }}
             >
-              <div style={{ width: 28, height: 4, background: GOLD }} />
+              <div style={{ width: 28, height: 4, ...goldPatch }} />
               {eyebrow}
             </div>
           ) : null}
@@ -274,7 +296,22 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false, logo }
                 >
                   {dotted ? line.slice(0, -1) : line}
                 </span>
-                {dotted ? <span style={{ color: GOLD }}>.</span> : null}
+                {dotted ? (
+                  <span
+                    style={{
+                      paddingRight: headlineSize * 0.1,
+                      marginRight: headlineSize * -0.1,
+                      backgroundColor: GOLD,
+                      backgroundImage: `url(${goldUrl})`,
+                      backgroundSize: `${headlineSize * 3.75}px ${headlineSize * 3.75}px`,
+                      backgroundPosition: `${headlineSize * 0.27}px ${headlineSize * 0.2}px`,
+                      backgroundClip: "text",
+                      color: "transparent",
+                    }}
+                  >
+                    .
+                  </span>
+                ) : null}
               </div>
             );
           })}
@@ -311,10 +348,13 @@ export function renderOgImage({ eyebrow, lines, subtitle, emblem = false, logo }
           }}
         >
           <div style={{ display: "flex", gap: 30 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
-              <div style={{ width: 8, height: 8, background: GOLD }} />
-              {site.tagline.replace(/\.$/, "")}
-            </div>
+            {/* Not when the headline is the tagline: it would say it twice. */}
+            {lines.join(" ") === site.tagline ? null : (
+              <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+                <div style={{ width: 8, height: 8, ...goldPatch }} />
+                {site.tagline.replace(/\.$/, "")}
+              </div>
+            )}
           </div>
           <div style={{ display: "flex" }}>{site.name}</div>
         </div>

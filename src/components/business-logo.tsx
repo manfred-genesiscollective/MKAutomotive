@@ -1,6 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 
 import exportSg from "@/assets/logos/export-sg.svg";
+import geneos from "@/assets/logos/geneos.svg";
 import goldenHour from "@/assets/logos/golden-hour.svg";
 import revhub from "@/assets/logos/revhub.svg";
 import swiftdrive from "@/assets/logos/swiftdrive.svg";
@@ -14,7 +15,9 @@ import styles from "./business-logo.module.css";
  * Each business's own logo, traced from the artwork the group supplied and
  * kept in its own colours (src/assets/logos). Golden Hour's and The Car
  * Lounge's words are stacked to the right of their monograms, one word to a
- * line. Two colours differ from the artwork: Golden Hour's words take the
+ * line, as GeneOS's are in its own artwork, whose G is redrawn as exact
+ * geometry.
+ * Two colours differ from the artwork: Golden Hour's words take the
  * monogram's orange (they were black) and the "Drive" of SwiftDrive is white
  * instead of navy. Black and navy would disappear on the carbon.
  */
@@ -24,6 +27,7 @@ const IMAGES: Record<string, StaticImageData> = {
   "the-car-lounge": theCarLounge,
   "golden-hour": goldenHour,
   "export-sg": exportSg,
+  geneos,
 };
 
 type Props = {

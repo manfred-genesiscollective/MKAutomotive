@@ -60,7 +60,6 @@
   --shade: 0.3;
 }
 
-
 /* The previous and next business at the foot of a business page. */
 .neighbour {
   --height: clamp(24px, 2.3vw, 32px);
@@ -84,6 +83,11 @@
 @media (forced-colors: active), print {
   .logo {
     opacity: 1;
+  }
+
+  /* The text's backplate would cover the line above it. */
+  .word {
+    line-height: normal;
   }
 
   .logo::after {

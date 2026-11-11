@@ -22,8 +22,6 @@ export type Business = {
   tagline: string;
   /** What a visitor wants when this is the business they need. */
   need: string;
-  /** Two sentences for lists and rows. */
-  summary: string;
   /** One sentence for search results and link previews: 155 characters at most. */
   seo: string;
   /** Opening statement on the business page. */
@@ -55,8 +53,6 @@ export const businesses: Business[] = [
     category: "Car rental",
     tagline: "Weekly and monthly car\u00a0rental with door-to-door delivery.",
     need: "Rent a car",
-    summary:
-      "Fleet rental by the week and the month, delivered and collected anywhere in Singapore at any hour, at one all-in rate.",
     seo: "SwiftDrive offers weekly and monthly car rental, delivered anywhere in Singapore at any hour, at one all-in rate.",
     intro:
       "SwiftDrive is the Group’s car rental business. It owns and maintains its fleet and delivers every vehicle to the customer.",
@@ -131,8 +127,6 @@ export const businesses: Business[] = [
     category: "Parts and fitting",
     tagline: "Performance parts and accessories, supplied and fitted.",
     need: "Upgrade a car",
-    summary:
-      "An online store for performance parts with its own fitting workshop in Singapore, starting with big brake kits. Every order is checked against the vehicle’s chassis.",
     seo: "RevHub supplies performance parts online, starting with big brake kits, and fits them at its own workshop in Singapore.",
     intro: "RevHub is the Group’s performance parts retailer and fitting workshop.",
     description: [
@@ -202,8 +196,6 @@ export const businesses: Business[] = [
     category: "Towing and roadside assistance",
     tagline: "24/7 towing and roadside assistance, island-wide.",
     need: "Get a tow or roadside assistance",
-    summary:
-      "Towing, recovery and roadside assistance anywhere in Singapore, 24 hours a day. An estimate in about a minute, and the price confirmed before dispatch.",
     seo: "Golden Hour provides towing, recovery and roadside assistance anywhere in Singapore, 24 hours a day, with the price confirmed before dispatch.",
     intro:
       "Golden Hour is the Group’s towing, recovery and roadside assistance business.",
@@ -279,8 +271,6 @@ export const businesses: Business[] = [
     category: "Vehicle export",
     tagline: "Singapore used cars, ready for export.",
     need: "Buy a car for export",
-    summary:
-      "Singapore used vehicles for overseas dealers and importers, each listed with an open FOB price, a video and at least 25 photographs.",
     seo: "export.sg supplies Singapore used vehicles to overseas dealers and importers, each with an open FOB price, a video and at least 25 photographs.",
     intro: "export.sg is the Group’s vehicle export business.",
     description: [
@@ -353,8 +343,6 @@ export const businesses: Business[] = [
     category: "Service booking",
     tagline: "A booking desk for workshops and automotive services.",
     need: "Book a workshop or service",
-    summary:
-      "A remote booking desk for workshops and automotive services, now in development.",
     seo: "The Car Lounge is a remote booking desk for workshops and automotive services in Singapore, now in development.",
     intro:
       "The Car Lounge is the Group’s booking desk for workshops and automotive services. It is in development.",
@@ -397,15 +385,11 @@ export const businesses: Business[] = [
     slug: "geneos",
     name: "GeneOS",
     category: "Business software",
-    tagline: "The back-end system for automotive businesses.",
+    tagline: "The\u00a0back-end system for automotive businesses.",
     need: "Run an automotive business",
-    summary: "An entire back-end system for automotive businesses, now in development.",
     seo: "GeneOS is an entire back-end system for automotive businesses from MK Automotive Group, now in development.",
-    intro:
-      "GeneOS is the Group’s back-end system for automotive businesses. It is in development.",
-    description: [
-      "It is being built as an entire back-end system for automotive businesses.",
-    ],
+    intro: "GeneOS is the Group’s software business. It is in development.",
+    description: ["It is being built to run the entire back end of an automotive business."],
     status: "coming-soon",
     domain: "geneos.digital",
     facts: [
@@ -415,8 +399,8 @@ export const businesses: Business[] = [
     servicesHeading: "The proposition",
     services: [
       {
-        title: "One back-end system",
-        text: "The back-end software for an automotive business, in one system.",
+        title: "One system",
+        text: "The whole back end, in one place.",
       },
     ],
     promisesHeading: "Customer commitments",
@@ -472,7 +456,7 @@ export function countWord(count: number = businesses.length): string {
   return NUMBER_WORDS[count] ?? String(count);
 }
 
-/** "SwiftDrive, RevHub, The Car Lounge, Golden Hour and export.sg" */
+/** "SwiftDrive, RevHub, Golden Hour, export.sg, The Car Lounge and GeneOS" */
 export function businessNameList(): string {
   const names = businesses.map((business) => business.name);
   if (names.length <= 1) return names.join("");

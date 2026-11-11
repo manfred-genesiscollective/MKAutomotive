@@ -141,12 +141,16 @@ select.input option {
   color: var(--ink);
 }
 
+/* A small square of forged gold (globals.css). */
 .error::before {
   content: "";
   flex: none;
   width: 7px;
   height: 7px;
-  background: var(--gold);
+  background:
+    linear-gradient(var(--gold-tint), var(--gold-tint)),
+    url("../assets/forged-metal.svg") 0 0 / 160px 160px var(--gold);
+  background-blend-mode: multiply, normal;
 }
 
 .chips {
@@ -251,7 +255,10 @@ select.input option {
   flex: none;
   width: 7px;
   height: 7px;
-  background: var(--gold);
+  background:
+    linear-gradient(var(--gold-tint), var(--gold-tint)),
+    url("../assets/forged-metal.svg") 0 0 / 160px 160px var(--gold);
+  background-blend-mode: multiply, normal;
 }
 
 .done {

@@ -20,7 +20,6 @@ describe("businesses", () => {
     for (const business of businesses) assert.match(business.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });
 
-
   it("gives every open business a website, and no website to one in development", () => {
     for (const business of businesses) {
       if (business.status === "live") assert.match(business.url ?? "", /^https:\/\//, business.name);
@@ -50,7 +49,7 @@ describe("businesses", () => {
 
   it("fills in the wording every business page needs", () => {
     for (const business of businesses) {
-      for (const text of [business.tagline, business.need, business.summary, business.intro, business.work, business.model, business.cta.heading, business.cta.text, business.cta.label]) {
+      for (const text of [business.tagline, business.need, business.intro, business.work, business.model, business.cta.heading, business.cta.text, business.cta.label]) {
         assert.ok(text.trim().length > 0, business.name);
       }
       assert.ok(business.description.length > 0, business.name);

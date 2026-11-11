@@ -10,7 +10,8 @@
  *                            background: the site has no light sections.
  *   Champagne Gold  #BD9C66  small details only: full stops, short
  *                            stripes, tiny markers, selected text. Never a
- *                            band, a panel or a button.
+ *                            band, a panel or a button. Like the platinum it
+ *                            is a forged finish: see "Forged gold" below.
  *   Platinum                 not a flat colour but a finish: the carbon's
  *                            own flakes in polished metal. The logo, the
  *                            emblem and the large headings are made of it.
@@ -31,6 +32,9 @@
   --carbon: #1b1c1f;
   --pearl: #eeece6;
   --gold: #bd9c66;
+  /* Multiplied over the platinum flakes it makes forged gold, which on
+     average comes out at --gold ("Forged gold" below). */
+  --gold-tint: #d7b277;
   /* Platinum where it has to be one flat colour (see logo.module.css). */
   --platinum: #e5e4e2;
   /* The tone laid over the forged-carbon texture: far deeper than the brand
@@ -97,9 +101,9 @@
 
 /*
  * A glass panel: a sheet of darker glass laid over the carbon, which stays
- * faintly visible through it. Used for the bands that need a calm ground:
- * the stage directory, the group figures, the forms. The top edge catches
- * the light.
+ * faintly visible through it. Used where a calm ground is needed: the wall
+ * of logos, the forms, the closing bands and the promise cards. The top edge
+ * catches the light.
  */
 .surface-glass {
   --bg-raised: rgba(238, 236, 230, 0.05);
@@ -607,7 +611,10 @@ svg {
   width: 14px;
   height: 2px;
   margin-top: calc(0.75em - 1px);
-  background: var(--gold);
+  background:
+    linear-gradient(var(--gold-tint), var(--gold-tint)),
+    url("../assets/forged-metal.svg") 0 0 / 160px 160px var(--gold);
+  background-blend-mode: multiply, normal;
 }
 
 .meta {
@@ -619,10 +626,52 @@ svg {
   color: var(--ink-3);
 }
 
-/* The gold full stop that ends a headline. */
+/*
+ * Forged gold. The gold details are cut from the same material as the
+ * platinum: the carbon's flakes, here in polished gold. It is the platinum
+ * texture with --gold-tint multiplied over it, so it needs no texture of its
+ * own. The short stripes and small markers use it too (as a background, at
+ * 160px). Focus underlines stay solid gold, so they always show.
+ *
+ * The gold full stop that ends a headline, sized in em like the letters
+ * beside it, so the flakes match theirs. The texture is placed so that the
+ * patch inside the stop averages --gold: every stop shows the same patch.
+ */
 .dot {
   color: var(--gold);
   -webkit-text-fill-color: var(--gold);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .dot {
+    background:
+      linear-gradient(var(--gold-tint), var(--gold-tint)),
+      url("../assets/forged-metal.svg") 0 0.5em / 3.75em 3.75em var(--gold);
+    background-blend-mode: multiply, normal;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    /* Room for the slant, as for the letters. */
+    padding: 0.16em 0.14em 0.16em 0.08em;
+    margin: -0.16em -0.14em -0.16em -0.08em;
+  }
+}
+
+@media (prefers-contrast: more), print {
+  .dot {
+    background: none;
+    color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
+  }
+}
+
+@media (forced-colors: active) {
+  .dot {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
 }
 
 .text-link {
@@ -635,34 +684,6 @@ svg {
 
 .text-link:hover {
   text-decoration-color: currentColor;
-}
-
-/* Mono "learn more" label inside a row that is itself the link. The stripe
-   grows when the row is hovered. */
-.arrow-link {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  line-height: 1.5;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-
-.arrow-link::before {
-  content: "";
-  flex: none;
-  width: 14px;
-  height: 2px;
-  margin-top: calc(0.75em - 1px);
-  background: var(--gold);
-  transition: width 0.3s var(--ease);
-}
-
-.arrow-link-host:hover .arrow-link::before {
-  width: 30px;
 }
 
 /* ---------- Buttons ---------- */

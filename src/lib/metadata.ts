@@ -12,9 +12,12 @@ export const defaultTitle = `${site.name} | Automotive holding company, Singapor
  * A page that does have its own image file (the home page and each business
  * page have an opengraph-image.tsx beside them) must NOT name one here: an
  * image named in this object wins over the file.
+ *
+ * Raise `v` whenever the group's share image changes: sites that cache link
+ * previews fetch the picture again only when its address changes.
  */
 const shareImage = {
-  url: "/opengraph-image",
+  url: "/opengraph-image?v=2",
   width: 1200,
   height: 630,
   alt: `${site.name}: ${site.tagline}`,

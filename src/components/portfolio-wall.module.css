@@ -99,14 +99,29 @@
   outline: none;
 }
 
-/* The link covers the whole tile and carries the gold stripe drawn in on hover. */
+/* The link covers the whole tile. */
 .link::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(var(--gold), var(--gold)) 0 0 / 0 2px no-repeat;
-  transition: background-size 0.5s var(--ease);
+}
+
+/* A stripe of forged gold (globals.css) drawn in along the top on hover. */
+.link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 40px;
+  height: 2px;
+  background:
+    linear-gradient(var(--gold-tint), var(--gold-tint)),
+    url("../assets/forged-metal.svg") 0 0 / 160px 160px var(--gold);
+  background-blend-mode: multiply, normal;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.5s var(--ease);
 }
 
 .link:focus-visible::after {
@@ -183,9 +198,9 @@
   opacity: 1;
 }
 
-.tile:hover .link::after,
-.tile:focus-within .link::after {
-  background-size: 40px 2px;
+.tile:hover .link::before,
+.tile:focus-within .link::before {
+  clip-path: inset(0);
 }
 
 .tile:hover .go,
@@ -212,7 +227,7 @@
 @media (prefers-reduced-motion: reduce) {
   .tile::before,
   .tile *,
-  .link::after {
+  .link::before {
     transition: none !important;
   }
 
@@ -266,6 +281,31 @@
   .badge {
     padding: 2px 7px;
     font-size: 10px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+}
+
+/* The narrowest phones: the status takes the whole foot, without the arrow. */
+@media (max-width: 359px) {
+  .go {
+    display: none;
+  }
+
+  .foot {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Forced colours drop the hairline shadows: rule the tiles with outlines. */
+@media (forced-colors: active) {
+  .tile {
+    outline: 1px solid CanvasText;
+  }
+
+  .go,
+  .tile:hover .go,
+  .tile:focus-within .go {
+    color: CanvasText;
   }
 }

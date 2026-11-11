@@ -90,7 +90,7 @@
   color: var(--ink);
 }
 
-/* A short gold stripe under the section you are in. */
+/* A short stripe of forged gold (globals.css) under the section you are in. */
 .link[aria-current]::after {
   content: "";
   position: absolute;
@@ -98,7 +98,10 @@
   bottom: 4px;
   width: 14px;
   height: 2px;
-  background: var(--gold);
+  background:
+    linear-gradient(var(--gold-tint), var(--gold-tint)),
+    url("../assets/forged-metal.svg") 0 0 / 160px 160px var(--gold);
+  background-blend-mode: multiply, normal;
 }
 
 .cta {
@@ -264,9 +267,34 @@
   line-height: 1.15;
 }
 
+/* The section you are in ends with a full stop of forged gold, as the
+   headlines do (.dot in globals.css). */
 .menuLink[aria-current] .menuLabel::after {
   content: ".";
   color: var(--gold);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .menuLink[aria-current] .menuLabel::after {
+    background:
+      linear-gradient(var(--gold-tint), var(--gold-tint)),
+      url("../assets/forged-metal.svg") 0 0.5em / 3.75em 3.75em var(--gold);
+    background-blend-mode: multiply, normal;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    padding: 0.16em 0.14em 0.16em 0.08em;
+    margin: -0.16em -0.14em -0.16em -0.08em;
+  }
+}
+
+@media (prefers-contrast: more), (forced-colors: active), print {
+  .menuLink[aria-current] .menuLabel::after {
+    background: none;
+    color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
+  }
 }
 
 .menuFoot {

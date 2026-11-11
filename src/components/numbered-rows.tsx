@@ -13,19 +13,15 @@ type Props = {
   items: Item[];
   /** Heading level of each row title. */
   as?: "h2" | "h3";
-  /** Replaces the running number with labels of your own. */
-  labels?: string[];
 };
 
 /** A ruled list: number, title, description. */
-export function NumberedRows({ items, as: Heading = "h3", labels }: Props) {
+export function NumberedRows({ items, as: Heading = "h3" }: Props) {
   return (
     <ol className={styles.rows}>
       {items.map((item, index) => (
         <li key={item.title} className={styles.row} data-reveal>
-          <span className={styles.number}>
-            {labels?.[index] ?? String(index + 1).padStart(2, "0")}
-          </span>
+          <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>
           {item.logo ? (
             <Heading className={`${styles.title} ${styles.logoTitle}`}>
               <BusinessLogo slug={item.logo} alt={item.title} size="list" />
