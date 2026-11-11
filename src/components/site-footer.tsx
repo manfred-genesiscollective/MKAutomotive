@@ -56,8 +56,8 @@ export async function SiteFooter() {
           </div>
 
           <div className={styles.columns}>
-            <nav className={styles.column} aria-label="Group">
-              <p className="eyebrow">Group</p>
+            <nav className={styles.column} aria-label="Company">
+              <p className="eyebrow">Company</p>
               <ul>
                 {groupLinks.map((item) => (
                   <li key={item.href}>

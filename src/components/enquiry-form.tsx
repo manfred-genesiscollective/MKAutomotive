@@ -42,7 +42,7 @@ const COPY: Record<EnquiryKind, FormCopy> = {
   contact: {
     submit: "Send message",
     successTitle: "Message sent",
-    successText: "Thank you. The Group will reply by email.",
+    successText: "Thank you. We will reply by email.",
     company: { label: "Company", placeholder: "Company name" },
     topic: { label: "Subject", control: "chips" },
     message: { placeholder: "Your enquiry" },
@@ -50,7 +50,7 @@ const COPY: Record<EnquiryKind, FormCopy> = {
   partners: {
     submit: "Submit enquiry",
     successTitle: "Enquiry received",
-    successText: "Thank you. The Group will review your enquiry and reply by email.",
+    successText: "Thank you. We will review your enquiry and reply by email.",
     company: { label: "Company", placeholder: "Company name" },
     topic: { label: "Partnership type", control: "select" },
     message: { placeholder: "The opportunity you have in mind" },
@@ -58,7 +58,7 @@ const COPY: Record<EnquiryKind, FormCopy> = {
   investors: {
     submit: "Send enquiry",
     successTitle: "Enquiry received",
-    successText: "Thank you. The Group will reply by email.",
+    successText: "Thank you. We will reply by email.",
     company: { label: "Firm", placeholder: "Fund or firm name" },
   },
   careers: {

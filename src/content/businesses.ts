@@ -55,7 +55,7 @@ export const businesses: Business[] = [
     need: "Rent a car",
     seo: "SwiftDrive offers weekly and monthly car rental, delivered anywhere in Singapore at any hour, at one all-in rate.",
     intro:
-      "SwiftDrive is the Group’s car rental business. It owns and maintains its fleet and delivers every vehicle to the customer.",
+      "SwiftDrive is our car rental business. It owns and maintains its fleet and delivers every vehicle to the customer.",
     description: [
       "Vehicles are delivered to homes, offices, hotels and Changi Airport at any hour, and collected when the rental ends. The all-in rate covers delivery, collection, roadside assistance and unlimited kilometres.",
     ],
@@ -128,7 +128,7 @@ export const businesses: Business[] = [
     tagline: "Performance parts and accessories, supplied and fitted.",
     need: "Upgrade a car",
     seo: "RevHub supplies performance parts online, starting with big brake kits, and fits them at its own workshop in Singapore.",
-    intro: "RevHub is the Group’s performance parts retailer and fitting workshop.",
+    intro: "RevHub is our performance parts retailer and fitting workshop.",
     description: [
       "The catalogue shows only the parts that fit the customer’s vehicle. Every order is checked by hand against the chassis before dispatch, and lead times are confirmed before payment.",
       "The range starts with big brake kits, pads, rotors and lines. Wheels, lighting, seats, steering wheels and exterior parts will follow.",
@@ -198,7 +198,7 @@ export const businesses: Business[] = [
     need: "Get a tow or roadside assistance",
     seo: "Golden Hour provides towing, recovery and roadside assistance anywhere in Singapore, 24 hours a day, with the price confirmed before dispatch.",
     intro:
-      "Golden Hour is the Group’s towing, recovery and roadside assistance business.",
+      "Golden Hour is our towing, recovery and roadside assistance business.",
     description: [
       "It operates island-wide, around the clock, for cars, vans and small lorries. A request takes a few steps online, an estimate appears as it is made, and the price is confirmed before a truck is dispatched.",
       "After an accident, vehicles go to the owner’s insurer or to a workshop of the owner’s choice.",
@@ -272,7 +272,7 @@ export const businesses: Business[] = [
     tagline: "Singapore used cars, ready for export.",
     need: "Buy a car for export",
     seo: "export.sg supplies Singapore used vehicles to overseas dealers and importers, each with an open FOB price, a video and at least 25 photographs.",
-    intro: "export.sg is the Group’s vehicle export business.",
+    intro: "export.sg is our vehicle export business.",
     description: [
       "It acquires vehicles at the end of their ten-year Certificate of Entitlement (COE), prepares them in a licensed export processing zone and ships them to buyers in Africa, the Caribbean, Oceania and Europe. Each listing carries its FOB price and the destination’s import rules; the landed cost is quoted on request.",
       "Owners whose COE is about to expire receive an indicative offer within one business day.",
@@ -345,7 +345,7 @@ export const businesses: Business[] = [
     need: "Book a workshop or service",
     seo: "The Car Lounge is a remote booking desk for workshops and automotive services in Singapore, now in development.",
     intro:
-      "The Car Lounge is the Group’s booking desk for workshops and automotive services. It is in development.",
+      "The Car Lounge is our booking desk for workshops and automotive services. It is in development.",
     description: [
       "Drivers will book workshops and automotive services remotely, as easily as booking accommodation. Workshops and service providers will receive their bookings through it.",
     ],
@@ -388,7 +388,7 @@ export const businesses: Business[] = [
     tagline: "The\u00a0back-end system for automotive businesses.",
     need: "Run an automotive business",
     seo: "GeneOS is an entire back-end system for automotive businesses from MK Automotive Group, now in development.",
-    intro: "GeneOS is the Group’s software business. It is in development.",
+    intro: "GeneOS is our software business. It is in development.",
     description: ["It is being built to run the entire back end of an automotive business."],
     status: "coming-soon",
     domain: "geneos.digital",

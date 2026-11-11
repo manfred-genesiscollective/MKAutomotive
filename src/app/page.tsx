@@ -70,8 +70,8 @@ export default function HomePage() {
       <CtaBand
         surface="glass"
         eyebrow="Partnerships and investment"
-        title="Work with the Group."
-        text="Enquiries about partnerships, supply, investment and careers are reviewed by the Group and directed to the business concerned."
+        title="Work with us."
+        text="We review every enquiry about partnerships, supply, investment and careers, and refer it to the business concerned."
       >
         <Link href="/contact" className="button button--large">
           Contact us

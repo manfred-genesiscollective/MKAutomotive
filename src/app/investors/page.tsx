@@ -18,7 +18,7 @@ export default function InvestorsPage() {
 
   return (
     <>
-      <PageHero eyebrow="Investors" title={["Specialists,", "under one group."]}>
+      <PageHero eyebrow="Investors" title={["Specialists,", "under one roof."]}>
         <p className="lede lede--lg">
           {site.name} owns specialist businesses across the automotive sector in Singapore,
           from rental, performance parts and recovery to export, service booking and software.

@@ -446,7 +446,7 @@ svg {
   line-height: 0.98;
 }
 
-/* The first limit keeps a headline of up to 8em ("About the Group.") on
+/* The first limit keeps a headline of up to 8em ("Our businesses.") on
    one line: it is the room between the gutters, divided by that width. */
 .display--page {
   font-size: clamp(

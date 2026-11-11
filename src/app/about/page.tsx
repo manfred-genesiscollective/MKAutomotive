@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/metadata";
 import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
-  title: "About the Group",
+  title: "About us",
   description: `${site.name} is a Singapore holding company with ${countWord()} automotive businesses: ${businessNameList()}.`,
   path: "/about",
 });
@@ -30,7 +30,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHero eyebrow="The Group" title={["About the Group."]}>
+      <PageHero eyebrow="Who we are" title={["About us."]}>
         <p className="lede lede--lg">
           A Singapore holding company with {countWord()} automotive businesses, each operating
           under its own brand.
@@ -90,7 +90,7 @@ export default function AboutPage() {
                 label: "Vision",
                 content: (
                   <p className="statement">
-                    To be the group that drivers, businesses and partners rely on for every
+                    To be the name that drivers, businesses and partners rely on for every
                     aspect of automotive.
                   </p>
                 ),
@@ -111,8 +111,8 @@ export default function AboutPage() {
 
       <CtaBand
         eyebrow="Partnerships and investment"
-        title="Work with the Group."
-        text="Enquiries are reviewed by the Group and directed to the business concerned."
+        title="Work with us."
+        text="We review every enquiry and refer it to the business concerned."
       >
         <Link href="/contact" className="button button--large">
           Contact us

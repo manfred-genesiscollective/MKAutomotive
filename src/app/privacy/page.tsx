@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             <h2 className="h3">How we use it</h2>
             <p>
               We use these details to respond to your enquiry and to pass it to the right person in
-              the Group or in one of its businesses. We do not sell them and we do not use them for
+              our team or in one of our businesses. We do not sell them and we do not use them for
               advertising.
             </p>
           </section>

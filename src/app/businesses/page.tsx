@@ -31,7 +31,7 @@ export default function BusinessesPage() {
       <CtaBand
         surface="glass"
         eyebrow="General enquiries"
-        title="Speak to the Group."
+        title="Speak to us."
         text="We will direct your enquiry to the business concerned."
       >
         <Link href="/contact" className="button button--large">

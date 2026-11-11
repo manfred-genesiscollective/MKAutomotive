@@ -37,7 +37,7 @@ export default function PartnersPage() {
         kind="partners"
         eyebrow="Enquire"
         title="Propose a partnership."
-        text="Outline your organisation and the opportunity. The Group reviews every enquiry and replies by email."
+        text="Outline your organisation and the opportunity. We review every enquiry and reply by email."
       />
     </>
   );

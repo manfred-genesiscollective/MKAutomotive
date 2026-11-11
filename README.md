@@ -164,7 +164,7 @@ The copy is written in a formal, corporate voice for partners and investors firs
 - [ ] The Investors page: whether investor enquiries are wanted in public, and whether there is a deck to offer. The page currently takes enquiries and offers no document.
 - [ ] The privacy notice (`/privacy`), including the registered name and a data protection contact.
 - [ ] The Car Lounge page. It says only that a remote booking desk for workshops and automotive services is in development.
-- [x] The GeneOS page: approved. It says only that GeneOS is the Group's software business, being built to run the entire back end of an automotive business, and that it is in development.
+- [x] The GeneOS page: approved. It says only that GeneOS is our software business, being built to run the entire back end of an automotive business, and that it is in development.
 
 ### Facts to confirm
 

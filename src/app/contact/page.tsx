@@ -25,7 +25,7 @@ export default function ContactPage() {
         <div className={`container ${styles.grid}`}>
           <div className={styles.aside} data-reveal>
             <p className={styles.lead}>
-              Write to the Group about partnerships, supply, investment and careers. Customer
+              Write to us about partnerships, supply, investment and careers. Customer
               enquiries are answered fastest by each business directly.
             </p>
 

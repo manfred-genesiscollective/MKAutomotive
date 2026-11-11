@@ -167,7 +167,7 @@ export default async function BusinessPage({ params }: PageProps<"/businesses/[s
                     : `${business.domain}, ${live ? "opening soon" : IN_DEVELOPMENT.toLowerCase()}`,
                   href: business.url,
                 },
-                { label: "Group", value: site.name },
+                { label: "Part of", value: site.name },
               ]}
             />
           </aside>
