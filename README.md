@@ -126,6 +126,8 @@ The site is deployed on Vercel as the project `mkautomotive`, linked to this rep
 
 Set the enquiry variables (see Enquiry forms) in the project's settings on Vercel, under Environment Variables, then redeploy. Until then the forms tell visitors their message could not be sent.
 
+The site is public at every address. Vercel's Deployment Protection (Vercel Authentication) is turned off for the project, so each deployment's own link, such as the ones Vercel and GitHub show, also opens for anyone. Turn it back on under Settings, Deployment Protection, to require a Vercel login for those links; www.mkholdings.asia stays public either way.
+
 ### Search engines
 
 The site is listed on its own domain, www.mkholdings.asia. Its vercel.app addresses serve the same pages but always send `X-Robots-Tag: noindex` (`next.config.ts`), so search engines list the domain only. Canonical links, the sitemap and link previews all use the domain (`NEXT_PUBLIC_SITE_URL`).
